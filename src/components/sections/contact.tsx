@@ -9,10 +9,6 @@ import { Icon } from "../icons";
 // Only real, verifiable channels — GitHub carries the proof of work.
 const SOCIALS = [{ id: "github", label: "GitHub", href: PROFILE.socials.github }];
 
-// Web3Forms — public access key (client-side by design). Submissions are
-// emailed straight to the profile inbox; no backend needed.
-const WEB3FORMS_KEY = "22e9f500-224c-44ad-b257-ec9ab5bc4867";
-
 type Status = "idle" | "sending" | "sent" | "error";
 
 export function Contact() {
@@ -23,24 +19,15 @@ export function Contact() {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // honeypot — bots fill hidden fields; humans never do
     const bot = (e.currentTarget.elements.namedItem("botcheck") as HTMLInputElement)
       ?.value;
-    if (bot) return;
 
     setStatus("sending");
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `New project enquiry from ${name || "portfolio"}`,
-          from_name: "Sabbir Portfolio",
-          name,
-          email,
-          message,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, botcheck: bot }),
       });
       const data = await res.json();
       if (data.success) {
