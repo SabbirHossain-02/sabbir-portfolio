@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTheme } from "next-themes";
 import { SKILLS } from "@/lib/site";
-import { Section, SectionInner, SectionHead, Reveal } from "../section";
+import { Section, SectionInner, SectionHead } from "../section";
 import { Icon } from "../icons";
 import { useDeck } from "../deck";
 import { TechSphere, type SphereNode } from "../tech-sphere";
@@ -51,7 +51,7 @@ export function Skills() {
       <SectionInner>
         <SectionHead title="My stack." />
 
-        <Reveal className="grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="stagger grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           {/* 3D glass-icon sphere */}
           <div className="relative h-[320px] sm:h-[380px]">
             <TechSphere
@@ -65,7 +65,7 @@ export function Skills() {
 
           {/* Category legend — glass cards with brand-icon chips that mirror
               the sphere; hover one to light up just that group. */}
-          <div className="grid gap-3">
+          <div className="stagger grid gap-3">
             {SKILLS.map((group, i) => {
               const tint = tints[i];
               const on = hi === i;
@@ -137,7 +137,7 @@ export function Skills() {
               );
             })}
           </div>
-        </Reveal>
+        </div>
       </SectionInner>
     </Section>
   );

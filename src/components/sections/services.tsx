@@ -2,7 +2,7 @@
 
 import { Check, ArrowUpRight } from "lucide-react";
 import { SERVICES } from "@/lib/site";
-import { Section, SectionInner, SectionHead, Reveal } from "../section";
+import { Section, SectionInner, SectionHead } from "../section";
 import { Icon } from "../icons";
 import { useDeck } from "../deck";
 
@@ -14,13 +14,13 @@ export function Services() {
       <SectionInner>
         <SectionHead title="What I do." />
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="stagger grid gap-5 md:grid-cols-3">
           {SERVICES.map((s, i) => (
-            <Reveal key={s.title} delay={i * 0.08} className="h-full">
-              <article
-                onClick={() => goTo("contact")}
-                className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-surface/60 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong"
-              >
+            <article
+              key={s.title}
+              onClick={() => goTo("contact")}
+              className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-line bg-surface/60 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1.5 hover:border-line-strong"
+            >
                 {/* accent line grows across the top on hover */}
                 <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
@@ -75,8 +75,7 @@ export function Services() {
                     strokeWidth={2.2}
                   />
                 </span>
-              </article>
-            </Reveal>
+            </article>
           ))}
         </div>
       </SectionInner>

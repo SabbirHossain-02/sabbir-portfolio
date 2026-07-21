@@ -148,6 +148,23 @@ body {
   animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Staggered entrance — direct children rise in sequence. Applied to card
+   grids; replays every time a section is (re)entered because the deck
+   re-keys the active slide's content. */
+.stagger > * {
+  animation: rise-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.stagger > *:nth-child(1)  { animation-delay: 0.04s; }
+.stagger > *:nth-child(2)  { animation-delay: 0.10s; }
+.stagger > *:nth-child(3)  { animation-delay: 0.16s; }
+.stagger > *:nth-child(4)  { animation-delay: 0.22s; }
+.stagger > *:nth-child(5)  { animation-delay: 0.28s; }
+.stagger > *:nth-child(6)  { animation-delay: 0.34s; }
+.stagger > *:nth-child(7)  { animation-delay: 0.40s; }
+.stagger > *:nth-child(8)  { animation-delay: 0.46s; }
+.stagger > *:nth-child(9)  { animation-delay: 0.52s; }
+.stagger > *:nth-child(n + 10) { animation-delay: 0.58s; }
+
 /* Gradient text used sparingly on hero name / key numbers */
 .text-gradient {
   background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 100%);

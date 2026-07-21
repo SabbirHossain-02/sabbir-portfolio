@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { FAQ } from "@/lib/site";
-import { Section, SectionInner, SectionHead, Reveal } from "../section";
+import { Section, SectionInner, SectionHead } from "../section";
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
@@ -14,12 +14,14 @@ export function Faq() {
       <SectionInner>
         <SectionHead title="FAQ." />
 
-        <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2">
+        <div className="stagger grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2">
           {FAQ.map((item, i) => {
             const isOpen = open === i;
             return (
-              <Reveal key={item.q} delay={(i % 2) * 0.08}>
-                <div className="rounded-2xl border border-line bg-surface/60 backdrop-blur transition hover:border-line-strong">
+              <div
+                key={item.q}
+                className="rounded-2xl border border-line bg-surface/60 backdrop-blur transition hover:border-line-strong"
+              >
                   <button
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
@@ -52,8 +54,7 @@ export function Faq() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
-              </Reveal>
+              </div>
             );
           })}
         </div>

@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { Mail, MapPin, Phone, Download, Send } from "lucide-react";
 import { PROFILE } from "@/lib/site";
-import { Section, SectionInner, SectionHead, Reveal } from "../section";
+import { Section, SectionInner, SectionHead } from "../section";
 import { Icon } from "../icons";
 
 // Only real, verifiable channels — GitHub carries the proof of work.
@@ -27,9 +27,9 @@ export function Contact() {
       <SectionInner>
         <SectionHead title="Let's talk." />
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="stagger grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.1fr]">
           {/* left: direct channels */}
-          <Reveal className="rounded-2xl border border-line bg-surface/60 p-7 backdrop-blur">
+          <div className="rounded-2xl border border-line bg-surface/60 p-7 backdrop-blur">
             <div className="space-y-3">
               <a
                 href={`mailto:${PROFILE.email}`}
@@ -91,11 +91,10 @@ export function Contact() {
                 </a>
               </div>
             </div>
-          </Reveal>
+          </div>
 
           {/* right: mailto form */}
-          <Reveal
-            delay={0.1}
+          <div
             className="rounded-2xl border border-line bg-surface/60 p-7 backdrop-blur"
           >
             <form onSubmit={onSubmit} className="grid gap-4">
@@ -139,7 +138,7 @@ export function Contact() {
                 />
               </button>
             </form>
-          </Reveal>
+          </div>
         </div>
 
         <p className="mt-8 text-center font-mono text-[11px] text-dim">

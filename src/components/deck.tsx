@@ -61,6 +61,9 @@ const CAROUSEL_COOLDOWN = 480;
 export function Experience() {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(1);
+  // Per-section "generation" — bumped each time a section is entered, used as a
+  // React key so the slide's content re-mounts and replays its entrance stagger.
+  const [gens, setGens] = useState<number[]>(() => SLIDES.map(() => 0));
   // Desktop = fullpage deck (wheel/keys/swipe swap sections, no inner scroll).
   // Mobile = app: sections switch via the bottom tab bar and each screen
   // scrolls internally, so gestures never fight native scrolling.
@@ -88,6 +91,11 @@ export function Experience() {
       indexRef.current = next;
       setDir(next > prev ? 1 : -1);
       setIndex(next);
+      setGens((g) => {
+        const n = [...g];
+        n[next] += 1;
+        return n;
+      });
       locked.current = true;
       window.setTimeout(() => (locked.current = false), COOLDOWN);
     },
@@ -231,7 +239,10 @@ export function Experience() {
                 pointerEvents: isActive ? "auto" : "none",
               }}
             >
-              <div className="relative flex min-h-full w-full flex-col justify-start md:h-full md:justify-center">
+              <div
+                key={gens[i]}
+                className="relative flex min-h-full w-full flex-col justify-start md:h-full md:justify-center"
+              >
                 <Comp />
               </div>
             </div>

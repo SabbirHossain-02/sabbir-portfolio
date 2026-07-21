@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { ABOUT, PROFILE } from "@/lib/site";
-import { Section, SectionInner, SectionHead, Reveal } from "../section";
+import { Section, SectionInner, SectionHead } from "../section";
 import { Portrait } from "../portrait";
 
 // Every stat here is verifiable — nothing a client could catch as inflated.
@@ -29,7 +29,7 @@ export function About() {
       <SectionInner>
         <SectionHead title="How I work." />
 
-        <Reveal className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <div className="stagger grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
           {/* Intro — the anchor cell */}
           <div className="relative col-span-2 flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface/60 p-6 backdrop-blur md:row-span-2">
             <span
@@ -161,7 +161,7 @@ export function About() {
               ))}
             </ol>
           </div>
-        </Reveal>
+        </div>
       </SectionInner>
     </Section>
   );
