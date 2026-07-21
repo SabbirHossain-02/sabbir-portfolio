@@ -1,0 +1,21 @@
+<svg width="900" height="1150" viewBox="0 0 900 1150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#16233f"/>
+      <stop offset="55%" stop-color="#0a1122"/>
+      <stop offset="100%" stop-color="#05070e"/>
+    </radialGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#28324b"/>
+      <stop offset="100%" stop-color="#131a2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1150" fill="url(#bg)"/>
+  <!-- simple suited silhouette -->
+  <g fill="url(#fig)">
+    <circle cx="450" cy="360" r="120"/>
+    <path d="M250 1150 C250 830 330 700 450 700 C570 700 650 830 650 1150 Z"/>
+  </g>
+  <path d="M450 700 L450 980" stroke="#0a1122" stroke-width="26" opacity="0.6"/>
+  <text x="450" y="1090" text-anchor="middle" fill="#5d6a85" font-family="monospace" font-size="26" letter-spacing="3">portrait.png</text>
+</svg>
