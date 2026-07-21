@@ -16,14 +16,18 @@ export function Services() {
 
   return (
     <Section id="services">
-      <SectionInner>
+      {/* mobile fills the viewport height so the carousel card uses the whole
+          screen (no dead space top/bottom); desktop stays a normal block */}
+      <SectionInner className="flex h-[100dvh] flex-col md:block md:h-auto">
         <SectionHead title="What I do." />
 
         {/* desktop: 3-column grid */}
         <div className="stagger hidden gap-5 md:grid md:grid-cols-3">{cards}</div>
 
-        {/* mobile: swipeable carousel */}
-        <MobileSwiper className="md:hidden">{cards}</MobileSwiper>
+        {/* mobile: swipeable carousel that fills the remaining height */}
+        <MobileSwiper className="flex min-h-0 flex-1 flex-col md:hidden">
+          {cards}
+        </MobileSwiper>
       </SectionInner>
     </Section>
   );
@@ -84,8 +88,8 @@ function ServiceCard({
         ))}
       </ul>
 
-      {/* subtle CTA */}
-      <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+      {/* subtle CTA — anchored to the bottom so tall cards fill nicely */}
+      <span className="relative mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-semibold text-accent">
         <span className="opacity-70 transition-opacity group-hover:opacity-100">
           Discuss a project
         </span>

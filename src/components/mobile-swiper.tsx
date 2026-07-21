@@ -87,16 +87,21 @@ export function MobileSwiper({
 
   return (
     <div className={className}>
-      <div ref={stageRef} className="touch-pan-y overflow-hidden">
+      {/* stage fills the available height (flex-1) so the card uses the screen
+          instead of floating in the middle with dead space */}
+      <div
+        ref={stageRef}
+        className="relative min-h-0 flex-1 touch-pan-y overflow-hidden"
+      >
         <div
-          className="flex items-stretch"
+          className="flex h-full items-stretch"
           style={{
             transform: `translateX(-${cur * 100}%)`,
             transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
           {items.map((it, i) => (
-            <div key={i} className="w-full shrink-0">
+            <div key={i} className="h-full w-full shrink-0">
               {it}
             </div>
           ))}
@@ -104,7 +109,7 @@ export function MobileSwiper({
       </div>
 
       {/* controls */}
-      <div className="mt-5 flex items-center justify-center gap-6">
+      <div className="mt-5 flex shrink-0 items-center justify-center gap-6">
         <button
           type="button"
           onClick={() => go(cur - 1)}
@@ -140,7 +145,7 @@ export function MobileSwiper({
         </button>
       </div>
 
-      <p className="mt-3 text-center font-mono text-xs text-dim">
+      <p className="mt-3 shrink-0 text-center font-mono text-xs text-dim">
         <span className="text-ink">{String(cur + 1).padStart(2, "0")}</span> /{" "}
         {String(n).padStart(2, "0")}
       </p>
