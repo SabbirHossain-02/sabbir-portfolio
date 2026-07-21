@@ -274,7 +274,7 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["React", "Node.js", "MySQL"],
     liveUrl: "http://163.227.239.38/",
-    image: "/projects/proton-mobile.png",
+    image: "/projects/proton-mobile.jpeg",
     accent: "#22c55e",
   },
 ];
