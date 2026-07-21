@@ -63,10 +63,28 @@ export function Coverflow() {
 
   const activeProject = PROJECTS[cur];
 
+  // Horizontal swipe on touch — swipe left → next card, right → previous.
+  const touch = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (!touch.current) return;
+    const dx = e.changedTouches[0].clientX - touch.current.x;
+    const dy = e.changedTouches[0].clientY - touch.current.y;
+    touch.current = null;
+    // only act on a mostly-horizontal swipe, so vertical scrolling still works
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      go(curRef.current + (dx < 0 ? 1 : -1));
+    }
+  };
+
   return (
     <div className="w-full">
       <div
-        className="relative mx-auto h-[404px] w-full select-none sm:h-[420px]"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="relative mx-auto h-[430px] w-full touch-pan-y select-none sm:h-[430px]"
         style={{ perspective: "1600px" }}
       >
         {PROJECTS.map((p, i) => {
@@ -78,9 +96,9 @@ export function Coverflow() {
             <div
               key={p.id}
               onClick={() => off !== 0 && go(i)}
-              className="absolute left-1/2 top-1/2 h-[392px] w-[290px] sm:w-[360px]"
+              className="absolute left-1/2 top-1/2 h-[416px] w-[min(84vw,360px)]"
               style={{
-                transform: `translate(-50%, -50%) translateX(${off * 42}%) rotateY(${clamped * -38}deg) translateZ(${-abs * 150}px) scale(${off === 0 ? 1 : 0.86})`,
+                transform: `translate(-50%, -50%) translateX(${off * 44}%) rotateY(${clamped * -38}deg) translateZ(${-abs * 150}px) scale(${off === 0 ? 1 : 0.84})`,
                 transformStyle: "preserve-3d",
                 transition:
                   "transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease",
@@ -216,7 +234,7 @@ function Card({ p, active }: { p: Project; active: boolean }) {
         </div>
 
         <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-          <span className="truncate font-mono text-[10px] text-dim">
+          <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-dim">
             {p.builtBy}
           </span>
           <a
