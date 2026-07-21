@@ -182,6 +182,18 @@ const BUILT = "Sabbir Hosen · PKGIT";
 
 export const PROJECTS: Project[] = [
   {
+    id: "anwar-ispat",
+    title: "Anwar Ispat",
+    type: "Corporate · E-commerce",
+    purpose:
+      "The corporate brand site for Anwar Ispat — one of Bangladesh's largest steel manufacturers. Product catalogue, quote requests and a cinematic, high-end brand presence built to carry a national brand's traffic.",
+    builtBy: BUILT,
+    stack: ["Next.js", "React", "Node.js", "PostgreSQL"],
+    liveUrl: "https://www.anwarispat.com/",
+    image: "/projects/anwar-ispat.png",
+    accent: "#e11d48",
+  },
+  {
     id: "a1polymer",
     title: "A1 Polymer",
     type: "Corporate · E-commerce",
