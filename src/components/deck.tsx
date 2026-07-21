@@ -239,9 +239,12 @@ export function Experience() {
                 pointerEvents: isActive ? "auto" : "none",
               }}
             >
+              {/* Mobile: min-h-full so short content centres yet tall content
+                  scrolls. Desktop: h-full gives a definite height so the hero's
+                  full-bleed portrait (min-h-full) fills the viewport. */}
               <div
                 key={gens[i]}
-                className="relative flex min-h-full w-full flex-col justify-start md:h-full md:justify-center"
+                className="relative flex min-h-full w-full flex-col justify-center md:h-full"
               >
                 <Comp />
               </div>

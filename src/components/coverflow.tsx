@@ -63,27 +63,61 @@ export function Coverflow() {
 
   const activeProject = PROJECTS[cur];
 
-  // Horizontal swipe on touch — swipe left → next card, right → previous.
-  const touch = useRef<{ x: number; y: number } | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => {
-    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (!touch.current) return;
-    const dx = e.changedTouches[0].clientX - touch.current.x;
-    const dy = e.changedTouches[0].clientY - touch.current.y;
-    touch.current = null;
-    // only act on a mostly-horizontal swipe, so vertical scrolling still works
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
-      go(curRef.current + (dx < 0 ? 1 : -1));
-    }
-  };
+  // Horizontal swipe on touch. Native listeners (not React's, which are passive)
+  // so we can preventDefault and claim the horizontal gesture — otherwise the
+  // browser hijacks it for scrolling and the swipe never fires on real phones.
+  const stageRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    let sx = 0;
+    let sy = 0;
+    let active = false;
+    let decided = false;
+    let horizontal = false;
+
+    const onStart = (e: TouchEvent) => {
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+      active = true;
+      decided = false;
+      horizontal = false;
+    };
+    const onMove = (e: TouchEvent) => {
+      if (!active) return;
+      const dx = e.touches[0].clientX - sx;
+      const dy = e.touches[0].clientY - sy;
+      if (!decided && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+        decided = true;
+        horizontal = Math.abs(dx) > Math.abs(dy);
+      }
+      if (horizontal) e.preventDefault(); // claim horizontal, keep vertical scroll
+    };
+    const onEnd = (e: TouchEvent) => {
+      if (!active) return;
+      active = false;
+      const dx = e.changedTouches[0].clientX - sx;
+      if (horizontal && Math.abs(dx) > 40) {
+        go(curRef.current + (dx < 0 ? 1 : -1));
+      }
+    };
+
+    el.addEventListener("touchstart", onStart, { passive: true });
+    el.addEventListener("touchmove", onMove, { passive: false });
+    el.addEventListener("touchend", onEnd, { passive: true });
+    el.addEventListener("touchcancel", onEnd, { passive: true });
+    return () => {
+      el.removeEventListener("touchstart", onStart);
+      el.removeEventListener("touchmove", onMove);
+      el.removeEventListener("touchend", onEnd);
+      el.removeEventListener("touchcancel", onEnd);
+    };
+  }, [go]);
 
   return (
     <div className="w-full">
       <div
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
+        ref={stageRef}
         className="relative mx-auto h-[430px] w-full touch-pan-y select-none sm:h-[430px]"
         style={{ perspective: "1600px" }}
       >
