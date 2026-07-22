@@ -190,7 +190,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "React", "Node.js", "PostgreSQL"],
     liveUrl: "https://www.anwarispat.com/",
-    image: "/projects/anwar-ispat.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784677995/anwar-ispat_sxjfgl.png",
     accent: "#e11d48",
   },
   {
@@ -202,7 +203,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "React", "Tailwind CSS", "Node.js"],
     liveUrl: "https://a1polymer.com/",
-    image: "/projects/a1polymer.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678050/a1polymer_dsjjtq.png",
     accent: "#4d8bff",
   },
   {
@@ -214,7 +216,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "React", "Tailwind CSS", "Commerce"],
     liveUrl: "https://caltex-demo.vercel.app/",
-    image: "/projects/caltex.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678110/caltex_byaqgm.png",
     accent: "#38bdf8",
   },
   {
@@ -226,7 +229,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
     liveUrl: "https://ids-group-demo-web.vercel.app/",
-    image: "/projects/ids-group.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678156/ids-group_a3sg1c.png",
     accent: "#7c8cff",
   },
   {
@@ -238,7 +242,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "Tailwind CSS", "Framer Motion"],
     liveUrl: "https://tel-website-demo-pkgit.vercel.app/",
-    image: "/projects/tel.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678188/tel_wfux6y.png",
     accent: "#5b8cff",
   },
   {
@@ -250,7 +255,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "Node.js", "Tailwind CSS", "Booking flow"],
     liveUrl: "https://hotel-the-glory-web.vercel.app/",
-    image: "/projects/hotel-glory.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678219/hotel-glory_k1bngk.png",
     accent: "#22c55e",
   },
   {
@@ -262,7 +268,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "three.js", "Tailwind CSS"],
     liveUrl: "https://property-lifts-portfolio.vercel.app/",
-    image: "/projects/property-lifts.png",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678248/property-lifts_jwxt2u.png",
     accent: "#f59e0b",
   },
   {
@@ -274,7 +281,8 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["React", "Node.js", "MySQL"],
     liveUrl: "http://163.227.239.38/",
-    image: "/projects/proton-mobile.jpeg",
+    image:
+      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678274/proton-mobile_tjhjln.jpg",
     accent: "#22c55e",
   },
 ];
