@@ -211,7 +211,7 @@ function Card({ p, active }: { p: Project; active: boolean }) {
           <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
           <span className="h-2 w-2 rounded-full bg-[#28c840]" />
           <span className="ml-2 truncate font-mono text-[10px] text-dim">
-            {p.liveUrl.replace(/^https?:\/\//, "")}
+            {(p.href || "").replace(/^https?:\/\//, "")}
           </span>
           <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Live
@@ -231,12 +231,11 @@ function Card({ p, active }: { p: Project; active: boolean }) {
             <div
               className="grid h-full w-full place-items-center"
               style={{
-                background: `linear-gradient(135deg, ${p.accent}22, transparent 70%), var(--surface-2)`,
+                background: `linear-gradient(135deg, var(--accent)22, transparent 70%), var(--surface-2)`,
               }}
             >
               <span
-                className="font-display text-3xl font-bold"
-                style={{ color: p.accent }}
+                className="font-display text-3xl font-bold text-accent"
               >
                 {p.title}
               </span>
@@ -246,14 +245,14 @@ function Card({ p, active }: { p: Project; active: boolean }) {
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <span className="label" style={{ color: p.accent }}>
-          {p.type}
+        <span className="label text-accent">
+          {p.typeLabel}
         </span>
         <h3 className="mt-1.5 font-display text-lg font-semibold tracking-tight text-ink">
           {p.title}
         </h3>
         <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-muted">
-          {p.purpose}
+          {p.blurb}
         </p>
 
         <div className="mt-2.5 flex flex-wrap gap-1.5">
@@ -269,10 +268,10 @@ function Card({ p, active }: { p: Project; active: boolean }) {
 
         <div className="mt-auto flex items-center justify-between gap-2 pt-3">
           <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-dim">
-            {p.builtBy}
+            Sabbir Hosen
           </span>
           <a
-            href={p.liveUrl}
+            href={p.href}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
