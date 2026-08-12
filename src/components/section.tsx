@@ -49,16 +49,18 @@ export function SectionInner({
 export function SectionHead({
   title,
   lead,
+  className = "",
 }: {
   title: string;
   lead?: string;
+  className?: string;
 }) {
   const hasDot = title.endsWith(".");
   const main = hasDot ? title.slice(0, -1) : title;
 
   return (
     <header
-      className="rise mb-5 max-w-2xl sm:mb-6"
+      className={`rise mb-5 max-w-2xl sm:mb-6 ${className}`}
       style={{ animationDelay: "0.06s" } as CSSProperties}
     >
       <div className="flex items-center gap-4">
