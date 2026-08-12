@@ -294,8 +294,7 @@ export const PROJECTS: Project[] = [
     builtBy: BUILT,
     stack: ["Next.js", "React", "JavaScript", "Tailwind CSS"],
     liveUrl: "https://velora-ecommerce-hazel.vercel.app/",
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80",
+    image: "/velora-preview.jpg",
     accent: "#ec4899",
   },
 ];
