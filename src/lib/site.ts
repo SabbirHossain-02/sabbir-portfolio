@@ -297,6 +297,18 @@ export const PROJECTS: Project[] = [
     image: "/velora-preview.jpg",
     accent: "#ec4899",
   },
+  {
+    id: "saasdash",
+    title: "SaaSdash",
+    type: "SaaS · Admin Dashboard",
+    purpose:
+      "A clean, modern SaaS administration dashboard template featuring user authentication, real-time analytics widgets, responsive data tables, and an intuitive UI architecture.",
+    builtBy: BUILT,
+    stack: ["React", "Next.js", "Tailwind CSS", "Dashboard"],
+    liveUrl: "https://saasdash-react-template.vercel.app/",
+    image: "/saasdash-preview.jpg",
+    accent: "#6366f1",
+  },
 ];
 
 export interface Faq {

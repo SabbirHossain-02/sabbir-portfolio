@@ -19,7 +19,7 @@ const STATS: {
     label: "Projects on GitHub",
     href: PROFILE.socials.github,
   },
-  { value: "8", suffix: "+", label: "Live client sites" },
+  { value: "9", suffix: "+", label: "Live client sites" },
   { value: "12", suffix: "+", label: "Technologies" },
 ];
 
