@@ -11,6 +11,7 @@ export type SectionId =
   | "skills"
   | "projects"
   | "services"
+  | "faq"
   | "contact";
 
 export interface NavItem {
