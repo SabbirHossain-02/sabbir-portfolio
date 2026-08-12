@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -84,6 +85,62 @@ const STATS: {
 ];
 
 const HIGHLIGHT_ICONS = [Code2, Smartphone, Zap];
+
+/** Dynamic count-up timer component */
+function AnimatedNumber({ value }: { value: string }) {
+  const target = parseInt(value, 10);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (isNaN(target)) return;
+    let startTimestamp: number | null = null;
+    const duration = 1200; // ms
+
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // Cubic ease-out
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easedProgress * target));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  }, [target]);
+
+  return <>{isNaN(target) ? value : count}</>;
+}
+
+/** Dynamic animated progress line component */
+function AnimatedProgressBar({
+  progress,
+  color,
+}: {
+  progress: string;
+  color: string;
+}) {
+  const [width, setWidth] = useState("0%");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWidth(progress);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [progress]);
+
+  return (
+    <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-line/60">
+      <div
+        className="h-full rounded-full transition-all duration-1000 ease-out group-hover:!w-full"
+        style={{ width, backgroundColor: color }}
+      />
+    </div>
+  );
+}
 
 export function About() {
   return (
@@ -240,7 +297,7 @@ export function About() {
             </div>
           </div>
 
-          {/* Column 3: 4 Rich Stat Cards in 2x2 Grid (3 cols) */}
+          {/* Column 3: 4 Dynamic Stat Cards in 2x2 Grid (3 cols) */}
           <div className="grid grid-cols-2 gap-3 md:col-span-3">
             {STATS.map((s) => {
               const IconComp = s.icon;
@@ -280,7 +337,7 @@ export function About() {
                     </span>
                   </div>
 
-                  {/* Middle row: Big gradient stat number + title */}
+                  {/* Middle row: Dynamic count-up stat number + title */}
                   <div className="my-2.5">
                     <div className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-[1.85rem]">
                       <span
@@ -290,7 +347,7 @@ export function About() {
                           WebkitTextFillColor: "transparent",
                         }}
                       >
-                        {s.value}
+                        <AnimatedNumber value={s.value} />
                       </span>
                       {s.suffix && (
                         <span className="ml-0.5 font-bold text-lg" style={{ color: s.color }}>
@@ -306,13 +363,8 @@ export function About() {
                     </div>
                   </div>
 
-                  {/* Bottom accent progress bar */}
-                  <div className="h-1 w-full overflow-hidden rounded-full bg-line/60">
-                    <div
-                      className="h-full rounded-full transition-all duration-500 group-hover:w-full"
-                      style={{ width: s.progress, backgroundColor: s.color }}
-                    />
-                  </div>
+                  {/* Bottom dynamic animated progress line */}
+                  <AnimatedProgressBar progress={s.progress} color={s.color} />
 
                   {/* Ambient backdrop glow */}
                   <div
