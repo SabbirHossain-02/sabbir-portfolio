@@ -4,7 +4,6 @@ import {
   ArrowUpRight,
   CheckCircle2,
   Clock,
-  Github,
   Globe,
   Cpu,
   Code2,
@@ -16,13 +15,15 @@ import {
 import { ABOUT, PROFILE } from "@/lib/site";
 import { Section, SectionInner, SectionHead } from "../section";
 import { Portrait } from "../portrait";
+import { Icon } from "../icons";
 
 const STATS: {
   value: string;
   suffix?: string;
   label: string;
   href?: string;
-  icon: typeof Clock;
+  iconName?: string;
+  icon?: typeof Clock;
 }[] = [
   { value: "3", suffix: "+", label: "Years experience", icon: Clock },
   {
@@ -30,7 +31,7 @@ const STATS: {
     suffix: "+",
     label: "Projects on GitHub",
     href: PROFILE.socials.github,
-    icon: Github,
+    iconName: "github",
   },
   { value: "9", suffix: "+", label: "Live client sites", icon: Globe },
   { value: "12", suffix: "+", label: "Technologies", icon: Cpu },
@@ -103,7 +104,11 @@ export function About() {
               <>
                 <div className="flex items-center justify-between">
                   <span className="grid h-8 w-8 place-items-center rounded-lg border border-line bg-surface-2 text-accent transition-colors group-hover:border-accent/30 group-hover:bg-accent/10">
-                    <IconComp className="h-4 w-4" strokeWidth={2} />
+                    {s.iconName ? (
+                      <Icon name={s.iconName} className="h-4 w-4" strokeWidth={2} />
+                    ) : IconComp ? (
+                      <IconComp className="h-4 w-4" strokeWidth={2} />
+                    ) : null}
                   </span>
                   {s.href && (
                     <ArrowUpRight
@@ -154,7 +159,7 @@ export function About() {
             </span>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {ABOUT.highlights.map((h, i) => {
-                const Icon = HIGHLIGHT_ICONS[i] || CheckCircle2;
+                const HighlightIcon = HIGHLIGHT_ICONS[i] || CheckCircle2;
                 return (
                   <div
                     key={h.title}
@@ -162,7 +167,7 @@ export function About() {
                   >
                     <div className="flex items-center gap-2">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-accent/10 text-accent">
-                        <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+                        <HighlightIcon className="h-3.5 w-3.5" strokeWidth={2} />
                       </span>
                       <span className="text-[13px] font-semibold leading-tight text-ink">
                         {h.title}
