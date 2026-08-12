@@ -342,3 +342,22 @@ export const MARQUEE_TECH = [
   { name: "Git", icon: "plug" },
   { name: "Linux", icon: "server" },
 ];
+
+export const FAQ = [
+  {
+    q: "What is your availability for new contracts or full-time roles?",
+    a: "I am actively available for remote full-time positions and select full-stack contract projects. I can onboard immediately.",
+  },
+  {
+    q: "What tech stack do you specialize in?",
+    a: "Core stack includes React, Next.js, Node.js, Python, PostgreSQL, and Linux VPS deployment with Docker and Nginx.",
+  },
+  {
+    q: "Do you handle server deployment and DevOps?",
+    a: "Yes. I configure self-managed Linux VPS servers, Nginx reverse proxies, SSL certificates, Docker containers, and CI/CD pipelines.",
+  },
+  {
+    q: "How do you ensure code quality and maintainability?",
+    a: "I enforce strict TypeScript contracts, modular component structures, database indexing, and comprehensive OpenAPI/Postman documentation.",
+  },
+];
