@@ -22,39 +22,64 @@ const STATS: {
   value: string;
   suffix?: string;
   label: string;
+  sublabel: string;
+  badge: string;
   href?: string;
   iconName?: string;
   icon?: typeof Clock;
-  glowColor: string;
+  color: string;
+  glowClass: string;
+  borderHover: string;
+  progress: string;
 }[] = [
   {
     value: "3",
     suffix: "+",
-    label: "Years experience",
+    label: "Years Experience",
+    sublabel: "In production",
+    badge: "Verified",
     icon: Clock,
-    glowColor: "from-blue-500/20 to-cyan-500/5",
+    color: "#3b82f6",
+    glowClass: "from-blue-500/20 via-blue-500/5 to-transparent",
+    borderHover: "hover:border-blue-500/50 hover:shadow-[0_10px_30px_rgba(59,130,246,0.18)]",
+    progress: "85%",
   },
   {
     value: "50",
     suffix: "+",
     label: "GitHub Repos",
+    sublabel: "Open Source",
+    badge: "GitHub",
     href: PROFILE.socials.github,
     iconName: "github",
-    glowColor: "from-purple-500/20 to-indigo-500/5",
+    color: "#a855f7",
+    glowClass: "from-purple-500/20 via-purple-500/5 to-transparent",
+    borderHover: "hover:border-purple-500/50 hover:shadow-[0_10px_30px_rgba(168,85,247,0.18)]",
+    progress: "92%",
   },
   {
     value: "9",
     suffix: "+",
-    label: "Live client sites",
+    label: "Live Client Sites",
+    sublabel: "Deployed Apps",
+    badge: "Live",
     icon: Globe,
-    glowColor: "from-emerald-500/20 to-teal-500/5",
+    color: "#10b981",
+    glowClass: "from-emerald-500/20 via-emerald-500/5 to-transparent",
+    borderHover: "hover:border-emerald-500/50 hover:shadow-[0_10px_30px_rgba(16,185,129,0.18)]",
+    progress: "100%",
   },
   {
     value: "12",
     suffix: "+",
     label: "Technologies",
+    sublabel: "Core Stack",
+    badge: "Stack",
     icon: Cpu,
-    glowColor: "from-amber-500/20 to-orange-500/5",
+    color: "#f59e0b",
+    glowClass: "from-amber-500/20 via-amber-500/5 to-transparent",
+    borderHover: "hover:border-amber-500/50 hover:shadow-[0_10px_30px_rgba(245,158,11,0.18)]",
+    progress: "95%",
   },
 ];
 
@@ -215,14 +240,22 @@ export function About() {
             </div>
           </div>
 
-          {/* Column 3: 4 Stat Cards in 2x2 Grid (3 cols) */}
+          {/* Column 3: 4 Rich Stat Cards in 2x2 Grid (3 cols) */}
           <div className="grid grid-cols-2 gap-3 md:col-span-3">
             {STATS.map((s) => {
               const IconComp = s.icon;
               const cardContent = (
-                <>
-                  <div className="relative z-10 flex items-center justify-between">
-                    <span className="grid h-8 w-8 place-items-center rounded-xl border border-line bg-surface-2 text-accent shadow-inner transition-transform duration-300 group-hover:scale-110 group-hover:border-accent/30 group-hover:bg-accent/10">
+                <div className="relative z-10 flex h-full flex-col justify-between p-3.5">
+                  {/* Top row: Themed icon badge + tag pill */}
+                  <div className="flex items-center justify-between">
+                    <span
+                      className="grid h-8 w-8 place-items-center rounded-xl border shadow-inner transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        color: s.color,
+                        borderColor: `${s.color}3d`,
+                        backgroundColor: `${s.color}15`,
+                      }}
+                    >
                       {s.iconName ? (
                         <Icon
                           name={s.iconName}
@@ -233,34 +266,63 @@ export function About() {
                         <IconComp className="h-4 w-4" strokeWidth={2} />
                       ) : null}
                     </span>
-                    {s.href && (
-                      <ArrowUpRight className="h-3.5 w-3.5 text-dim transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
-                    )}
+
+                    <span
+                      className="inline-flex items-center gap-0.5 rounded-full border px-2 py-0.5 font-mono text-[8.5px] font-bold uppercase tracking-wider"
+                      style={{
+                        color: s.color,
+                        borderColor: `${s.color}40`,
+                        backgroundColor: `${s.color}12`,
+                      }}
+                    >
+                      {s.badge}
+                      {s.href && <ArrowUpRight className="h-2.5 w-2.5" />}
+                    </span>
                   </div>
-                  <div className="relative z-10 mt-3.5">
-                    <div className="font-display text-2xl font-extrabold text-ink sm:text-3xl">
-                      <span className="text-gradient">{s.value}</span>
+
+                  {/* Middle row: Big gradient stat number + title */}
+                  <div className="my-2.5">
+                    <div className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-[1.85rem]">
+                      <span
+                        style={{
+                          background: `linear-gradient(135deg, var(--ink) 20%, ${s.color} 100%)`,
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                        }}
+                      >
+                        {s.value}
+                      </span>
                       {s.suffix && (
-                        <span className="ml-0.5 font-bold text-accent text-lg">
+                        <span className="ml-0.5 font-bold text-lg" style={{ color: s.color }}>
                           {s.suffix}
                         </span>
                       )}
                     </div>
-                    <div className="label mt-1 text-[10px] font-medium leading-tight text-muted">
+                    <div className="font-display text-[12px] font-bold leading-snug text-ink mt-0.5">
                       {s.label}
+                    </div>
+                    <div className="font-mono text-[9.5px] text-dim">
+                      {s.sublabel}
                     </div>
                   </div>
 
-                  {/* Soft subtle glow on hover */}
+                  {/* Bottom accent progress bar */}
+                  <div className="h-1 w-full overflow-hidden rounded-full bg-line/60">
+                    <div
+                      className="h-full rounded-full transition-all duration-500 group-hover:w-full"
+                      style={{ width: s.progress, backgroundColor: s.color }}
+                    />
+                  </div>
+
+                  {/* Ambient backdrop glow */}
                   <div
                     aria-hidden
-                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${s.glowColor} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
+                    className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${s.glowClass} opacity-30 transition-opacity duration-300 group-hover:opacity-100`}
                   />
-                </>
+                </div>
               );
 
-              const cls =
-                "group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line-strong/80 bg-surface/80 p-3.5 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_8px_25px_rgba(91,140,255,0.12)]";
+              const cls = `group relative overflow-hidden rounded-2xl border border-line-strong/80 bg-surface/80 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 ${s.borderHover}`;
 
               return s.href ? (
                 <a
