@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState } from "react";
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -13,7 +13,6 @@ import {
 import { PROJECTS, type Project } from "@/lib/site";
 import { Section, SectionInner, SectionHead } from "../section";
 import { Icon } from "../icons";
-import { useDeck } from "../deck";
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -23,237 +22,161 @@ const CATEGORIES = [
   { id: "frontend", label: "Frontend" },
 ] as const;
 
+const CARDS_PER_PAGE = 4;
+
 export function Projects() {
-  const { registerInterceptor, active, dir } = useDeck();
   const [activeTab, setActiveTab] = useState<string>("all");
-  const [cur, setCur] = useState(0);
-  const curRef = useRef(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
 
-  // Filter projects by selected category tab
+  // Filter projects by active tab
   const filteredProjects = PROJECTS.filter((p) => {
     if (activeTab === "all") return true;
     return p.category === activeTab;
   });
 
-  const n = filteredProjects.length;
+  // Calculate total pages for current filter
+  const totalPages = Math.ceil(filteredProjects.length / CARDS_PER_PAGE);
+  const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
 
-  const go = useCallback(
-    (i: number) => {
-      if (n === 0) return;
-      const v = Math.max(0, Math.min(n - 1, i));
-      curRef.current = v;
-      setCur(v);
-    },
-    [n]
+  // Get current page slice
+  const paginatedProjects = filteredProjects.slice(
+    safePage * CARDS_PER_PAGE,
+    (safePage + 1) * CARDS_PER_PAGE
   );
 
-  // Reset current index when category tab changes
-  useEffect(() => {
-    curRef.current = 0;
-    setCur(0);
-  }, [activeTab]);
-
-  // Scroll interceptor for deck section
-  useEffect(() => {
-    const fn = (d: 1 | -1) => {
-      const c = curRef.current;
-      if (d > 0) {
-        if (c < n - 1) {
-          go(c + 1);
-          return true; // consumed — stay in projects slide
-        }
-        return false; // at last project -> advance slide
-      } else {
-        if (c > 0) {
-          go(c - 1);
-          return true;
-        }
-        return false; // at first project -> go back slide
-      }
-    };
-    registerInterceptor("projects", fn);
-    return () => registerInterceptor("projects", null);
-  }, [registerInterceptor, go, n]);
-
-  // Reset index when entering section
-  useEffect(() => {
-    if (active === "projects") {
-      const target = dir > 0 ? 0 : Math.max(0, n - 1);
-      curRef.current = target;
-      setCur(target);
-    }
-  }, [active, dir, n]);
-
-  const activeProject = filteredProjects[cur] || filteredProjects[0];
-
-  // Touch swipe support
-  const stageRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = stageRef.current;
-    if (!el) return;
-    let sx = 0;
-    let sy = 0;
-    let isTracking = false;
-    let isDecided = false;
-    let isHorizontal = false;
-
-    const onStart = (e: TouchEvent) => {
-      sx = e.touches[0].clientX;
-      sy = e.touches[0].clientY;
-      isTracking = true;
-      isDecided = false;
-      isHorizontal = false;
-    };
-    const onMove = (e: TouchEvent) => {
-      if (!isTracking) return;
-      const dx = e.touches[0].clientX - sx;
-      const dy = e.touches[0].clientY - sy;
-      if (!isDecided && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
-        isDecided = true;
-        isHorizontal = Math.abs(dx) > Math.abs(dy);
-      }
-      if (isHorizontal) e.preventDefault();
-    };
-    const onEnd = (e: TouchEvent) => {
-      if (!isTracking) return;
-      isTracking = false;
-      const dx = e.changedTouches[0].clientX - sx;
-      if (isHorizontal && Math.abs(dx) > 40) {
-        go(curRef.current + (dx < 0 ? 1 : -1));
-      }
-    };
-
-    el.addEventListener("touchstart", onStart, { passive: true });
-    el.addEventListener("touchmove", onMove, { passive: false });
-    el.addEventListener("touchend", onEnd, { passive: true });
-    el.addEventListener("touchcancel", onEnd, { passive: true });
-    return () => {
-      el.removeEventListener("touchstart", onStart);
-      el.removeEventListener("touchmove", onMove);
-      el.removeEventListener("touchend", onEnd);
-      el.removeEventListener("touchcancel", onEnd);
-    };
-  }, [go]);
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    setCurrentPage(0);
+  };
 
   return (
     <Section id="projects">
-      <SectionInner className="!py-2 md:!py-3 flex h-[100dvh] flex-col justify-between md:h-auto">
+      <SectionInner className="!py-2 md:!py-3 flex h-full flex-col justify-between">
         <div>
-          {/* Header & Category Tabs */}
-          <div className="mb-2 flex flex-col gap-2 sm:mb-3 sm:flex-row sm:items-center sm:justify-between">
-            <SectionHead title="Featured Work." className="!mb-0" />
+          {/* Header & Category Filter Bar */}
+          <div className="mb-3 flex flex-col gap-2.5 sm:mb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden
+                  className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-accent to-accent-2 shadow-[0_0_16px_var(--accent)]"
+                />
+                <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                  Featured Work<span className="text-accent">.</span>
+                </h2>
+              </div>
+              <p className="pl-4.5 text-xs text-muted">
+                Explore 10 production-ready applications, SaaS platforms &amp; backend systems.
+              </p>
+            </div>
 
-            <div className="flex flex-wrap items-center gap-1 rounded-2xl border border-line bg-surface-2/80 p-1 backdrop-blur">
+            {/* Category Filter Tabs */}
+            <div className="flex flex-wrap items-center gap-1 rounded-2xl border border-line-strong/80 bg-surface-2/80 p-1 backdrop-blur-xl">
               {CATEGORIES.map((cat) => {
                 const isActive = activeTab === cat.id;
+                const count =
+                  cat.id === "all"
+                    ? PROJECTS.length
+                    : PROJECTS.filter((p) => p.category === cat.id).length;
+
                 return (
                   <button
                     key={cat.id}
                     type="button"
-                    onClick={() => setActiveTab(cat.id)}
-                    className={`rounded-xl px-2.5 py-1 font-mono text-[11px] font-semibold transition-all duration-200 ${
+                    onClick={() => handleTabChange(cat.id)}
+                    className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-mono text-xs font-semibold transition-all duration-200 ${
                       isActive
-                        ? "bg-accent text-accent-ink shadow-[0_0_15px_color-mix(in_srgb,var(--accent)_40%,transparent)]"
+                        ? "bg-accent text-accent-ink shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
                         : "text-muted hover:text-ink"
                     }`}
                   >
-                    {cat.label}
+                    <span>{cat.label}</span>
+                    <span
+                      className={`rounded-full px-1.5 py-0.2 text-[9px] font-bold ${
+                        isActive
+                          ? "bg-black/20 text-accent-ink"
+                          : "bg-line/60 text-dim"
+                      }`}
+                    >
+                      {count}
+                    </span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* 3D Carousel Stage */}
-          <div className="relative mt-2 w-full">
-            <div
-              ref={stageRef}
-              className="relative mx-auto h-[360px] w-full touch-pan-y select-none sm:h-[390px]"
-              style={{ perspective: "1600px" }}
-            >
-              {filteredProjects.map((p, i) => {
-                const off = i - cur;
-                const abs = Math.abs(off);
-                const visible = abs <= 2;
-                const clamped = Math.max(-2, Math.min(2, off));
+          {/* 2-Column Grid Layout (Flat & Clean) */}
+          <div className="stagger grid gap-3.5 sm:grid-cols-2">
+            {paginatedProjects.map((p) => (
+              <ProjectCard
+                key={p.id}
+                p={p}
+                onOpenCaseStudy={() => setSelectedCaseStudy(p)}
+              />
+            ))}
+          </div>
+        </div>
 
-                return (
-                  <div
-                    key={p.id}
-                    onClick={() => off !== 0 && go(i)}
-                    className="absolute left-1/2 top-1/2 h-[350px] w-[min(88vw,420px)] sm:h-[380px]"
-                    style={{
-                      transform: `translate(-50%, -50%) translateX(${off * 52}%) rotateY(${clamped * -38}deg) translateZ(${-abs * 160}px) scale(${off === 0 ? 1 : 0.82})`,
-                      transformStyle: "preserve-3d",
-                      transition:
-                        "transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease",
-                      opacity: visible ? (off === 0 ? 1 : 0.6) : 0,
-                      zIndex: 50 - abs,
-                      pointerEvents: visible ? "auto" : "none",
-                      cursor: off === 0 ? "default" : "pointer",
-                    }}
-                  >
-                    <ProjectCard
-                      p={p}
-                      active={off === 0}
-                      onOpenCaseStudy={() => setSelectedCaseStudy(p)}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+        {/* Pagination & Footer Controls */}
+        <div className="mt-4 flex flex-col items-center justify-between gap-2 border-t border-line/80 pt-3 sm:flex-row">
+          <div className="font-mono text-xs text-muted">
+            Showing{" "}
+            <span className="font-bold text-accent">
+              {safePage * CARDS_PER_PAGE + 1} —{" "}
+              {Math.min(
+                (safePage + 1) * CARDS_PER_PAGE,
+                filteredProjects.length
+              )}
+            </span>{" "}
+            of <span className="font-bold text-ink">{filteredProjects.length}</span> Projects
+          </div>
 
-            {/* 3D Controls & Counter */}
-            <div className="mt-3 flex items-center justify-between px-2">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => go(cur - 1)}
-                  disabled={cur === 0}
-                  aria-label="Previous project"
-                  className="grid h-9 w-9 place-items-center rounded-full border border-line-strong/80 bg-surface/80 text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ChevronLeft className="h-4.5 w-4.5" strokeWidth={2.2} />
-                </button>
+          {/* Page Buttons */}
+          {totalPages > 1 && (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
+                disabled={safePage === 0}
+                aria-label="Previous Page"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                <span>Prev</span>
+              </button>
 
-                <button
-                  type="button"
-                  onClick={() => go(cur + 1)}
-                  disabled={cur === n - 1}
-                  aria-label="Next project"
-                  className="grid h-9 w-9 place-items-center rounded-full border border-line-strong/80 bg-surface/80 text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ChevronRight className="h-4.5 w-4.5" strokeWidth={2.2} />
-                </button>
-              </div>
-
-              {/* Progress Indicators */}
-              <div className="flex items-center gap-1.5">
-                {filteredProjects.map((p, i) => (
+              <div className="flex items-center gap-1 px-1">
+                {Array.from({ length: totalPages }).map((_, idx) => (
                   <button
-                    key={p.id}
+                    key={idx}
                     type="button"
-                    onClick={() => go(i)}
-                    aria-label={`Go to ${p.title}`}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === cur ? "w-6 bg-accent" : "w-1.5 bg-line-strong hover:bg-muted"
+                    onClick={() => setCurrentPage(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === safePage
+                        ? "w-6 bg-accent"
+                        : "w-2 bg-line-strong hover:bg-muted"
                     }`}
+                    aria-label={`Page ${idx + 1}`}
                   />
                 ))}
               </div>
 
-              {/* Counter label */}
-              {activeProject && (
-                <div className="font-mono text-xs text-muted">
-                  <span className="font-bold text-accent">
-                    {String(cur + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-dim"> / {String(n).padStart(2, "0")}</span>
-                </div>
-              )}
+              <button
+                type="button"
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
+                }
+                disabled={safePage >= totalPages - 1}
+                aria-label="Next Page"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+              >
+                <span>Next</span>
+                <ChevronRight className="h-4 w-4" />
+              </button>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Case Study Modal */}
@@ -344,29 +267,21 @@ export function Projects() {
 
 function ProjectCard({
   p,
-  active,
   onOpenCaseStudy,
 }: {
   p: Project;
-  active: boolean;
   onOpenCaseStudy: () => void;
 }) {
   const [failed, setFailed] = useState(false);
   const showImg = p.image && !failed;
 
   return (
-    <div
-      className="flex h-full w-full flex-col overflow-hidden rounded-2xl border bg-surface/90 shadow-[var(--shadow-lg)] backdrop-blur-xl transition-all duration-500"
-      style={{
-        borderColor: active ? "rgba(91, 140, 255, 0.5)" : "var(--line)",
-        boxShadow: active
-          ? "0 14px 40px rgba(91, 140, 255, 0.18), inset 0 0 0 1px rgba(91, 140, 255, 0.2)"
-          : undefined,
-        filter: active ? "none" : "brightness(0.65)",
-      }}
-    >
-      {/* Browser Window Bar */}
-      <div className="relative flex shrink-0 items-center justify-between border-b border-line/80 bg-surface-2/80 px-3 py-2">
+    <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line-strong/80 bg-surface/80 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_12px_35px_rgba(91,140,255,0.15)]">
+      {/* Top glowing accent line */}
+      <span className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+
+      {/* Browser Bar Header */}
+      <div className="flex items-center justify-between border-b border-line/80 bg-surface-2/70 px-3.5 py-2 backdrop-blur">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -388,24 +303,18 @@ function ProjectCard({
         </div>
       </div>
 
-      {/* Screenshot Preview */}
-      <div className="relative h-[155px] w-full shrink-0 overflow-hidden bg-surface-2 sm:h-[165px]">
+      {/* Project Image Preview */}
+      <div className="relative aspect-[16/8.5] w-full overflow-hidden bg-surface-2">
         {showImg ? (
           <img
-            src={p.image as string}
-            alt={`${p.title} live preview`}
+            src={p.image}
+            alt={p.title}
             onError={() => setFailed(true)}
-            className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105"
-            draggable={false}
+            className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
           />
         ) : (
-          <div
-            className="grid h-full w-full place-items-center"
-            style={{
-              background: `linear-gradient(135deg, var(--accent)22, transparent 70%), var(--surface-2)`,
-            }}
-          >
-            <span className="font-display text-2xl font-bold text-accent">
+          <div className="grid h-full w-full place-items-center bg-surface-2">
+            <span className="font-display text-xl font-bold text-accent">
               {p.title}
             </span>
           </div>
@@ -414,49 +323,45 @@ function ProjectCard({
       </div>
 
       {/* Card Content Body */}
-      <div className="flex flex-1 flex-col justify-between p-4">
+      <div className="flex flex-1 flex-col justify-between p-4.5">
         <div>
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-accent">
-              {p.typeLabel}
-            </span>
-          </div>
+          <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-accent">
+            {p.typeLabel}
+          </span>
 
-          <h3 className="mt-1 font-display text-base font-bold tracking-tight text-ink sm:text-lg">
+          <h3 className="mt-1 font-display text-base font-bold tracking-tight text-ink transition-colors group-hover:text-accent sm:text-lg">
             {p.title}
           </h3>
 
-          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">
+          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted">
             {p.blurb}
           </p>
         </div>
 
-        <div>
+        <div className="mt-3.5 border-t border-line/80 pt-3">
           {/* Tech Stack Pills */}
-          <div className="my-2.5 flex flex-wrap gap-1">
-            {p.stack.slice(0, 4).map((s) => (
+          <div className="mb-3 flex flex-wrap gap-1">
+            {p.stack.slice(0, 4).map((st) => (
               <span
-                key={s}
+                key={st}
                 className="rounded-md border border-line bg-surface-2/60 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-dim"
               >
-                {s}
+                {st}
               </span>
             ))}
           </div>
 
           {/* Action Links */}
-          <div className="flex items-center gap-2 border-t border-line/80 pt-2.5">
+          <div className="flex items-center gap-2">
             {p.href && (
               <a
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                tabIndex={active ? 0 : -1}
-                className="inline-flex items-center gap-1 rounded-xl border border-accent/30 bg-accent/10 px-3 py-1 font-mono text-[11px] font-bold text-accent transition-all hover:bg-accent hover:text-accent-ink"
+                className="inline-flex items-center gap-1 rounded-xl border border-accent/30 bg-accent/10 px-3 py-1.5 font-mono text-xs font-bold text-accent transition-all duration-200 hover:bg-accent hover:text-accent-ink"
               >
                 <span>Live Demo</span>
-                <ArrowUpRight className="h-3 w-3" />
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             )}
 
@@ -465,25 +370,19 @@ function ProjectCard({
                 href={p.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                tabIndex={active ? 0 : -1}
-                className="inline-flex items-center gap-1 rounded-xl border border-line bg-surface-2 px-2.5 py-1 font-mono text-[11px] font-semibold text-muted hover:text-ink"
+                className="inline-flex items-center gap-1 rounded-xl border border-line bg-surface-2/80 px-2.5 py-1.5 font-mono text-xs font-semibold text-muted transition-all duration-200 hover:border-line-strong hover:text-ink"
               >
-                <Icon name="github" className="h-3 w-3" />
+                <Icon name="github" className="h-3.5 w-3.5" />
                 <span>GitHub</span>
               </a>
             )}
 
             <button
               type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenCaseStudy();
-              }}
-              tabIndex={active ? 0 : -1}
-              className="ml-auto inline-flex items-center gap-1 font-mono text-[10.5px] font-semibold text-dim hover:text-accent transition-colors"
+              onClick={onOpenCaseStudy}
+              className="ml-auto inline-flex items-center gap-1 font-mono text-xs font-semibold text-dim hover:text-accent transition-colors"
             >
-              <FileText className="h-3 w-3" />
+              <FileText className="h-3.5 w-3.5" />
               <span>Case Study</span>
             </button>
           </div>

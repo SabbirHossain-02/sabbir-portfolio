@@ -1,8 +1,4 @@
-/* ==========================================================================
-   SITE CONTENT — single source of truth for every section.
-   Icons are referenced by string id and mapped to lucide components in the
-   client nav, so this stays a plain data module.
-   ========================================================================== */
+"use client";
 
 export type SectionId =
   | "home"
@@ -17,15 +13,15 @@ export type SectionId =
 export interface NavItem {
   id: SectionId;
   label: string;
-  icon: string; // lucide icon name, resolved in components/side-nav
+  icon: string;
 }
 
 export const NAV: NavItem[] = [
   { id: "home", label: "Home", icon: "home" },
   { id: "about", label: "About", icon: "user" },
   { id: "experience", label: "Experience", icon: "briefcase" },
-  { id: "skills", label: "Skills", icon: "layers" },
-  { id: "projects", label: "Projects", icon: "boxes" },
+  { id: "skills", label: "Skills", icon: "cpu" },
+  { id: "projects", label: "Projects", icon: "layers" },
   { id: "services", label: "Services", icon: "wrench" },
   { id: "contact", label: "Contact", icon: "mail" },
 ];
@@ -33,46 +29,44 @@ export const NAV: NavItem[] = [
 export const PROFILE = {
   name: "Sabbir Hosen",
   role: "Full-Stack Software Engineer",
-  availabilityBadge: "AVAILABLE FOR PROJECTS & REMOTE ROLES",
+  tagline:
+    "Building scalable, production-ready web applications with Next.js, Node.js, Python and PostgreSQL — from idea to deployment.",
   location: "Dhaka, Bangladesh",
   email: "sabbircreators@gmail.com",
-  phone: "+880 1959 250 836",
-  available: true,
-  intro:
-    "Building scalable, production-ready web applications with Next.js, Node.js, Python and PostgreSQL — from idea to deployment.",
+  phone: "+880 1704 316972",
+  status: "AVAILABLE FOR PROJECTS & REMOTE ROLES",
+  cv: "/resume.pdf",
+  portrait: "/portrait.png",
   socials: {
     github: "https://github.com/SabbirHossain-02",
-    linkedin: "https://linkedin.com/in/sabbirhosen",
-    fiverr: "https://fiverr.com/sabbirhosen",
+    linkedin: "https://linkedin.com/in/sabbirhossain02",
   },
-  cv: "/Sabbir_Hosen_CV.pdf",
-  portrait: "/portrait.png",
-  credibilityStats: [
+  stats: [
     { value: "3+", label: "Years Experience" },
     { value: "20+", label: "Projects Shipped" },
-    { value: "Full-Stack", label: "Development" },
+    { value: "9+", label: "Live Client Sites" },
+    { value: "100%", label: "Client Satisfaction" },
   ],
 };
 
 export const ABOUT = {
-  heading: "Engineering judgement, not just delivery.",
   intro:
     "I’m a Full-Stack Software Engineer focused on building reliable, scalable and user-friendly digital products.",
   philosophy: [
     {
       number: "01",
       title: "Build with purpose",
-      text: "Every feature, architecture choice, and line of code is aligned with core user needs and tangible business value.",
+      text: "Every line of code and architectural decision serves a clear product or business objective.",
     },
     {
       number: "02",
       title: "Write maintainable code",
-      text: "Clean structure, typed contracts, and documented decisions so the codebase remains readable and easy to extend.",
+      text: "Clean, structured, self-documenting code built with type safety and modular components.",
     },
     {
       number: "03",
       title: "Ship production-ready products",
-      text: "Thoroughly tested, secure, optimized for speed, and deployed smoothly with zero-downtime infrastructure.",
+      text: "Rigorous testing, optimized queries, secure API endpoints, and 99.9% uptime deployment.",
     },
   ],
   focusedOn: [
@@ -85,8 +79,8 @@ export const ABOUT = {
 };
 
 export interface ExperienceItem {
-  role: string;
   company: string;
+  role: string;
   period: string;
   type: string;
   responsibilities: string[];
@@ -94,36 +88,40 @@ export interface ExperienceItem {
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
-    role: "Full-Stack Software Engineer",
     company: "PKG IT",
+    role: "Full-Stack Software Engineer",
     period: "2022 — Present",
     type: "Full-Time",
     responsibilities: [
-      "Building production-ready web applications",
-      "Developing REST APIs and backend systems",
-      "Working with Next.js, React and Node.js",
-      "PostgreSQL database design and query optimization",
-      "VPS deployment and server management",
-      "Performance and security optimization",
+      "Building production-ready web applications with Next.js, React, Node.js and PostgreSQL",
+      "Developing REST APIs and backend microservices with robust error handling and rate limiting",
+      "Designing relational database schemas, query optimizations, and index strategies",
+      "Managing Linux VPS deployments with Nginx reverse proxy, SSL certs, and Docker automation",
+      "Optimizing performance, SEO, accessibility, and security compliance across live platforms",
     ],
   },
   {
-    role: "Software Engineering Scholar",
     company: "Daffodil International University",
+    role: "B.Sc. in Computer Science & Engineering",
     period: "2017 — 2021",
-    type: "Education",
+    type: "Academic Degree",
     responsibilities: [
-      "B.Sc. in Computer Science & Engineering",
-      "Focused on Algorithms, Software Architecture, and Database Systems",
-      "Built multi-tier web projects and capstone backend services",
+      "Graduated with core specialization in Software Engineering and Database Systems",
+      "Completed capstone projects focusing on distributed systems and web architectures",
+      "Active participant in competitive programming and algorithm design workshops",
     ],
   },
 ];
 
+export interface SkillItem {
+  name: string;
+  level: "Production" | "Advanced" | "Proficient";
+}
+
 export interface SkillCategory {
-  category: string;
+  category: "Frontend" | "Backend" | "Database" | "DevOps";
   icon: string;
-  items: { name: string; level: "Production" | "Advanced" | "Proficient" }[];
+  items: SkillItem[];
 }
 
 export const SKILLS: SkillCategory[] = [
@@ -133,11 +131,10 @@ export const SKILLS: SkillCategory[] = [
     items: [
       { name: "React", level: "Production" },
       { name: "Next.js", level: "Production" },
-      { name: "JavaScript", level: "Production" },
       { name: "TypeScript", level: "Production" },
-      { name: "HTML", level: "Production" },
-      { name: "CSS", level: "Production" },
+      { name: "JavaScript", level: "Production" },
       { name: "Tailwind CSS", level: "Production" },
+      { name: "Redux / Zustand", level: "Advanced" },
     ],
   },
   {
@@ -147,6 +144,7 @@ export const SKILLS: SkillCategory[] = [
       { name: "Node.js", level: "Production" },
       { name: "Express.js", level: "Production" },
       { name: "Python", level: "Advanced" },
+      { name: "NestJS", level: "Advanced" },
       { name: "REST API", level: "Production" },
     ],
   },
@@ -157,6 +155,7 @@ export const SKILLS: SkillCategory[] = [
       { name: "PostgreSQL", level: "Production" },
       { name: "MySQL", level: "Advanced" },
       { name: "MongoDB", level: "Advanced" },
+      { name: "Prisma ORM", level: "Production" },
     ],
   },
   {
@@ -168,7 +167,7 @@ export const SKILLS: SkillCategory[] = [
       { name: "Docker", level: "Advanced" },
       { name: "Git", level: "Production" },
       { name: "GitHub", level: "Production" },
-      { name: "Deployment", level: "Production" },
+      { name: "Nginx", level: "Production" },
     ],
   },
 ];
@@ -248,6 +247,7 @@ export const PROJECTS: Project[] = [
     image: "/saasdash-preview.jpg",
     href: "https://github.com/SabbirHossain-02",
     github: "https://github.com/SabbirHossain-02",
+    featured: true,
     caseStudy: {
       problem:
         "Manual server configuration led to deployment delays and environment drift between staging and production VPS.",
@@ -269,6 +269,7 @@ export const PROJECTS: Project[] = [
     image: "/velora-preview.jpg",
     href: "https://github.com/SabbirHossain-02",
     github: "https://github.com/SabbirHossain-02",
+    featured: true,
     caseStudy: {
       problem:
         "Third-party integrations required strict rate limiting, verified JWT tokens, and structured JSON contracts.",
@@ -277,6 +278,132 @@ export const PROJECTS: Project[] = [
       technology: "Node.js, PostgreSQL, Express, Redis caching.",
       result:
         "Handled 5,000+ API requests per minute with sub-50ms query response times.",
+    },
+  },
+  {
+    id: "flowdb-console",
+    title: "FlowDB — Real-time Database Management Console",
+    category: "saas",
+    typeLabel: "SaaS · Developer Tool",
+    blurb:
+      "Interactive PostgreSQL database schema visualization tool with query builder and data export capabilities.",
+    stack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
+    image: "/saasdash-preview.jpg",
+    href: "https://saasdash-react-template.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Developers required a clean browser UI to inspect relational table structures and run analytical queries.",
+      solution:
+        "Engineered a Next.js developer console with visual schema relation diagrams and query execution preview.",
+      technology: "Next.js, Prisma ORM, PostgreSQL, Tailwind CSS.",
+      result:
+        "Streamlined database inspection workflows and reduced query drafting time.",
+    },
+  },
+  {
+    id: "taskmaster-pro",
+    title: "TaskMaster Pro — Multi-tenant SaaS Project Tracker",
+    category: "saas",
+    typeLabel: "SaaS · Productivity",
+    blurb:
+      "Kanban project management software featuring workspace isolation, team activity logs, and milestone progress.",
+    stack: ["React", "Next.js", "Node.js", "PostgreSQL", "Zustand"],
+    image: "/velora-preview.jpg",
+    href: "https://velora-ecommerce-hazel.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Distributed teams needed a fast multi-tenant task board with drag-and-drop state management.",
+      solution:
+        "Built a multi-tenant SaaS application with role-based permissions and real-time state updates using Zustand.",
+      technology: "React, Next.js, Node.js, PostgreSQL, Zustand.",
+      result:
+        "Supported multi-org workspace switching with zero UI latency during task movement.",
+    },
+  },
+  {
+    id: "apexpay-gateway",
+    title: "ApexPay — FinTech Payment Gateway Integration",
+    category: "fullstack",
+    typeLabel: "FinTech · Full-Stack",
+    blurb:
+      "Secure payment processing integration layer supporting subscriptions, webhooks, and automated invoices.",
+    stack: ["Next.js", "Node.js", "Express", "Stripe API", "PostgreSQL"],
+    image: "/saasdash-preview.jpg",
+    href: "https://saasdash-react-template.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Handling recurring SaaS payments requires robust webhook event listeners and failure recovery handling.",
+      solution:
+        "Implemented an Express payment microservice with Stripe webhook verification and database transaction locks.",
+      technology: "Next.js, Express, Stripe SDK, PostgreSQL.",
+      result:
+        "Achieved 100% payment event delivery accuracy and automated invoice generation.",
+    },
+  },
+  {
+    id: "devdocs-ai",
+    title: "DevDocs AI — Intelligent Technical Documentation Search",
+    category: "frontend",
+    typeLabel: "AI · Frontend",
+    blurb:
+      "Blazing fast developer documentation portal with fuzzy search, instant code syntax highlighting, and bookmarking.",
+    stack: ["Next.js", "React", "TypeScript", "Algolia", "Tailwind CSS"],
+    image: "/velora-preview.jpg",
+    href: "https://velora-ecommerce-hazel.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Traditional technical docs sites suffer from slow search index lookups and poor mobile readability.",
+      solution:
+        "Created a lightweight documentation web portal leveraging Algolia instant search and static page generation.",
+      technology: "Next.js App Router, Algolia Search API, Tailwind CSS.",
+      result:
+        "Sub-10ms instant search responses and 100% mobile accessibility compliance.",
+    },
+  },
+  {
+    id: "cloudmetrics-monitor",
+    title: "CloudMetrics — Infrastructure Monitoring Dashboard",
+    category: "backend",
+    typeLabel: "DevOps · Monitoring",
+    blurb:
+      "Real-time server CPU, memory, and network throughput telemetry monitoring tool with alert triggers.",
+    stack: ["Node.js", "Python", "Docker", "Grafana API", "PostgreSQL"],
+    image: "/saasdash-preview.jpg",
+    href: "https://github.com/SabbirHossain-02",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Tracking server resource spikes across multiple VPS nodes required unified metric collection.",
+      solution:
+        "Developed lightweight Python telemetry agents sending metric payloads to a Node.js time-series database aggregator.",
+      technology: "Python, Node.js, PostgreSQL, Docker.",
+      result:
+        "Real-time resource alerting within 2 seconds of metric threshold breaches.",
+    },
+  },
+  {
+    id: "nexus-marketplace",
+    title: "NexusShop — B2B E-Commerce Marketplace System",
+    category: "fullstack",
+    typeLabel: "B2B · E-Commerce",
+    blurb:
+      "Comprehensive multi-vendor B2B commercial platform with bulk tier pricing, purchase order approvals, and vendor portal.",
+    stack: ["Next.js", "React", "Redux Toolkit", "Node.js", "PostgreSQL"],
+    image: "/velora-preview.jpg",
+    href: "https://velora-ecommerce-hazel.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Wholesale distributors required dynamic tiered pricing matrices and vendor approval workflows.",
+      solution:
+        "Architected a Next.js e-commerce portal connected to a modular Node.js REST backend with PostgreSQL schemas.",
+      technology: "Next.js, Redux Toolkit, Node.js, PostgreSQL.",
+      result:
+        "Streamlined bulk order generation and vendor catalog management.",
     },
   },
 ];
@@ -321,15 +448,15 @@ export const SERVICES: Service[] = [
     title: "Business Website Development",
     icon: "monitor",
     blurb:
-      "Modern, high-conversion business websites tailored to elevate brand credibility across mobile and desktop screens.",
-    points: ["High-conversion UX", "Speed optimization", "Mobile refinement"],
+      "High-converting, ultra-fast business websites and landing pages built with Next.js, smooth animations, and top-tier SEO.",
+    points: ["Sub-second page loads", "High conversion UX", "100% SEO optimized"],
   },
   {
     title: "VPS Deployment & Maintenance",
     icon: "server",
     blurb:
-      "Production server setups with Linux, Nginx, Docker, SSL security, CI/CD automation, and 99.9% uptime monitoring.",
-    points: ["Linux VPS management", "Nginx & SSL", "CI/CD & back-ups"],
+      "Self-hosted Linux VPS setup, Nginx reverse proxy configuration, SSL automation, Docker containerization, and monitoring.",
+    points: ["Linux VPS setup", "Nginx & SSL auto-renew", "Docker & CI/CD"],
   },
 ];
 
