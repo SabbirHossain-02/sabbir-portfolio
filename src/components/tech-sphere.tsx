@@ -95,15 +95,25 @@ export function TechSphere({
         const node = els.current[i];
         if (!node) continue;
 
+        const isMatch = hi !== null && cats[i] === hi;
         const dim = hi !== null && cats[i] !== hi;
-        const scale = (dim ? 0.5 : 0.62) + depth * 0.55;
-        let opacity = 0.35 + depth * 0.65;
-        if (dim) opacity *= 0.14;
+
+        let scale = (dim ? 0.45 : 0.65) + depth * 0.55;
+        let opacity = 0.4 + depth * 0.6;
+        let blur = depth < 0.45 ? (0.45 - depth) * 3 : 0;
+
+        if (isMatch) {
+          scale = 1.15 + depth * 0.25;
+          opacity = 1.0;
+          blur = 0;
+        } else if (dim) {
+          opacity *= 0.12;
+        }
 
         node.style.transform = `translate(-50%, -50%) translate3d(${x1.toFixed(1)}px, ${y2.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
         node.style.opacity = opacity.toFixed(3);
-        node.style.zIndex = String(Math.round(depth * 100));
-        node.style.filter = depth < 0.45 ? `blur(${((0.45 - depth) * 3).toFixed(2)}px)` : "none";
+        node.style.zIndex = isMatch ? "200" : String(Math.round(depth * 100));
+        node.style.filter = blur > 0 ? `blur(${blur.toFixed(2)}px)` : "none";
       }
       raf = requestAnimationFrame(tick);
     };
