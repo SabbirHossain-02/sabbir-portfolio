@@ -13,19 +13,19 @@ import type { SectionId } from "@/lib/site";
 import { SideNav, MobileBar } from "./side-nav";
 import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
-import { ExperienceSection } from "./sections/experience";
 import { Skills } from "./sections/skills";
 import { Services } from "./sections/services";
 import { Projects } from "./sections/projects";
+import { Faq } from "./sections/faq";
 import { Contact } from "./sections/contact";
 
 const SLIDES: { id: SectionId; Comp: () => ReactNode }[] = [
   { id: "home", Comp: Hero },
   { id: "about", Comp: About },
-  { id: "experience", Comp: ExperienceSection },
   { id: "skills", Comp: Skills },
-  { id: "projects", Comp: Projects },
   { id: "services", Comp: Services },
+  { id: "projects", Comp: Projects },
+  { id: "faq", Comp: Faq },
   { id: "contact", Comp: Contact },
 ];
 
@@ -142,26 +142,6 @@ export function Experience() {
     if (!node) return;
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < 12) return;
-      let target = e.target as HTMLElement | null;
-      while (target && target !== node) {
-        if (
-          target.scrollHeight > target.clientHeight &&
-          (target.style.overflowY === "auto" ||
-            target.style.overflowY === "scroll" ||
-            target.classList.contains("overflow-y-auto"))
-        ) {
-          const isDown = e.deltaY > 0;
-          const atBottom =
-            Math.abs(
-              target.scrollHeight - target.clientHeight - target.scrollTop
-            ) < 4;
-          const atTop = target.scrollTop <= 0;
-          if ((isDown && !atBottom) || (!isDown && !atTop)) {
-            return; // Allow inner scroll container to scroll naturally!
-          }
-        }
-        target = target.parentElement;
-      }
       e.preventDefault();
       tryAdvance(e.deltaY > 0 ? 1 : -1);
     };

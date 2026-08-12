@@ -1,148 +1,142 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Monitor, Server, Database, Boxes } from "lucide-react";
-import { SKILLS, type SkillCategory } from "@/lib/site";
+import { useTheme } from "next-themes";
+import { SKILLS } from "@/lib/site";
 import { Section, SectionInner, SectionHead } from "../section";
+import { Icon } from "../icons";
+import { useDeck } from "../deck";
+import { TechSphere, type SphereNode } from "../tech-sphere";
 import { BRANDS, isNeutral } from "../brands";
-import { TechMarquee } from "../marquee";
-
-const CATEGORY_COLORS: Record<string, { color: string; border: string; bg: string }> = {
-  Frontend: { color: "#3b82f6", border: "border-blue-500/30", bg: "bg-blue-500/10" },
-  Backend: { color: "#a855f7", border: "border-purple-500/30", bg: "bg-purple-500/10" },
-  Database: { color: "#10b981", border: "border-emerald-500/30", bg: "bg-emerald-500/10" },
-  DevOps: { color: "#f59e0b", border: "border-amber-500/30", bg: "bg-amber-500/10" },
-};
-
-const CATEGORY_ICONS: Record<string, typeof Monitor> = {
-  Frontend: Monitor,
-  Backend: Server,
-  Database: Database,
-  DevOps: Boxes,
-};
 
 export function Skills() {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { active } = useDeck();
+  const { resolvedTheme } = useTheme();
+  const dark = resolvedTheme !== "light";
+  const [hi, setHi] = useState<number | null>(null);
+
+  const ink = dark ? "#e9eefb" : "#0a1122";
+  const tints = dark
+    ? ["#7aa2ff", "#b79dff", "#5bd6a0"]
+    : ["#2f5fd0", "#6d4fd0", "#159968"];
+
+  // Build a glass-badge node per tech, coloured by its real brand.
+  const nodes: SphereNode[] = SKILLS.flatMap((group, ci) =>
+    group.items.map((tech) => {
+      const brand = BRANDS[tech];
+      const color = brand ? (isNeutral(brand.color) ? ink : brand.color) : ink;
+      const BrandIcon = brand?.Icon;
+      return {
+        key: tech,
+        category: ci,
+        content: (
+          <div
+            title={tech}
+            className="grid h-12 w-12 cursor-default place-items-center rounded-2xl border border-line bg-surface/70 backdrop-blur"
+            style={{ boxShadow: `0 0 18px ${color}2e, inset 0 0 0 1px ${color}1f` }}
+          >
+            {BrandIcon ? (
+              <BrandIcon size={24} color={color} />
+            ) : (
+              <span style={{ color }}>•</span>
+            )}
+          </div>
+        ),
+      };
+    })
+  );
 
   return (
     <Section id="skills">
-      <SectionInner className="!py-2 md:!py-3">
-        {/* Section Header */}
-        <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4">
-          <SectionHead title="Skills & Tech." className="!mb-0" />
+      <SectionInner>
+        <SectionHead title="My stack." />
 
-          <div className="hidden items-center gap-2 rounded-full border border-line bg-surface-2/80 px-3.5 py-1 backdrop-blur sm:flex">
-            <Sparkles className="h-3.5 w-3.5 text-accent" />
-            <span className="font-mono text-xs font-medium text-muted">
-              Technical Stack &amp; Tools
-            </span>
+        <div className="stagger grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+          {/* 3D glass-icon sphere */}
+          <div className="relative h-[320px] sm:h-[380px]">
+            <TechSphere
+              nodes={nodes}
+              radius={150}
+              active={active === "skills"}
+              highlight={hi}
+              className="h-full w-full"
+            />
           </div>
-        </div>
 
-        {/* 4 Categorized Skill Grid */}
-        <div className="stagger grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {SKILLS.map((catGroup) => {
-            const catMeta = CATEGORY_COLORS[catGroup.category] || CATEGORY_COLORS.Frontend;
-            const CatIcon = CATEGORY_ICONS[catGroup.category] || Monitor;
-
-            return (
-              <div
-                key={catGroup.category}
-                onMouseEnter={() => setActiveCategory(catGroup.category)}
-                onMouseLeave={() => setActiveCategory(null)}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line-strong/80 bg-surface/80 p-4 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_12px_35px_rgba(91,140,255,0.12)]"
-              >
-                {/* Top accent border line */}
-                <span
-                  className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"
+          {/* Category legend — glass cards with brand-icon chips that mirror
+              the sphere; hover one to light up just that group. */}
+          <div className="stagger grid gap-3">
+            {SKILLS.map((group, i) => {
+              const tint = tints[i];
+              const on = hi === i;
+              return (
+                <div
+                  key={group.title}
+                  onMouseEnter={() => setHi(i)}
+                  onMouseLeave={() => setHi(null)}
+                  className="group relative cursor-default overflow-hidden rounded-2xl border border-line bg-surface/60 p-5 backdrop-blur transition-all duration-300"
                   style={{
-                    background: `linear-gradient(90deg, transparent, ${catMeta.color}, transparent)`,
+                    borderColor: on ? `${tint}55` : undefined,
+                    boxShadow: on
+                      ? `inset 0 0 0 1px ${tint}33, 0 12px 34px ${tint}1f`
+                      : undefined,
+                    transform: on ? "translateY(-2px)" : undefined,
                   }}
-                />
+                >
+                  {/* corner tint glow */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    style={{
+                      background: `radial-gradient(circle, ${tint}33, transparent 70%)`,
+                    }}
+                  />
 
-                {/* Category Header */}
-                <div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <span
-                        className="grid h-8.5 w-8.5 place-items-center rounded-xl border shadow-inner transition-transform duration-300 group-hover:scale-110"
-                        style={{
-                          color: catMeta.color,
-                          borderColor: `${catMeta.color}3d`,
-                          backgroundColor: `${catMeta.color}15`,
-                        }}
-                      >
-                        <CatIcon className="h-4 w-4" strokeWidth={2} />
-                      </span>
-                      <h3 className="font-display text-base font-bold text-ink">
-                        {catGroup.category}
-                      </h3>
-                    </div>
-
+                  <div className="relative flex items-center gap-3">
                     <span
-                      className="rounded-full border px-2 py-0.5 font-mono text-[8.5px] font-bold uppercase tracking-wider"
+                      className="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface-2"
                       style={{
-                        color: catMeta.color,
-                        borderColor: `${catMeta.color}40`,
-                        backgroundColor: `${catMeta.color}12`,
+                        color: tint,
+                        boxShadow: on ? `0 0 16px ${tint}44` : "none",
                       }}
                     >
-                      {catGroup.items.length} Skills
+                      <Icon name={group.icon} className="h-5 w-5" />
+                    </span>
+                    <h3 className="font-display text-base font-semibold text-ink">
+                      {group.title}
+                    </h3>
+                    <span
+                      className="ml-auto rounded-full border border-line px-2 py-0.5 font-mono text-[10px] text-dim"
+                      style={on ? { color: tint, borderColor: `${tint}55` } : undefined}
+                    >
+                      {group.items.length} tools
                     </span>
                   </div>
 
-                  {/* Skill Items List with Level Badges */}
-                  <div className="mt-3 space-y-1.5">
-                    {catGroup.items.map((item) => {
-                      const brand = BRANDS[item.name];
+                  <div className="relative mt-4 flex flex-wrap gap-1.5">
+                    {group.items.map((tech) => {
+                      const brand = BRANDS[tech];
+                      const c = brand
+                        ? isNeutral(brand.color)
+                          ? ink
+                          : brand.color
+                        : ink;
                       const BrandIcon = brand?.Icon;
                       return (
-                        <div
-                          key={item.name}
-                          className="flex items-center justify-between rounded-xl border border-line/60 bg-surface-2/50 px-2 py-1 backdrop-blur transition-colors hover:border-accent/30 hover:bg-surface-2"
+                        <span
+                          key={tech}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-surface-2 px-2.5 py-1.5 font-mono text-[11px] text-muted transition-colors group-hover:text-ink"
                         >
-                          <div className="flex items-center gap-2">
-                            {BrandIcon && (
-                              <BrandIcon
-                                size={13}
-                                color={brand ? (isNeutral(brand.color) ? "#99a3b7" : brand.color) : "#99a3b7"}
-                              />
-                            )}
-                            <span className="text-[11.5px] font-semibold text-ink">
-                              {item.name}
-                            </span>
-                          </div>
-
-                          <span className="rounded bg-line/60 px-1.5 py-0.2 font-mono text-[8px] font-medium text-dim">
-                            {item.level}
-                          </span>
-                        </div>
+                          {BrandIcon && <BrandIcon size={13} color={c} />}
+                          {tech}
+                        </span>
                       );
                     })}
                   </div>
                 </div>
-
-                {/* Subtle hover background glow */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background: `radial-gradient(circle at 50% 0%, ${catMeta.color}15, transparent 70%)`,
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Technologies I Work With — Infinite Slow Marquee */}
-        <div className="mt-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="label font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
-              Technologies I Work With
-            </span>
+              );
+            })}
           </div>
-          <TechMarquee />
         </div>
       </SectionInner>
     </Section>

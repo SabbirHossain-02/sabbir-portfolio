@@ -3,19 +3,19 @@
 import { useState, useEffect } from "react";
 import {
   ArrowUpRight,
+  CheckCircle2,
   Clock,
   Globe,
   Cpu,
   Code2,
   Smartphone,
   Zap,
+  Briefcase,
   Sparkles,
-  Layers,
-  Server,
-  ShieldCheck,
+  GraduationCap,
 } from "lucide-react";
 import { ABOUT, PROFILE } from "@/lib/site";
-import { Section, SectionInner, SectionHead } from "../section";
+import { Section, SectionInner } from "../section";
 import { Portrait } from "../portrait";
 import { Icon } from "../icons";
 
@@ -46,10 +46,10 @@ const STATS: {
     progress: "85%",
   },
   {
-    value: "20",
+    value: "50",
     suffix: "+",
-    label: "Projects Shipped",
-    sublabel: "Open Source & Apps",
+    label: "GitHub Repos",
+    sublabel: "Open Source",
     badge: "GitHub",
     href: PROFILE.socials.github,
     iconName: "github",
@@ -62,7 +62,7 @@ const STATS: {
     value: "9",
     suffix: "+",
     label: "Live Client Sites",
-    sublabel: "Deployed Production",
+    sublabel: "Deployed Apps",
     badge: "Live",
     icon: Globe,
     color: "#10b981",
@@ -84,6 +84,8 @@ const STATS: {
   },
 ];
 
+const HIGHLIGHT_ICONS = [Code2, Smartphone, Zap];
+
 /** Dynamic count-up timer component */
 function AnimatedNumber({ value }: { value: string }) {
   const target = parseInt(value, 10);
@@ -92,11 +94,12 @@ function AnimatedNumber({ value }: { value: string }) {
   useEffect(() => {
     if (isNaN(target)) return;
     let startTimestamp: number | null = null;
-    const duration = 1200;
+    const duration = 1200; // ms
 
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // Cubic ease-out
       const easedProgress = 1 - Math.pow(1 - progress, 3);
       setCount(Math.floor(easedProgress * target));
       if (progress < 1) {
@@ -143,22 +146,31 @@ export function About() {
   return (
     <Section id="about">
       <SectionInner className="!py-2 md:!py-3">
-        {/* Section Header */}
+        {/* Section Header - Premium Bar */}
         <div className="mb-3.5 flex items-center justify-between gap-3 sm:mb-4">
-          <SectionHead title="About Me." className="!mb-0" />
+          <div className="flex items-center gap-3">
+            <span
+              aria-hidden
+              className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-accent to-accent-2 shadow-[0_0_16px_var(--accent)]"
+            />
+            <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              How I work<span className="text-accent">.</span>
+            </h2>
+          </div>
 
           <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2/80 px-3.5 py-1 backdrop-blur">
             <Sparkles className="h-3.5 w-3.5 text-accent" />
             <span className="font-mono text-xs font-medium text-muted">
-              Engineering Judgment &amp; Philosophy
+              Engineering &amp; Philosophy
             </span>
           </div>
         </div>
 
-        {/* 3-Column Bento Layout */}
+        {/* 3-Column Ultra-Compact Bento Grid */}
         <div className="stagger grid grid-cols-1 gap-3.5 md:grid-cols-12">
           {/* Column 1: Bio & Profile Anchor (5 cols) */}
           <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line-strong/80 bg-surface/80 p-5 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:border-accent/50 hover:shadow-[0_12px_35px_rgba(91,140,255,0.12)] md:col-span-5">
+            {/* Ambient backlight glow */}
             <div
               aria-hidden
               className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gradient-to-br from-accent/20 to-accent-2/10 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
@@ -167,19 +179,22 @@ export function About() {
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <span className="label font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
-                  Full-Stack Software Engineer
+                  Bio &amp; Philosophy
                 </span>
                 <span className="rounded-md border border-accent/20 bg-accent/10 px-2 py-0.5 font-mono text-[9px] font-semibold text-accent">
                   PKG IT
                 </span>
               </div>
 
-              <h3 className="mt-3 font-display text-lg font-bold leading-snug tracking-tight text-ink sm:text-[1.3rem]">
-                {ABOUT.intro}
+              <h3 className="mt-3 font-display text-xl font-bold leading-snug tracking-tight text-ink sm:text-[1.4rem]">
+                I build systems that hold up{" "}
+                <span className="text-gradient">after launch.</span>
               </h3>
 
               <p className="mt-3 text-xs leading-relaxed text-muted sm:text-[13px]">
-                Experienced in architecture, backend microservices, Next.js App Router, PostgreSQL schemas, and deploying automated VPS infrastructure with 99.9% uptime.
+                Full-stack engineer at PKG IT since 2022. I craft complete web
+                applications with Next.js, Node.js and PostgreSQL, and manage
+                production VPS deployments.
               </p>
             </div>
 
@@ -192,7 +207,7 @@ export function About() {
                   {PROFILE.name}
                 </div>
                 <div className="label text-[9px] text-muted">
-                  Software Engineer
+                  Full-Stack Engineer
                 </div>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[9px] font-semibold uppercase text-emerald-400">
@@ -205,59 +220,90 @@ export function About() {
             </div>
           </div>
 
-          {/* Column 2: Philosophy & Focus (4 cols) */}
+          {/* Column 2: What Clients Get & Experience (4 cols) */}
           <div className="flex flex-col gap-3.5 md:col-span-4">
-            {/* Development Philosophy */}
+            {/* What Clients Get */}
             <div className="group rounded-2xl border border-line-strong/80 bg-surface/80 p-4 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:border-accent/40">
               <span className="label mb-2.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
-                Development Philosophy
+                What clients get
               </span>
               <div className="space-y-2">
-                {ABOUT.philosophy.map((item) => (
+                {ABOUT.highlights.map((h, i) => {
+                  const HighlightIcon = HIGHLIGHT_ICONS[i] || CheckCircle2;
+                  return (
+                    <div
+                      key={h.title}
+                      className="flex items-start gap-2.5 rounded-xl border border-line/60 bg-surface-2/60 p-2.5 backdrop-blur transition-all duration-200 hover:border-accent/30 hover:bg-surface-2"
+                    >
+                      <span className="mt-0.5 grid h-5.5 w-5.5 shrink-0 place-items-center rounded-lg border border-accent/20 bg-accent/10 text-accent">
+                        <HighlightIcon className="h-3 w-3" strokeWidth={2} />
+                      </span>
+                      <div>
+                        <div className="text-[12px] font-bold leading-none text-ink">
+                          {h.title}
+                        </div>
+                        <div className="mt-1 text-[11px] leading-tight text-dim">
+                          {h.text}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Experience Timeline */}
+            <div className="group rounded-2xl border border-line-strong/80 bg-surface/80 p-4 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:border-accent/40">
+              <div className="mb-2.5 flex items-center justify-between">
+                <span className="label font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
+                  Experience &amp; Education
+                </span>
+                <Briefcase className="h-3.5 w-3.5 text-dim transition-colors group-hover:text-accent" />
+              </div>
+              <div className="space-y-3">
+                {ABOUT.timeline.map((t, i) => (
                   <div
-                    key={item.number}
-                    className="flex items-start gap-2.5 rounded-xl border border-line/60 bg-surface-2/60 p-2.5 backdrop-blur transition-all duration-200 hover:border-accent/30 hover:bg-surface-2"
+                    key={t.title}
+                    className="relative border-l-2 border-line/80 pl-3.5"
                   >
-                    <span className="font-mono text-xs font-extrabold text-accent">
-                      {item.number}
-                    </span>
-                    <div>
-                      <div className="text-[12px] font-bold leading-none text-ink">
-                        {item.title}
-                      </div>
-                      <div className="mt-1 text-[11px] leading-tight text-dim">
-                        {item.text}
-                      </div>
+                    <span
+                      className={`absolute -left-[5px] top-1 h-2.5 w-2.5 rounded-full border-2 border-surface ${
+                        i === 0
+                          ? "bg-accent shadow-[0_0_8px_var(--accent)]"
+                          : "bg-dim"
+                      }`}
+                    />
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono text-[9px] font-medium text-dim">
+                        {t.when}
+                      </span>
+                      {i === 0 && (
+                        <span className="rounded border border-accent/20 bg-accent/10 px-1.5 py-0.2 font-mono text-[8px] font-bold text-accent">
+                          PRESENT
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-0.5 flex items-center gap-1 text-[12px] font-bold leading-snug text-ink">
+                      {i === 1 ? (
+                        <GraduationCap className="h-3 w-3 shrink-0 text-accent" />
+                      ) : (
+                        <Briefcase className="h-3 w-3 shrink-0 text-accent" />
+                      )}
+                      {t.title}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-
-            {/* Currently Focused On */}
-            <div className="group rounded-2xl border border-line-strong/80 bg-surface/80 p-4 shadow-[var(--shadow-md)] backdrop-blur-2xl transition-all duration-300 hover:border-accent/40">
-              <span className="label mb-2.5 block font-mono text-[10px] font-bold uppercase tracking-widest text-accent">
-                Currently Focused On
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {ABOUT.focusedOn.map((focus) => (
-                  <span
-                    key={focus}
-                    className="rounded-lg border border-accent/20 bg-accent/10 px-2.5 py-1 font-mono text-[10px] font-semibold text-accent"
-                  >
-                    {focus}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Column 3: 4 Stat Cards in 2x2 Grid (3 cols) */}
+          {/* Column 3: 4 Dynamic Stat Cards in 2x2 Grid (3 cols) */}
           <div className="grid grid-cols-2 gap-3 md:col-span-3">
             {STATS.map((s) => {
               const IconComp = s.icon;
               const cardContent = (
                 <div className="relative z-10 flex h-full flex-col justify-between p-3.5">
+                  {/* Top row: Themed icon badge + tag pill */}
                   <div className="flex items-center justify-between">
                     <span
                       className="grid h-8 w-8 place-items-center rounded-xl border shadow-inner transition-transform duration-300 group-hover:scale-110"
@@ -291,6 +337,7 @@ export function About() {
                     </span>
                   </div>
 
+                  {/* Middle row: Dynamic count-up stat number + title */}
                   <div className="my-2.5">
                     <div className="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-[1.85rem]">
                       <span
@@ -316,8 +363,10 @@ export function About() {
                     </div>
                   </div>
 
+                  {/* Bottom dynamic animated progress line */}
                   <AnimatedProgressBar progress={s.progress} color={s.color} />
 
+                  {/* Ambient backdrop glow */}
                   <div
                     aria-hidden
                     className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${s.glowClass} opacity-30 transition-opacity duration-300 group-hover:opacity-100`}
