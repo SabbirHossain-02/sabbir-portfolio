@@ -24,6 +24,13 @@ export const metadata: Metadata = {
   title: "Sabbir Hosen — Full-Stack Software Engineer",
   description:
     "Full-stack engineer building backend services, APIs and app-like interfaces that stay fast in production. Next.js, Node.js, NestJS, PostgreSQL.",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
