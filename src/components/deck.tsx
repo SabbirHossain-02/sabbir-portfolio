@@ -13,19 +13,19 @@ import type { SectionId } from "@/lib/site";
 import { SideNav, MobileBar } from "./side-nav";
 import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
+import { ExperienceSection } from "./sections/experience";
 import { Skills } from "./sections/skills";
 import { Services } from "./sections/services";
 import { Projects } from "./sections/projects";
-import { Faq } from "./sections/faq";
 import { Contact } from "./sections/contact";
 
 const SLIDES: { id: SectionId; Comp: () => ReactNode }[] = [
   { id: "home", Comp: Hero },
   { id: "about", Comp: About },
+  { id: "experience", Comp: ExperienceSection },
   { id: "skills", Comp: Skills },
-  { id: "services", Comp: Services },
   { id: "projects", Comp: Projects },
-  { id: "faq", Comp: Faq },
+  { id: "services", Comp: Services },
   { id: "contact", Comp: Contact },
 ];
 

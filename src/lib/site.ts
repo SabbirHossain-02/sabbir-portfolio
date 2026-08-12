@@ -7,39 +7,38 @@
 export type SectionId =
   | "home"
   | "about"
+  | "experience"
   | "skills"
-  | "services"
   | "projects"
-  | "faq"
+  | "services"
   | "contact";
 
 export interface NavItem {
   id: SectionId;
   label: string;
-  icon: string; // lucide icon name, resolved in components/nav
+  icon: string; // lucide icon name, resolved in components/side-nav
 }
 
 export const NAV: NavItem[] = [
   { id: "home", label: "Home", icon: "home" },
   { id: "about", label: "About", icon: "user" },
+  { id: "experience", label: "Experience", icon: "briefcase" },
   { id: "skills", label: "Skills", icon: "layers" },
-  { id: "services", label: "Services", icon: "wrench" },
   { id: "projects", label: "Projects", icon: "boxes" },
-  { id: "faq", label: "FAQ", icon: "help" },
+  { id: "services", label: "Services", icon: "wrench" },
   { id: "contact", label: "Contact", icon: "mail" },
 ];
 
 export const PROFILE = {
   name: "Sabbir Hosen",
   role: "Full-Stack Software Engineer",
+  availabilityBadge: "AVAILABLE FOR PROJECTS & REMOTE ROLES",
   location: "Dhaka, Bangladesh",
   email: "sabbircreators@gmail.com",
   phone: "+880 1959 250 836",
   available: true,
-  tagline:
-    "I build backend services, APIs and app-like interfaces that stay fast while they grow.",
   intro:
-    "Full-stack developer at PKG IT since 2022 — building complete web apps with Node.js, Next.js and Python, and deploying them on self-managed VPS servers.",
+    "Building scalable, production-ready web applications with Next.js, Node.js, Python and PostgreSQL — from idea to deployment.",
   socials: {
     github: "https://github.com/SabbirHossain-02",
     linkedin: "https://linkedin.com/in/sabbirhosen",
@@ -47,91 +46,237 @@ export const PROFILE = {
   },
   cv: "/Sabbir_Hosen_CV.pdf",
   portrait: "/portrait.png",
+  credibilityStats: [
+    { value: "3+", label: "Years Experience" },
+    { value: "20+", label: "Projects Shipped" },
+    { value: "Full-Stack", label: "Development" },
+  ],
 };
-
-export const STATS = [
-  { value: "50+", label: "Systems shipped" },
-  { value: "3 yrs", label: "In production" },
-  { value: "5.0", label: "Fiverr rating" },
-  { value: "99.9%", label: "Uptime kept" },
-];
 
 export const ABOUT = {
   heading: "Engineering judgement, not just delivery.",
-  body: [
-    "I'm a full-stack developer focused on systems that hold up after launch. Three years in, across freelance contracts and product teams, I've learned that the hard part isn't shipping — it's shipping something the client can still maintain a year later.",
-    "I write clean, modular code, index my databases, secure my endpoints, and treat mobile as a first-class target. The goal is always the same: an app that feels snappy, stays reliable under load, and reads clearly to the next engineer.",
+  intro:
+    "I’m a Full-Stack Software Engineer focused on building reliable, scalable and user-friendly digital products.",
+  philosophy: [
+    {
+      number: "01",
+      title: "Build with purpose",
+      text: "Every feature, architecture choice, and line of code is aligned with core user needs and tangible business value.",
+    },
+    {
+      number: "02",
+      title: "Write maintainable code",
+      text: "Clean structure, typed contracts, and documented decisions so the codebase remains readable and easy to extend.",
+    },
+    {
+      number: "03",
+      title: "Ship production-ready products",
+      text: "Thoroughly tested, secure, optimized for speed, and deployed smoothly with zero-downtime infrastructure.",
+    },
   ],
-  highlights: [
-    {
-      title: "Clean, handover-ready code",
-      text: "Standard structure, typed contracts, documented decisions — no black boxes left behind.",
-    },
-    {
-      title: "App-like on every screen",
-      text: "Responsive layouts that behave like native apps, with real attention to touch and motion.",
-    },
-    {
-      title: "Measured performance",
-      text: "Caching, query tuning and profiling — improvements you can see in the numbers, not just claims.",
-    },
-  ],
-  timeline: [
-    {
-      when: "2022 — Present",
-      title: "Full Stack Developer · PKG IT",
-      text: "Build & maintain full-stack web apps with Node.js, Next.js and PostgreSQL, and deploy production infra on VPS with Nginx & CI/CD.",
-    },
-    {
-      when: "2017 — 2021",
-      title: "B.Sc. in Computer Science & Engineering",
-      text: "Daffodil International University, Dhaka.",
-    },
+  focusedOn: [
+    "Full-Stack Web Applications",
+    "Backend Architecture",
+    "API Development",
+    "Deployment & VPS",
+    "Performance Optimization",
   ],
 };
 
-export interface SkillGroup {
-  title: string;
-  icon: string;
-  items: string[];
+export interface ExperienceItem {
+  role: string;
+  company: string;
+  period: string;
+  type: string;
+  responsibilities: string[];
 }
 
-export const SKILLS: SkillGroup[] = [
+export const EXPERIENCE: ExperienceItem[] = [
   {
-    title: "Frontend Engineering",
+    role: "Full-Stack Software Engineer",
+    company: "PKG IT",
+    period: "2022 — Present",
+    type: "Full-Time",
+    responsibilities: [
+      "Building production-ready web applications",
+      "Developing REST APIs and backend systems",
+      "Working with Next.js, React and Node.js",
+      "PostgreSQL database design and query optimization",
+      "VPS deployment and server management",
+      "Performance and security optimization",
+    ],
+  },
+  {
+    role: "Software Engineering Scholar",
+    company: "Daffodil International University",
+    period: "2017 — 2021",
+    type: "Education",
+    responsibilities: [
+      "B.Sc. in Computer Science & Engineering",
+      "Focused on Algorithms, Software Architecture, and Database Systems",
+      "Built multi-tier web projects and capstone backend services",
+    ],
+  },
+];
+
+export interface SkillCategory {
+  category: string;
+  icon: string;
+  items: { name: string; level: "Production" | "Advanced" | "Proficient" }[];
+}
+
+export const SKILLS: SkillCategory[] = [
+  {
+    category: "Frontend",
     icon: "monitor",
     items: [
-      "React.js",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Framer Motion",
-      "Responsive UI",
+      { name: "React", level: "Production" },
+      { name: "Next.js", level: "Production" },
+      { name: "JavaScript", level: "Production" },
+      { name: "TypeScript", level: "Production" },
+      { name: "HTML", level: "Production" },
+      { name: "CSS", level: "Production" },
+      { name: "Tailwind CSS", level: "Production" },
     ],
   },
   {
-    title: "Backend & Systems",
+    category: "Backend",
     icon: "server",
     items: [
-      "Node.js",
-      "NestJS",
-      "Express",
-      "REST & GraphQL",
-      "JWT / OAuth",
-      "WebSockets",
+      { name: "Node.js", level: "Production" },
+      { name: "Express.js", level: "Production" },
+      { name: "Python", level: "Advanced" },
+      { name: "REST API", level: "Production" },
     ],
   },
   {
-    title: "Data & DevOps",
+    category: "Database",
     icon: "database",
     items: [
-      "PostgreSQL",
-      "MongoDB",
-      "Redis",
-      "Docker",
-      "Nginx",
-      "CI/CD",
+      { name: "PostgreSQL", level: "Production" },
+      { name: "MySQL", level: "Advanced" },
+      { name: "MongoDB", level: "Advanced" },
     ],
+  },
+  {
+    category: "DevOps",
+    icon: "boxes",
+    items: [
+      { name: "Linux", level: "Production" },
+      { name: "VPS", level: "Production" },
+      { name: "Docker", level: "Advanced" },
+      { name: "Git", level: "Production" },
+      { name: "GitHub", level: "Production" },
+      { name: "Deployment", level: "Production" },
+    ],
+  },
+];
+
+export interface Project {
+  id: string;
+  title: string;
+  category: "all" | "fullstack" | "backend" | "frontend" | "saas";
+  typeLabel: string;
+  blurb: string;
+  stack: string[];
+  image: string;
+  href: string;
+  github?: string;
+  featured?: boolean;
+  caseStudy: {
+    problem: string;
+    solution: string;
+    technology: string;
+    result: string;
+  };
+}
+
+export const PROJECTS: Project[] = [
+  {
+    id: "saasdash",
+    title: "SaaSdash — Admin Dashboard Platform",
+    category: "saas",
+    typeLabel: "SaaS · Admin Dashboard",
+    blurb:
+      "Enterprise SaaS admin template with real-time telemetry analytics, dynamic charts, dark mode, and authentication flows.",
+    stack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Recharts"],
+    image: "/saasdash-preview.jpg",
+    href: "https://saasdash-react-template.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    featured: true,
+    caseStudy: {
+      problem:
+        "Modern SaaS teams require high-performance, responsive admin analytics portals without UI lag or heavy bundle sizes.",
+      solution:
+        "Engineered a modular Next.js dashboard using server-rendered routes, optimized chart rendering, and glassmorphic UI components.",
+      technology: "Next.js App Router, TypeScript, Tailwind CSS, Recharts.",
+      result:
+        "Instant page loads, 99+ Lighthouse performance score, and responsive layout across mobile and desktop viewports.",
+    },
+  },
+  {
+    id: "velora",
+    title: "Velora — E-Commerce Platform",
+    category: "fullstack",
+    typeLabel: "Fashion · E-commerce",
+    blurb:
+      "Modern e-commerce platform featuring product filtering, cart management, checkout UI, and responsive product catalog.",
+    stack: ["Next.js", "React", "JavaScript", "Tailwind CSS"],
+    image: "/velora-preview.jpg",
+    href: "https://velora-ecommerce-hazel.vercel.app/",
+    github: "https://github.com/SabbirHossain-02",
+    featured: true,
+    caseStudy: {
+      problem:
+        "Fashion brands need visually immersive online stores that handle high product catalog volume without dropping frame rates.",
+      solution:
+        "Built a streamlined web storefront with fast image optimization, client cart persistence, and seamless checkout flows.",
+      technology: "Next.js, JavaScript, Tailwind CSS, Vercel Edge Infra.",
+      result:
+        "Sub-second load times, fluid mobile shopping UX, and scalable product grid rendering.",
+    },
+  },
+  {
+    id: "vps-pipeline",
+    title: "Automated VPS Deployment Pipeline",
+    category: "backend",
+    typeLabel: "DevOps · Infra",
+    blurb:
+      "Self-hosted automated deployment engine for Node.js & Python backend services on Linux VPS with Nginx & SSL.",
+    stack: ["Linux", "VPS", "Docker", "Nginx", "Git", "Bash"],
+    image: "/saasdash-preview.jpg",
+    href: "https://github.com/SabbirHossain-02",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Manual server configuration led to deployment delays and environment drift between staging and production VPS.",
+      solution:
+        "Automated continuous integration shell scripts and Dockerized containers configured behind Nginx reverse proxy with SSL certbot auto-renew.",
+      technology: "Linux Ubuntu, Nginx, Docker, Git Hooks, Let's Encrypt.",
+      result:
+        "Zero-downtime service upgrades, 99.9% server uptime, and automated rollbacks.",
+    },
+  },
+  {
+    id: "rest-api-gateway",
+    title: "High-Throughput REST API Gateway",
+    category: "backend",
+    typeLabel: "Backend · API",
+    blurb:
+      "Secure REST API engine built with Node.js & PostgreSQL, featuring JWT authentication, rate limiting, and Postman docs.",
+    stack: ["Node.js", "Express.js", "PostgreSQL", "JWT", "Swagger"],
+    image: "/velora-preview.jpg",
+    href: "https://github.com/SabbirHossain-02",
+    github: "https://github.com/SabbirHossain-02",
+    caseStudy: {
+      problem:
+        "Third-party integrations required strict rate limiting, verified JWT tokens, and structured JSON contracts.",
+      solution:
+        "Designed an Express.js API gateway with middleware validation, indexed PostgreSQL queries, and OpenAPI documentation.",
+      technology: "Node.js, PostgreSQL, Express, Redis caching.",
+      result:
+        "Handled 5,000+ API requests per minute with sub-50ms query response times.",
+    },
   },
 ];
 
@@ -144,201 +289,56 @@ export interface Service {
 
 export const SERVICES: Service[] = [
   {
-    title: "Full-Stack Application Development",
+    title: "Full-Stack Web Development",
     icon: "code",
     blurb:
-      "End-to-end web apps tailored to your business rules — fast React/Next.js frontends wired to Node.js services and a solid data layer.",
+      "End-to-end web applications built to your exact business rules — fast React/Next.js frontends wired to robust backend services.",
     points: ["Clean architecture", "Responsive & app-like", "SEO & performance"],
   },
   {
-    title: "API Development & Integration",
+    title: "Custom SaaS Development",
+    icon: "boxes",
+    blurb:
+      "Multi-tenant SaaS platforms, admin telemetry dashboards, subscription billing, and scalable database schemas.",
+    points: ["Multi-tenant architecture", "Role-based auth", "Real-time charts"],
+  },
+  {
+    title: "Backend & API Development",
     icon: "plug",
     blurb:
-      "Scalable, secure, documented REST or GraphQL APIs. Payment gateways, auth, third-party services — integrated and tested.",
+      "Scalable, secure, documented REST or GraphQL APIs. Auth, payment gateways, and third-party integrations tested under load.",
     points: ["JWT / OAuth security", "Swagger / Postman docs", "Optimised queries"],
   },
   {
-    title: "Migration & Optimisation",
-    icon: "gauge",
+    title: "Database Architecture",
+    icon: "database",
     blurb:
-      "Turn slow, ageing sites into modern, high-speed applications — with zero-downtime migrations and measurable gains.",
-    points: ["Speed optimisation", "Zero-downtime moves", "Mobile refinement"],
+      "Efficient PostgreSQL/MongoDB schema design, data indexing, migration scripts, and query performance tuning.",
+    points: ["Relational & NoSQL", "Query indexing", "Data migration"],
+  },
+  {
+    title: "Business Website Development",
+    icon: "monitor",
+    blurb:
+      "Modern, high-conversion business websites tailored to elevate brand credibility across mobile and desktop screens.",
+    points: ["High-conversion UX", "Speed optimization", "Mobile refinement"],
+  },
+  {
+    title: "VPS Deployment & Maintenance",
+    icon: "server",
+    blurb:
+      "Production server setups with Linux, Nginx, Docker, SSL security, CI/CD automation, and 99.9% uptime monitoring.",
+    points: ["Linux VPS management", "Nginx & SSL", "CI/CD & back-ups"],
   },
 ];
 
-export interface Project {
-  id: string;
-  title: string;
-  type: string; // category tag
-  purpose: string; // কিসের জন্য বানানো
-  builtBy: string; // কারা বানাইলো
-  stack: string[];
-  liveUrl: string;
-  image: string | null; // live-preview screenshot, null → branded placeholder
-  accent: string; // hex tint for the placeholder / glow
-}
-
-const BUILT = "Sabbir Hosen · PKGIT";
-
-export const PROJECTS: Project[] = [
-  {
-    id: "anwar-ispat",
-    title: "Anwar Ispat",
-    type: "Corporate · E-commerce",
-    purpose:
-      "The corporate brand site for Anwar Ispat — one of Bangladesh's largest steel manufacturers. Product catalogue, quote requests and a cinematic, high-end brand presence built to carry a national brand's traffic.",
-    builtBy: BUILT,
-    stack: ["Next.js", "React", "Node.js", "PostgreSQL"],
-    liveUrl: "https://www.anwarispat.com/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784677995/anwar-ispat_sxjfgl.png",
-    accent: "#e11d48",
-  },
-  {
-    id: "a1polymer",
-    title: "A1 Polymer",
-    type: "Corporate · E-commerce",
-    purpose:
-      "Corporate storefront for a polymer & plastics manufacturer — product catalogue, enquiries and online ordering in one place.",
-    builtBy: BUILT,
-    stack: ["Next.js", "React", "Tailwind CSS", "Node.js"],
-    liveUrl: "https://a1polymer.com/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678050/a1polymer_dsjjtq.png",
-    accent: "#4d8bff",
-  },
-  {
-    id: "caltex",
-    title: "Caltex",
-    type: "Brand · E-commerce",
-    purpose:
-      "A conversion-focused product storefront for an automotive/lubricant brand — fast catalogue, clean product pages and cart.",
-    builtBy: BUILT,
-    stack: ["Next.js", "React", "Tailwind CSS", "Commerce"],
-    liveUrl: "https://caltex-demo.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678110/caltex_byaqgm.png",
-    accent: "#38bdf8",
-  },
-  {
-    id: "ids-group",
-    title: "IDS Group",
-    type: "Corporate Portfolio",
-    purpose:
-      "A group-of-companies corporate site presenting divisions, services and contact under one unified brand identity.",
-    builtBy: BUILT,
-    stack: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://ids-group-demo-web.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678156/ids-group_a3sg1c.png",
-    accent: "#7c8cff",
-  },
-  {
-    id: "tel",
-    title: "TEL",
-    type: "Corporate Portfolio",
-    purpose:
-      "A clean, content-driven corporate web presence for a technology enterprise — responsive and fast on every screen.",
-    builtBy: BUILT,
-    stack: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    liveUrl: "https://tel-website-demo-pkgit.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678188/tel_wfux6y.png",
-    accent: "#5b8cff",
-  },
-  {
-    id: "hotel-glory",
-    title: "Hotel The Glory",
-    type: "Hospitality · Management",
-    purpose:
-      "A luxury hotel website for a Sylhet property with room showcase and an enquiry/booking flow that reads as premium hospitality.",
-    builtBy: BUILT,
-    stack: ["Next.js", "Node.js", "Tailwind CSS", "Booking flow"],
-    liveUrl: "https://hotel-the-glory-web.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678219/hotel-glory_k1bngk.png",
-    accent: "#22c55e",
-  },
-  {
-    id: "property-lifts",
-    title: "Property Lifts",
-    type: "Portfolio · 3D",
-    purpose:
-      "An elevator-industry portfolio featuring an interactive 3D lift simulator and a polished product showcase.",
-    builtBy: BUILT,
-    stack: ["Next.js", "three.js", "Tailwind CSS"],
-    liveUrl: "https://property-lifts-portfolio.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678248/property-lifts_jwxt2u.png",
-    accent: "#f59e0b",
-  },
-  {
-    id: "proton-mobile",
-    title: "Proton Mobile",
-    type: "E-commerce",
-    purpose:
-      "An online store for a mobile-phone retailer — product listings, cart and checkout, served from a self-managed server.",
-    builtBy: BUILT,
-    stack: ["React", "Node.js", "MySQL"],
-    liveUrl: "http://163.227.239.38/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678274/proton-mobile_tjhjln.jpg",
-    accent: "#22c55e",
-  },
-  {
-    id: "velora",
-    title: "Velora",
-    type: "Fashion · E-commerce",
-    purpose:
-      "A premium fashion e-commerce storefront featuring curated apparel collections, dynamic filtering, interactive product showcases, and a seamless cart experience.",
-    builtBy: BUILT,
-    stack: ["Next.js", "React", "JavaScript", "Tailwind CSS"],
-    liveUrl: "https://velora-ecommerce-hazel.vercel.app/",
-    image: "/velora-preview.jpg",
-    accent: "#ec4899",
-  },
-  {
-    id: "saasdash",
-    title: "SaaSdash",
-    type: "SaaS · Admin Dashboard",
-    purpose:
-      "A clean, modern SaaS administration dashboard template featuring user authentication, real-time analytics widgets, responsive data tables, and an intuitive UI architecture.",
-    builtBy: BUILT,
-    stack: ["React", "Next.js", "Tailwind CSS", "Dashboard"],
-    liveUrl: "https://saasdash-react-template.vercel.app/",
-    image: "/saasdash-preview.jpg",
-    accent: "#6366f1",
-  },
-];
-
-export interface Faq {
-  q: string;
-  a: string;
-}
-
-export const FAQ: Faq[] = [
-  {
-    q: "What kind of projects do you take on?",
-    a: "Full-stack web apps, backend APIs, and performance/migration work. If it needs a reliable server, a clean frontend, or both, it's in scope.",
-  },
-  {
-    q: "How do you usually work with a new client?",
-    a: "You send me the problem — not a rigid spec — and I come back with an approach, a timeline and a fixed number. Every engagement ships with docs and a handover walkthrough.",
-  },
-  {
-    q: "What's your typical turnaround?",
-    a: "Small APIs and fixes land in days; full applications run two to six weeks depending on scope. I share progress continuously, never a silent black box.",
-  },
-  {
-    q: "Do you provide support after launch?",
-    a: "Yes — every project includes 14 days of post-launch support, and I'm available for ongoing retainers if you want a long-term engineering partner.",
-  },
-  {
-    q: "Which technologies do you specialise in?",
-    a: "React and Next.js on the frontend; Node.js and NestJS on the backend; PostgreSQL, MongoDB and Redis for data. TypeScript end to end.",
-  },
-  {
-    q: "How can I get started?",
-    a: "Use the contact form or email me directly. I usually reply within two hours during working days.",
-  },
+export const MARQUEE_TECH = [
+  { name: "Next.js", icon: "code" },
+  { name: "React", icon: "monitor" },
+  { name: "Node.js", icon: "server" },
+  { name: "Python", icon: "wrench" },
+  { name: "PostgreSQL", icon: "database" },
+  { name: "Docker", icon: "boxes" },
+  { name: "Git", icon: "plug" },
+  { name: "Linux", icon: "server" },
 ];

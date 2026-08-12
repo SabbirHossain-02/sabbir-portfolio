@@ -23,7 +23,32 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Sabbir Hosen — Full-Stack Software Engineer",
   description:
-    "Full-stack engineer building backend services, APIs and app-like interfaces that stay fast in production. Next.js, Node.js, NestJS, PostgreSQL.",
+    "Portfolio of Sabbir Hosen, a Full-Stack Software Engineer building scalable web applications with Next.js, Node.js, Python and PostgreSQL.",
+  keywords: [
+    "Sabbir Hosen",
+    "Full-Stack Software Engineer",
+    "Next.js Developer",
+    "Node.js Engineer",
+    "PostgreSQL",
+    "Python",
+    "Software Engineer Portfolio",
+  ],
+  authors: [{ name: "Sabbir Hosen", url: "https://github.com/SabbirHossain-02" }],
+  openGraph: {
+    title: "Sabbir Hosen — Full-Stack Software Engineer",
+    description:
+      "Portfolio of Sabbir Hosen, a Full-Stack Software Engineer building scalable web applications with Next.js, Node.js, Python and PostgreSQL.",
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/portrait.png", width: 1200, height: 630, alt: "Sabbir Hosen Portfolio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sabbir Hosen — Full-Stack Software Engineer",
+    description:
+      "Portfolio of Sabbir Hosen, a Full-Stack Software Engineer building scalable web applications with Next.js, Node.js, Python and PostgreSQL.",
+    images: ["/portrait.png"],
+  },
 };
 
 export default function RootLayout({
