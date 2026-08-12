@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Github, Sparkles, ExternalLink, X, FileText, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Sparkles, ExternalLink, X, FileText, CheckCircle2 } from "lucide-react";
 import { PROJECTS, type Project } from "@/lib/site";
 import { Section, SectionInner, SectionHead } from "../section";
+import { Icon } from "../icons";
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -125,7 +126,7 @@ export function Projects() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-surface-2/80 px-3 py-1.5 font-mono text-xs font-semibold text-muted transition-all duration-200 hover:border-line-strong hover:text-ink"
                       >
-                        <Github className="h-3.5 w-3.5" />
+                        <Icon name="github" className="h-3.5 w-3.5" />
                         <span>GitHub</span>
                       </a>
                     )}
