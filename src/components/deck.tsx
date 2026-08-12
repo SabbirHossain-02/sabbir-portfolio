@@ -142,6 +142,26 @@ export function Experience() {
     if (!node) return;
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < 12) return;
+      let target = e.target as HTMLElement | null;
+      while (target && target !== node) {
+        if (
+          target.scrollHeight > target.clientHeight &&
+          (target.style.overflowY === "auto" ||
+            target.style.overflowY === "scroll" ||
+            target.classList.contains("overflow-y-auto"))
+        ) {
+          const isDown = e.deltaY > 0;
+          const atBottom =
+            Math.abs(
+              target.scrollHeight - target.clientHeight - target.scrollTop
+            ) < 4;
+          const atTop = target.scrollTop <= 0;
+          if ((isDown && !atBottom) || (!isDown && !atTop)) {
+            return; // Allow inner scroll container to scroll naturally!
+          }
+        }
+        target = target.parentElement;
+      }
       e.preventDefault();
       tryAdvance(e.deltaY > 0 ? 1 : -1);
     };

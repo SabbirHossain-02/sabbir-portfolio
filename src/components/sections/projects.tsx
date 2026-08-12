@@ -3,8 +3,6 @@
 import { useState } from "react";
 import {
   ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
   Sparkles,
   ExternalLink,
   X,
@@ -22,12 +20,8 @@ const CATEGORIES = [
   { id: "frontend", label: "Frontend" },
 ] as const;
 
-// 2 cards per page on desktop ensures 100% visibility on all laptop screens without vertical cutoffs
-const CARDS_PER_PAGE = 2;
-
 export function Projects() {
   const [activeTab, setActiveTab] = useState<string>("all");
-  const [currentPage, setCurrentPage] = useState(0);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<Project | null>(null);
 
   // Filter projects by active tab
@@ -36,26 +30,11 @@ export function Projects() {
     return p.category === activeTab;
   });
 
-  // Calculate total pages for current filter
-  const totalPages = Math.ceil(filteredProjects.length / CARDS_PER_PAGE);
-  const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
-
-  // Get current page slice (2 cards)
-  const paginatedProjects = filteredProjects.slice(
-    safePage * CARDS_PER_PAGE,
-    (safePage + 1) * CARDS_PER_PAGE
-  );
-
-  const handleTabChange = (tabId: string) => {
-    setActiveTab(tabId);
-    setCurrentPage(0);
-  };
-
   return (
     <Section id="projects">
       <SectionInner className="!py-2 md:!py-3 flex flex-col justify-center min-h-0">
         {/* Section Header & Category Filter Bar */}
-        <div className="mb-3 flex flex-col gap-2 sm:mb-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-3 flex flex-col gap-2.5 sm:mb-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-3">
               <span
@@ -84,7 +63,7 @@ export function Projects() {
                 <button
                   key={cat.id}
                   type="button"
-                  onClick={() => handleTabChange(cat.id)}
+                  onClick={() => setActiveTab(cat.id)}
                   className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-mono text-xs font-semibold transition-all duration-200 ${
                     isActive
                       ? "bg-accent text-accent-ink shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
@@ -107,72 +86,27 @@ export function Projects() {
           </div>
         </div>
 
-        {/* 2-Column Single-Row Grid (Compact & Sleek, fits 100% in viewport) */}
-        <div className="stagger grid gap-4 sm:grid-cols-2">
-          {paginatedProjects.map((p) => (
-            <ProjectCard
-              key={p.id}
-              p={p}
-              onOpenCaseStudy={() => setSelectedCaseStudy(p)}
-            />
-          ))}
+        {/* Scrollable Container for ALL 10 Projects */}
+        <div className="max-h-[66vh] overflow-y-auto pr-1 sm:pr-2 [scrollbar-width:thin] [scrollbar-color:var(--line-strong)_transparent]">
+          <div className="stagger grid gap-3.5 sm:grid-cols-2">
+            {filteredProjects.map((p) => (
+              <ProjectCard
+                key={p.id}
+                p={p}
+                onOpenCaseStudy={() => setSelectedCaseStudy(p)}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Footer Pagination Controls */}
-        <div className="mt-3.5 flex items-center justify-between border-t border-line/80 pt-3">
-          <div className="font-mono text-xs text-muted">
-            Showing{" "}
-            <span className="font-bold text-accent">
-              {safePage * CARDS_PER_PAGE + 1} —{" "}
-              {Math.min(
-                (safePage + 1) * CARDS_PER_PAGE,
-                filteredProjects.length
-              )}
-            </span>{" "}
-            of <span className="font-bold text-ink">{filteredProjects.length}</span> Projects
+        {/* Footer info bar */}
+        <div className="mt-3 flex items-center justify-between border-t border-line/80 pt-2.5 text-xs text-muted">
+          <div className="font-mono text-[11px]">
+            Showing <span className="font-bold text-accent">{filteredProjects.length}</span> of{" "}
+            <span className="font-bold text-ink">{PROJECTS.length}</span> Total Projects
           </div>
-
-          {/* Page Selector */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
-              disabled={safePage === 0}
-              aria-label="Previous Page"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              <ChevronLeft className="h-4 w-4" />
-              <span className="hidden sm:inline">Prev</span>
-            </button>
-
-            <div className="flex items-center gap-1.5 px-2">
-              {Array.from({ length: totalPages }).map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setCurrentPage(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    idx === safePage
-                      ? "w-6 bg-accent"
-                      : "w-2 bg-line-strong hover:bg-muted"
-                  }`}
-                  aria-label={`Page ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
-              }
-              disabled={safePage >= totalPages - 1}
-              aria-label="Next Page"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-            >
-              <span className="hidden sm:inline">Next</span>
-              <ChevronRight className="h-4 w-4" />
-            </button>
+          <div className="hidden font-mono text-[10px] text-dim sm:block">
+            Scroll inside to view all projects • Click Case Study for technical details
           </div>
         </div>
 
@@ -300,7 +234,7 @@ function ProjectCard({
         </div>
       </div>
 
-      {/* Project Image Preview (Slim aspect ratio fits perfectly on laptops) */}
+      {/* Project Image Preview */}
       <div className="relative aspect-[16/8] w-full overflow-hidden bg-surface-2">
         {showImg ? (
           <img
