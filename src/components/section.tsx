@@ -34,7 +34,7 @@ export function SectionInner({
 }) {
   return (
     <div
-      className={`mx-auto w-full max-w-6xl px-5 pb-28 pt-16 md:px-6 md:pb-24 md:pt-24 md:pl-28 lg:pl-32 ${className}`}
+      className={`mx-auto w-full max-w-6xl px-5 py-6 md:px-6 md:py-8 md:pl-28 lg:pl-32 ${className}`}
     >
       {children}
     </div>
@@ -58,7 +58,7 @@ export function SectionHead({
 
   return (
     <header
-      className="rise mb-9 max-w-2xl"
+      className="rise mb-5 max-w-2xl sm:mb-6"
       style={{ animationDelay: "0.06s" } as CSSProperties}
     >
       <div className="flex items-center gap-4">

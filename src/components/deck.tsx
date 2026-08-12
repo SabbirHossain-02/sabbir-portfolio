@@ -229,7 +229,7 @@ export function Experience() {
               key={s.id}
               data-slide={isActive ? "" : undefined}
               aria-hidden={!isActive}
-              className="snap-scroller absolute inset-0 h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain md:overflow-hidden"
+              className="snap-scroller absolute inset-0 h-full w-full overflow-y-auto overflow-x-hidden overscroll-contain"
               style={{
                 opacity: isActive ? 1 : 0,
                 transform: `translateY(${offY}px)`,
@@ -244,7 +244,7 @@ export function Experience() {
                   full-bleed portrait (min-h-full) fills the viewport. */}
               <div
                 key={gens[i]}
-                className="relative flex min-h-full w-full flex-col justify-center md:h-full"
+                className="relative flex min-h-full w-full flex-col justify-start pt-2 pb-6 md:h-full md:justify-center md:py-0"
               >
                 <Comp />
               </div>

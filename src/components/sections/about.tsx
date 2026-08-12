@@ -56,7 +56,7 @@ export function About() {
 
             <span
               aria-hidden
-              className="pointer-events-none absolute -right-4 -top-8 select-none font-display text-[9.5rem] leading-none text-line-strong opacity-30 transition-opacity duration-300 group-hover:opacity-50"
+              className="pointer-events-none absolute -right-2 -top-4 select-none font-display text-[6.5rem] leading-none text-line-strong opacity-25 transition-opacity duration-300 group-hover:opacity-40"
             >
               &ldquo;
             </span>
