@@ -11,7 +11,7 @@ import {
   FileText,
 } from "lucide-react";
 import { PROJECTS, type Project } from "@/lib/site";
-import { Section, SectionInner, SectionHead } from "../section";
+import { Section, SectionInner } from "../section";
 import { Icon } from "../icons";
 
 const CATEGORIES = [
@@ -22,7 +22,8 @@ const CATEGORIES = [
   { id: "frontend", label: "Frontend" },
 ] as const;
 
-const CARDS_PER_PAGE = 4;
+// 2 cards per page on desktop ensures 100% visibility on all laptop screens without vertical cutoffs
+const CARDS_PER_PAGE = 2;
 
 export function Projects() {
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -39,7 +40,7 @@ export function Projects() {
   const totalPages = Math.ceil(filteredProjects.length / CARDS_PER_PAGE);
   const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
 
-  // Get current page slice
+  // Get current page slice (2 cards)
   const paginatedProjects = filteredProjects.slice(
     safePage * CARDS_PER_PAGE,
     (safePage + 1) * CARDS_PER_PAGE
@@ -52,75 +53,73 @@ export function Projects() {
 
   return (
     <Section id="projects">
-      <SectionInner className="!py-2 md:!py-3 flex h-full flex-col justify-between">
-        <div>
-          {/* Header & Category Filter Bar */}
-          <div className="mb-3 flex flex-col gap-2.5 sm:mb-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden
-                  className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-accent to-accent-2 shadow-[0_0_16px_var(--accent)]"
-                />
-                <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-                  Featured Work<span className="text-accent">.</span>
-                </h2>
-              </div>
-              <p className="pl-4.5 text-xs text-muted">
-                Explore 10 production-ready applications, SaaS platforms &amp; backend systems.
-              </p>
+      <SectionInner className="!py-2 md:!py-3 flex flex-col justify-center min-h-0">
+        {/* Section Header & Category Filter Bar */}
+        <div className="mb-3 flex flex-col gap-2 sm:mb-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden
+                className="h-7 w-1.5 shrink-0 rounded-full bg-gradient-to-b from-accent to-accent-2 shadow-[0_0_16px_var(--accent)]"
+              />
+              <h2 className="font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                Featured Work<span className="text-accent">.</span>
+              </h2>
             </div>
-
-            {/* Category Filter Tabs */}
-            <div className="flex flex-wrap items-center gap-1 rounded-2xl border border-line-strong/80 bg-surface-2/80 p-1 backdrop-blur-xl">
-              {CATEGORIES.map((cat) => {
-                const isActive = activeTab === cat.id;
-                const count =
-                  cat.id === "all"
-                    ? PROJECTS.length
-                    : PROJECTS.filter((p) => p.category === cat.id).length;
-
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => handleTabChange(cat.id)}
-                    className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-mono text-xs font-semibold transition-all duration-200 ${
-                      isActive
-                        ? "bg-accent text-accent-ink shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
-                        : "text-muted hover:text-ink"
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span
-                      className={`rounded-full px-1.5 py-0.2 text-[9px] font-bold ${
-                        isActive
-                          ? "bg-black/20 text-accent-ink"
-                          : "bg-line/60 text-dim"
-                      }`}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            <p className="pl-4.5 text-xs text-muted">
+              Explore 10 production-ready applications, SaaS platforms &amp; backend systems.
+            </p>
           </div>
 
-          {/* 2-Column Grid Layout (Flat & Clean) */}
-          <div className="stagger grid gap-3.5 sm:grid-cols-2">
-            {paginatedProjects.map((p) => (
-              <ProjectCard
-                key={p.id}
-                p={p}
-                onOpenCaseStudy={() => setSelectedCaseStudy(p)}
-              />
-            ))}
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-1 rounded-2xl border border-line-strong/80 bg-surface-2/80 p-1 backdrop-blur-xl">
+            {CATEGORIES.map((cat) => {
+              const isActive = activeTab === cat.id;
+              const count =
+                cat.id === "all"
+                  ? PROJECTS.length
+                  : PROJECTS.filter((p) => p.category === cat.id).length;
+
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => handleTabChange(cat.id)}
+                  className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-mono text-xs font-semibold transition-all duration-200 ${
+                    isActive
+                      ? "bg-accent text-accent-ink shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_45%,transparent)]"
+                      : "text-muted hover:text-ink"
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.2 text-[9px] font-bold ${
+                      isActive
+                        ? "bg-black/20 text-accent-ink"
+                        : "bg-line/60 text-dim"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Pagination & Footer Controls */}
-        <div className="mt-4 flex flex-col items-center justify-between gap-2 border-t border-line/80 pt-3 sm:flex-row">
+        {/* 2-Column Single-Row Grid (Compact & Sleek, fits 100% in viewport) */}
+        <div className="stagger grid gap-4 sm:grid-cols-2">
+          {paginatedProjects.map((p) => (
+            <ProjectCard
+              key={p.id}
+              p={p}
+              onOpenCaseStudy={() => setSelectedCaseStudy(p)}
+            />
+          ))}
+        </div>
+
+        {/* Footer Pagination Controls */}
+        <div className="mt-3.5 flex items-center justify-between border-t border-line/80 pt-3">
           <div className="font-mono text-xs text-muted">
             Showing{" "}
             <span className="font-bold text-accent">
@@ -133,53 +132,51 @@ export function Projects() {
             of <span className="font-bold text-ink">{filteredProjects.length}</span> Projects
           </div>
 
-          {/* Page Buttons */}
-          {totalPages > 1 && (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
-                disabled={safePage === 0}
-                aria-label="Previous Page"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span>Prev</span>
-              </button>
+          {/* Page Selector */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setCurrentPage((prev) => Math.max(0, prev - 1))}
+              disabled={safePage === 0}
+              aria-label="Previous Page"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Prev</span>
+            </button>
 
-              <div className="flex items-center gap-1 px-1">
-                {Array.from({ length: totalPages }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setCurrentPage(idx)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      idx === safePage
-                        ? "w-6 bg-accent"
-                        : "w-2 bg-line-strong hover:bg-muted"
-                    }`}
-                    aria-label={`Page ${idx + 1}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
-                }
-                disabled={safePage >= totalPages - 1}
-                aria-label="Next Page"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
-              >
-                <span>Next</span>
-                <ChevronRight className="h-4 w-4" />
-              </button>
+            <div className="flex items-center gap-1.5 px-2">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentPage(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    idx === safePage
+                      ? "w-6 bg-accent"
+                      : "w-2 bg-line-strong hover:bg-muted"
+                  }`}
+                  aria-label={`Page ${idx + 1}`}
+                />
+              ))}
             </div>
-          )}
+
+            <button
+              type="button"
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
+              }
+              disabled={safePage >= totalPages - 1}
+              aria-label="Next Page"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-line-strong/80 bg-surface/80 px-3 py-1.5 font-mono text-xs font-semibold text-ink shadow-sm transition hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-30"
+            >
+              <span className="hidden sm:inline">Next</span>
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
-        {/* Case Study Modal */}
+        {/* Interactive Case Study Modal */}
         {selectedCaseStudy && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div
@@ -281,7 +278,7 @@ function ProjectCard({
       <span className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-transparent via-accent to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
       {/* Browser Bar Header */}
-      <div className="flex items-center justify-between border-b border-line/80 bg-surface-2/70 px-3.5 py-2 backdrop-blur">
+      <div className="flex items-center justify-between border-b border-line/80 bg-surface-2/70 px-3.5 py-1.5 backdrop-blur">
         <div className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -303,8 +300,8 @@ function ProjectCard({
         </div>
       </div>
 
-      {/* Project Image Preview */}
-      <div className="relative aspect-[16/8.5] w-full overflow-hidden bg-surface-2">
+      {/* Project Image Preview (Slim aspect ratio fits perfectly on laptops) */}
+      <div className="relative aspect-[16/8] w-full overflow-hidden bg-surface-2">
         {showImg ? (
           <img
             src={p.image}
@@ -314,7 +311,7 @@ function ProjectCard({
           />
         ) : (
           <div className="grid h-full w-full place-items-center bg-surface-2">
-            <span className="font-display text-xl font-bold text-accent">
+            <span className="font-display text-lg font-bold text-accent">
               {p.title}
             </span>
           </div>
@@ -323,7 +320,7 @@ function ProjectCard({
       </div>
 
       {/* Card Content Body */}
-      <div className="flex flex-1 flex-col justify-between p-4.5">
+      <div className="flex flex-1 flex-col justify-between p-4">
         <div>
           <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-accent">
             {p.typeLabel}
@@ -333,14 +330,14 @@ function ProjectCard({
             {p.title}
           </h3>
 
-          <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-muted">
+          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">
             {p.blurb}
           </p>
         </div>
 
-        <div className="mt-3.5 border-t border-line/80 pt-3">
+        <div className="mt-3 border-t border-line/80 pt-2.5">
           {/* Tech Stack Pills */}
-          <div className="mb-3 flex flex-wrap gap-1">
+          <div className="mb-2.5 flex flex-wrap gap-1">
             {p.stack.slice(0, 4).map((st) => (
               <span
                 key={st}
