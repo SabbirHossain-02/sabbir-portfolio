@@ -285,6 +285,19 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678274/proton-mobile_tjhjln.jpg",
     accent: "#22c55e",
   },
+  {
+    id: "velora",
+    title: "Velora",
+    type: "Fashion · E-commerce",
+    purpose:
+      "A premium fashion e-commerce storefront featuring curated apparel collections, dynamic filtering, interactive product showcases, and a seamless cart experience.",
+    builtBy: BUILT,
+    stack: ["Next.js", "React", "JavaScript", "Tailwind CSS"],
+    liveUrl: "https://velora-ecommerce-hazel.vercel.app/",
+    image:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80",
+    accent: "#ec4899",
+  },
 ];
 
 export interface Faq {
