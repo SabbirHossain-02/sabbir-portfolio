@@ -31,6 +31,8 @@ export const PROFILE = {
   role: "Full-Stack Software Engineer",
   tagline:
     "Building scalable, production-ready web applications with Next.js, Node.js, Python and PostgreSQL — from idea to deployment.",
+  intro:
+    "Building scalable, production-ready web applications with Next.js, Node.js, Python and PostgreSQL — from idea to deployment.",
   location: "Dhaka, Bangladesh",
   email: "sabbircreators@gmail.com",
   phone: "+880 1704 316972",
