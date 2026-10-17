@@ -1,7 +1,51 @@
 import Image from "next/image";
-import { BACKEND_WORK, PROJECTS } from "@/lib/site";
+import { BACKEND_WORK, PROJECTS, type BackendWork as Work } from "@/lib/site";
 import { Icon } from "./icons";
 import { StackDots } from "./project-card";
+
+/**
+ * Collapsible admin-panel preview shown inside a project's row on the
+ * Projects page. Open by default so the backend proof is seen, not hunted for.
+ */
+export function AdminPreview({ projectId }: { projectId: string }) {
+  const work: Work | undefined = BACKEND_WORK.find((b) => b.projectId === projectId);
+  if (!work) return null;
+
+  return (
+    <details open className="group rounded-xl border border-line bg-surface md:col-span-2">
+      <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-2.5 font-mono text-[13px] text-muted [&::-webkit-details-marker]:hidden">
+        <Icon name="server" />
+        <span className="font-medium text-ink">{work.projectId}</span> / admin
+        <span className="badge ml-2 font-sans">
+          <Icon name="lock" className="h-3 w-3" />
+          Behind login
+        </span>
+        <Icon name="chevron" className="ml-auto h-4 w-4 transition-transform group-open:rotate-90" />
+      </summary>
+      <div className="grid gap-4 border-t border-line p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <Image
+          src={work.image.src}
+          alt={`${work.title} dashboard`}
+          width={work.image.width}
+          height={work.image.height}
+          sizes="(min-width: 1024px) 560px, 100vw"
+          className="block h-auto w-full rounded-lg border border-line"
+        />
+        <div className="min-w-0">
+          <h3 className="font-semibold">{work.title}</h3>
+          <ul className="mt-2 grid gap-1.5 text-[13px]">
+            {work.features.map((f) => (
+              <li key={f} className="flex items-center gap-2">
+                <Icon name="check" className="h-3.5 w-3.5 text-ok" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </details>
+  );
+}
 
 /**
  * Admin panels behind client sites. The screenshot isn't linked because the

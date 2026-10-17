@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { PROJECTS, PROJECT_TYPES, hasAdmin } from "@/lib/site";
 import { Icon } from "./icons";
 import { Shot, StackDots } from "./project-card";
+import { AdminPreview } from "./backend-work";
 
 const STACKS = [...new Set(PROJECTS.flatMap((p) => p.stack))].sort();
 
@@ -117,6 +118,7 @@ export function ProjectList() {
                 </div>
               </div>
               <Shot project={p} sizes="(min-width: 768px) 180px, 100vw" className="-order-1 rounded-lg border border-line md:order-none" />
+              <AdminPreview projectId={p.id} />
             </li>
           ))}
         </ul>
