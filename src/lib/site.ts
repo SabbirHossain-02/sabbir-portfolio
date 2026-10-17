@@ -274,11 +274,29 @@ export interface BackendWork {
   summary: string;
   features: string[];
   stack: string[];
-  image: string; // admin screenshot, not linked (it's behind a login)
+  image: { src: string; width: number; height: number }; // admin screenshot, not linked (it's behind a login)
 }
 
 /** Admin panels and backends behind client sites — proof of the backend side. */
 export const BACKEND_WORK: BackendWork[] = [
+  {
+    projectId: "a1polymer",
+    title: "A1 Polymer admin panel",
+    summary:
+      "The admin panel behind a1polymer.com. The team runs a 145-product catalogue across 10 categories and keeps sliders, news, awards, partners and promo banners up to date, with quotations, messages and analytics in the same place.",
+    features: [
+      "145 products, 10 categories",
+      "Search and category filters",
+      "Add, edit and delete products",
+      "Hero sliders and promo banners",
+      "News, awards and partners",
+      "Quotations and messages",
+      "Analytics",
+      "Light and dark mode",
+    ],
+    stack: ["Next.js", "Node.js", "Tailwind CSS"],
+    image: { src: "/projects/a1polymer-admin.jpg", width: 1600, height: 593 },
+  },
   {
     projectId: "anwar-ispat",
     title: "Anwar Ispat admin CMS",
@@ -295,7 +313,7 @@ export const BACKEND_WORK: BackendWork[] = [
       "Contact messages",
     ],
     stack: ["Next.js", "Node.js", "PostgreSQL"],
-    image: "/projects/anwar-ispat-admin.jpg",
+    image: { src: "/projects/anwar-ispat-admin.jpg", width: 1600, height: 746 },
   },
 ];
 

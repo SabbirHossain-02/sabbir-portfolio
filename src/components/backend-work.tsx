@@ -25,10 +25,10 @@ export function BackendWork() {
                 </span>
               </div>
               <Image
-                src={b.image}
+                src={b.image.src}
                 alt={`${b.title} dashboard`}
-                width={1600}
-                height={746}
+                width={b.image.width}
+                height={b.image.height}
                 sizes="(min-width: 1024px) 900px, 100vw"
                 className="block h-auto w-full border-b border-line"
               />
