@@ -1,34 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { Icon } from "./icons";
 
+/**
+ * Both icons are always rendered and CSS picks one off the `dark` class
+ * next-themes puts on <html>, so the server markup matches the client and
+ * there's no mounted-state flicker.
+ */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Avoid hydration mismatch: the icon depends on the resolved theme.
-  useEffect(() => setMounted(true), []);
-
-  const isDark = resolvedTheme === "dark";
 
   return (
     <button
       type="button"
-      aria-label="Toggle color theme"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="group relative grid h-10 w-10 place-items-center rounded-full border border-line bg-surface/70 text-muted backdrop-blur transition hover:border-line-strong hover:text-ink"
+      aria-label="Switch between light and dark theme"
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="btn w-[34px] px-0"
     >
-      {mounted ? (
-        isDark ? (
-          <Sun className="h-[18px] w-[18px]" strokeWidth={1.8} />
-        ) : (
-          <Moon className="h-[18px] w-[18px]" strokeWidth={1.8} />
-        )
-      ) : (
-        <span className="h-[18px] w-[18px]" />
-      )}
+      <Icon name="moon" className="h-4 w-4 dark:hidden" />
+      <Icon name="sun" className="hidden h-4 w-4 dark:block" />
     </button>
   );
 }

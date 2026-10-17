@@ -4,53 +4,57 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ==========================================================================
-   DESIGN TOKENS — navy base, electric-blue accent, full light + dark ramps.
+   DESIGN TOKENS — GitHub-profile grammar with our own navy + electric blue.
    Semantic vars flip per theme; @theme maps them to Tailwind utilities
-   (bg-canvas, text-ink, text-muted, border-line, text-accent, …).
+   (bg-canvas, bg-surface, text-ink, text-muted, border-line, text-accent, …).
    ========================================================================== */
 :root {
   /* Light theme */
-  --canvas:      #eaeef6;
+  --canvas:      #f5f7fb;
   --surface:     #ffffff;
-  --surface-2:   #f2f5fb;
-  --line:        rgba(12, 20, 38, 0.10);
-  --line-strong: rgba(12, 20, 38, 0.18);
-  --ink:         #0a1122;
-  --muted:       #55617a;
-  --dim:         #8791a6;
+  --surface-2:   #eef2f8;
+  --line:        #d7dee9;
+  --line-soft:   #e6ebf2;
+  --ink:         #0e1626;
+  --muted:       #59657a;
   --accent:      #2563eb;
-  --accent-2:    #0891b2;
   --accent-ink:  #ffffff;
+  --accent-soft: rgba(37, 99, 235, 0.09);
+  --ok:          #16a34a;
+  --danger:      #dc2626;
 
-  /* Hero gradient stops (light) */
-  --grad-1: #dfe6f5;
-  --grad-2: #eef1f8;
+  /* Contribution calendar ramp, empty → busiest */
+  --c0: #e8edf5;
+  --c1: #bcd0fb;
+  --c2: #7ea4f5;
+  --c3: #3d74ec;
+  --c4: #1d4ed8;
 
-  --shadow-md: 0 8px 30px rgba(20, 33, 61, 0.10);
-  --shadow-lg: 0 30px 70px rgba(15, 23, 42, 0.18);
+  --shadow: 0 8px 24px rgba(15, 30, 60, 0.08);
 }
 
 .dark {
-  /* Dark theme — near-black with a navy undertone, echoing the portrait.
-     Flat and quiet: minimal accent, no glow. */
-  --canvas:      #04060b;
-  --surface:     #090c14;
-  --surface-2:   #0f131f;
-  --line:        rgba(255, 255, 255, 0.07);
-  --line-strong: rgba(255, 255, 255, 0.14);
-  --ink:         #eef1f8;
-  --muted:       #99a3b7;
-  --dim:         #5a6476;
+  --canvas:      #0a0e16;
+  --surface:     #0f141f;
+  --surface-2:   #151c2a;
+  --line:        #222b3c;
+  --line-soft:   #1a2232;
+  --ink:         #e6ebf4;
+  --muted:       #8d97ab;
   --accent:      #5b8cff;
-  --accent-2:    #5b8cff;
-  --accent-ink:  #04060b;
+  --accent-ink:  #050814;
+  --accent-soft: rgba(91, 140, 255, 0.14);
+  --ok:          #3fb97c;
+  --danger:      #f87171;
 
-  /* Hero gradient stops (near-black navy, to blend the photo edge) */
-  --grad-1: #0a1020;
-  --grad-2: #04060b;
+  --c0: #161d2b;
+  --c1: #1d3566;
+  --c2: #2c55a8;
+  --c3: #4677e6;
+  --c4: #8db0ff;
 
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -58,19 +62,19 @@
   --color-surface:     var(--surface);
   --color-surface-2:   var(--surface-2);
   --color-line:        var(--line);
-  --color-line-strong: var(--line-strong);
+  --color-line-soft:   var(--line-soft);
   --color-ink:         var(--ink);
   --color-muted:       var(--muted);
-  --color-dim:         var(--dim);
   --color-accent:      var(--accent);
-  --color-accent-2:    var(--accent-2);
   --color-accent-ink:  var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok:          var(--ok);
+  --color-danger:      var(--danger);
 
-  --font-display: var(--font-display);
-  --font-sans:    var(--font-sans);
-  --font-mono:    var(--font-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-card: var(--shadow);
 }
 
 /* ==========================================================================
@@ -81,7 +85,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -89,9 +92,14 @@ body {
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden; /* the section-swap scroller owns the scrolling */
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
 }
 
 ::selection {
@@ -99,82 +107,117 @@ body {
   color: var(--accent-ink);
 }
 
-/* Themed, slim scrollbar for the scroll container */
-.snap-scroller {
-  scrollbar-width: thin;
-  scrollbar-color: var(--line-strong) transparent;
-}
-.snap-scroller::-webkit-scrollbar { width: 8px; }
-.snap-scroller::-webkit-scrollbar-thumb {
-  background: var(--line-strong);
-  border-radius: 999px;
-}
-.snap-scroller::-webkit-scrollbar-track { background: transparent; }
-
-/* Utility: monospace eyebrow label */
-.label {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--dim);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
-/* Contact form fields */
-.input {
-  width: 100%;
-  border-radius: 0.75rem;
-  border: 1px solid var(--line);
-  background: var(--surface-2);
-  padding: 0.7rem 0.9rem;
-  font-size: 0.9rem;
-  color: var(--ink);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.input::placeholder { color: var(--dim); }
-.input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+/* ==========================================================================
+   COMPONENT CLASSES — the few patterns repeated across pages. Kept in the
+   components layer so Tailwind utilities (max-md:hidden, px-0, …) win.
+   ========================================================================== */
+
+@layer components {
+  /* Buttons: neutral by default, .btn-primary for the one main action */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.15s, filter 0.15s;
+  }
+  .btn:hover { border-color: var(--muted); }
+  .btn-primary {
+    background: var(--accent);
+    border-color: transparent;
+    color: var(--accent-ink);
+  }
+  .btn-primary:hover { border-color: transparent; filter: brightness(1.08); }
+  .btn:disabled { cursor: not-allowed; opacity: 0.7; }
+
+  /* Bordered surface — the README, contribution graph, forms */
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    min-width: 0;
+  }
+
+  /* Small rounded pill — "Live", "Own product", type tags */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1px 8px;
+    border-radius: 99px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .badge-live {
+    color: var(--ok);
+    border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+  }
+  .badge-live::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+
+  /* Form fields */
+  .input {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--canvas);
+    padding: 9px 12px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .input::placeholder { color: var(--muted); }
+  .input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  /* Hide horizontal scrollbars on the tab strip */
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
 }
 
-/* CSS-driven entrance (used by section content). Compositor-reliable — never
-   leaves content stuck at opacity 0 the way an interrupted JS animation can. */
+/* Contribution calendar cells */
+.cal-0 { fill: var(--c0); }
+.cal-1 { fill: var(--c1); }
+.cal-2 { fill: var(--c2); }
+.cal-3 { fill: var(--c3); }
+.cal-4 { fill: var(--c4); }
+
+/* Page content settles in on every route change */
 @keyframes rise-in {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: none; }
+  from { transform: translateY(6px); opacity: 0.6; }
+  to   { transform: none; opacity: 1; }
 }
 .rise {
-  animation: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-/* Staggered entrance — direct children rise in sequence. Applied to card
-   grids; replays every time a section is (re)entered because the deck
-   re-keys the active slide's content. */
-.stagger > * {
-  animation: rise-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.stagger > *:nth-child(1)  { animation-delay: 0.04s; }
-.stagger > *:nth-child(2)  { animation-delay: 0.10s; }
-.stagger > *:nth-child(3)  { animation-delay: 0.16s; }
-.stagger > *:nth-child(4)  { animation-delay: 0.22s; }
-.stagger > *:nth-child(5)  { animation-delay: 0.28s; }
-.stagger > *:nth-child(6)  { animation-delay: 0.34s; }
-.stagger > *:nth-child(7)  { animation-delay: 0.40s; }
-.stagger > *:nth-child(8)  { animation-delay: 0.46s; }
-.stagger > *:nth-child(9)  { animation-delay: 0.52s; }
-.stagger > *:nth-child(n + 10) { animation-delay: 0.58s; }
-
-/* Gradient text used sparingly on hero name / key numbers */
-.text-gradient {
-  background: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  animation: rise-in 0.35s ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;

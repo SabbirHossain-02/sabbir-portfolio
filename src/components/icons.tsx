@@ -1,32 +1,32 @@
 import {
-  Home,
-  User,
+  BookOpen,
+  BookMarked,
   Layers,
-  Wrench,
-  Boxes,
-  HelpCircle,
   Mail,
-  Monitor,
-  Server,
-  Database,
-  Code2,
-  Plug,
-  Gauge,
+  MapPin,
+  Building2,
+  Clock,
+  ArrowUpRight,
   Sun,
   Moon,
+  Search,
   Download,
-  MapPin,
-  Star,
-  ArrowUpRight,
-  ArrowRight,
-  ChevronDown,
+  Check,
+  Copy,
+  Code2,
+  Phone,
+  Plug,
+  Gauge,
+  Send,
+  GraduationCap,
+  ChevronRight,
   Circle,
 } from "lucide-react";
 import type { ComponentType } from "react";
 
 type IconProps = { className?: string; strokeWidth?: number };
 
-/* Brand marks — lucide removed brand icons, so these are inline. */
+/* Brand mark — lucide removed brand icons, so this one is inline. */
 function GithubMark({ className, strokeWidth = 1.8 }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} className={className} strokeLinecap="round" strokeLinejoin="round">
@@ -35,46 +35,35 @@ function GithubMark({ className, strokeWidth = 1.8 }: IconProps) {
   );
 }
 
-function LinkedinMark({ className, strokeWidth = 1.8 }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} className={className} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-}
-
 /** Resolves the string icon ids used across site data to components. */
 export const ICONS: Record<string, ComponentType<IconProps>> = {
-  home: Home,
-  user: User,
+  book: BookOpen,
+  repo: BookMarked,
   layers: Layers,
-  wrench: Wrench,
-  boxes: Boxes,
-  help: HelpCircle,
   mail: Mail,
-  monitor: Monitor,
-  server: Server,
-  database: Database,
-  code: Code2,
-  plug: Plug,
-  gauge: Gauge,
+  mapPin: MapPin,
+  building: Building2,
+  clock: Clock,
+  external: ArrowUpRight,
   sun: Sun,
   moon: Moon,
+  search: Search,
   download: Download,
-  mapPin: MapPin,
-  star: Star,
-  arrowUpRight: ArrowUpRight,
-  arrowRight: ArrowRight,
-  chevronDown: ChevronDown,
+  check: Check,
+  copy: Copy,
+  code: Code2,
+  phone: Phone,
+  plug: Plug,
+  gauge: Gauge,
+  send: Send,
+  cap: GraduationCap,
+  chevron: ChevronRight,
   github: GithubMark,
-  linkedin: LinkedinMark,
 };
 
 export function Icon({
   name,
-  className,
+  className = "h-4 w-4",
   strokeWidth = 1.8,
 }: {
   name: string;
@@ -82,5 +71,5 @@ export function Icon({
   strokeWidth?: number;
 }) {
   const Cmp = ICONS[name] ?? Circle;
-  return <Cmp className={className} strokeWidth={strokeWidth} />;
+  return <Cmp className={`shrink-0 ${className}`} strokeWidth={strokeWidth} />;
 }
