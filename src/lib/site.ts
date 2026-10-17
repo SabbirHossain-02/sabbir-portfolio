@@ -23,7 +23,8 @@ export const PROFILE = {
   pronouns: "he/him",
   role: "Full-Stack Software Engineer",
   company: "PKG IT",
-  since: 2022,
+  since: 2025,
+  codingSince: 2021,
   location: "Dhaka, Bangladesh",
   utcOffset: 6,
   email: "sabbircreators@gmail.com",
@@ -41,17 +42,10 @@ export const PROFILE = {
   portrait: "/profile.webp",
 };
 
-export const STATS = [
-  { value: "50+", label: "Systems shipped" },
-  { value: "3 yrs", label: "In production" },
-  { value: "5.0", label: "Fiverr rating" },
-  { value: "99.9%", label: "Uptime kept" },
-];
-
 export const ABOUT = {
   greeting: "Hi, I'm Sabbir.",
-  lead: "Full-stack developer at PKG IT since 2022, building complete web apps with Node.js, Next.js and Python, and deploying them on self-managed VPS servers.",
-  body: "I focus on systems that hold up after launch. Across freelance contracts and product teams, I've learned the hard part is shipping something the client can still maintain a year later. I index my databases, secure my endpoints and treat mobile as a first-class target.",
+  lead: "Self-taught full-stack developer at PKG IT, building complete web apps with Next.js, Node.js, PostgreSQL and Python, and deploying them on Vercel and self-managed VPS servers.",
+  body: "I focus on systems that hold up after launch: indexed databases, secured endpoints, and mobile treated as a first-class target. I use AI tools to move faster, and I make sure I understand every line I ship.",
   highlights: [
     {
       title: "Handover-ready code.",
@@ -423,14 +417,16 @@ export const STACK_COLORS: Record<string, string | null> = {
 
 export const stackColor = (tag: string) => STACK_COLORS[tag] ?? "var(--muted)";
 
-export const TIMELINE = [
-  {
-    when: "2017 — 2021",
-    title: "B.Sc. in Computer Science & Engineering",
-    text: "Daffodil International University, Dhaka.",
-    icon: "cap",
-  },
-];
+/** The personal story on the Overview page. Kept to what's public-appropriate. */
+export const STORY = {
+  quote: "I never had a straight path, so I learned to build my own.",
+  paragraphs: [
+    "When I was in class seven, my family hit hard times and we moved to Narsingdi so everyone could work. From then on I worked during the day and studied at night, and went to school mainly to sit my exams.",
+    "Near the end of class nine I started teaching myself to code. There was no course and no mentor, only documentation, small projects and late nights. Training at the gym gave me the habit that kept it going: show up every day, even when progress is slow.",
+    "Today I'm a full-stack developer at PKG IT. I build the websites, admin panels, CRMs and real-time dashboards behind brands like Rainbow Paints, Anwar Ispat and A1 Polymer.",
+    "Next, I'm learning web application security, and I'm going back to finish my HSC.",
+  ],
+};
 
 export interface Faq {
   q: string;
@@ -462,4 +458,12 @@ export const FAQ: Faq[] = [
     q: "How can I get started?",
     a: "Use the contact form or email me directly. I usually reply within two hours on working days.",
   },
+];
+
+/** Sidebar "Track record": only numbers a visitor can verify on the site. */
+export const STATS = [
+  { value: String(PROFILE.codingSince), label: "Writing code since" },
+  { value: String(PROFILE.since), label: `At ${PROFILE.company} since` },
+  { value: String(PROJECTS.length), label: "Live projects" },
+  { value: String(BACKEND_WORK.length), label: "Admin systems built" },
 ];
