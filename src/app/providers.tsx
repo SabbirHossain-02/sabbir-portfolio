@@ -5,14 +5,14 @@ import type { ReactNode } from "react";
 
 /**
  * next-themes drives the light/dark toggle by writing class="dark" on <html>.
- * defaultTheme is dark because the design is built navy-first; the toggle
- * lets visitors flip to light. disableTransitionOnChange avoids a color flash.
+ * defaultTheme is light; the toggle lets visitors flip to dark and their
+ * choice is remembered. disableTransitionOnChange avoids a color flash.
  */
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="light"
       enableSystem={false}
       disableTransitionOnChange
     >
