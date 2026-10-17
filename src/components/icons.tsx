@@ -22,6 +22,8 @@ import {
   ChevronRight,
   Server,
   Lock,
+  Footprints,
+  ArrowRight,
   Circle,
 } from "lucide-react";
 import type { ComponentType } from "react";
@@ -90,6 +92,8 @@ export const ICONS: Record<string, ComponentType<IconProps>> = {
   chevron: ChevronRight,
   server: Server,
   lock: Lock,
+  story: Footprints,
+  arrowRight: ArrowRight,
   github: GithubMark,
   linkedin: LinkedinMark,
   facebook: FacebookMark,

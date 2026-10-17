@@ -12,6 +12,7 @@ export interface Tab {
 
 export const TABS: Tab[] = [
   { href: "/", label: "Overview", icon: "book" },
+  { href: "/story", label: "Story", icon: "story" },
   { href: "/projects", label: "Projects", icon: "repo" },
   { href: "/services", label: "Services", icon: "layers" },
   { href: "/contact", label: "Contact", icon: "mail" },
@@ -417,16 +418,6 @@ export const STACK_COLORS: Record<string, string | null> = {
 
 export const stackColor = (tag: string) => STACK_COLORS[tag] ?? "var(--muted)";
 
-/** The personal story on the Overview page. Kept to what's public-appropriate. */
-export const STORY = {
-  quote: "I never had a straight path, so I learned to build my own.",
-  paragraphs: [
-    "When I was in class seven, my family hit hard times and we moved to Narsingdi so everyone could work. From then on I worked during the day and studied at night, and went to school mainly to sit my exams.",
-    "Near the end of class nine I started teaching myself to code. There was no course and no mentor, only documentation, small projects and late nights. Training at the gym gave me the habit that kept it going: show up every day, even when progress is slow.",
-    "Today I'm a full-stack developer at PKG IT. I build the websites, admin panels, CRMs and real-time dashboards behind brands like Rainbow Paints, Anwar Ispat and A1 Polymer.",
-    "Next, I'm learning web application security, and I'm going back to finish my HSC.",
-  ],
-};
 
 export interface Faq {
   q: string;

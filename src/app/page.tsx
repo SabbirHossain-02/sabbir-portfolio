@@ -1,4 +1,5 @@
-import { ABOUT, PROFILE, PROJECTS, SKILLS, STORY } from "@/lib/site";
+import { ABOUT, PROFILE, PROJECTS, SKILLS } from "@/lib/site";
+import { STORY } from "@/lib/story";
 import { Icon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { Contributions } from "@/components/contributions";
@@ -86,15 +87,17 @@ export default function Overview() {
               {STORY.quote}
               <span className="text-accent">”</span>
             </blockquote>
-            <div className="mt-5 grid max-w-[62ch] gap-3.5 text-[15px] leading-relaxed">
-              {STORY.paragraphs.map((para) => (
-                <p key={para.slice(0, 24)}>{para}</p>
-              ))}
+            <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-muted">{STORY.intro}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Link href="/story" className="btn btn-primary">
+                Read my full story
+                <Icon name="arrowRight" />
+              </Link>
+              <a href={PROFILE.cv} download className="btn">
+                <Icon name="download" />
+                CV
+              </a>
             </div>
-            <a href={PROFILE.cv} download className="btn mt-6">
-              <Icon name="download" />
-              Download my CV
-            </a>
           </div>
 
           <div className="border-t border-line bg-surface-2/40 px-[18px] pt-6 pb-7 md:px-[30px] lg:border-t-0 lg:pt-8">
