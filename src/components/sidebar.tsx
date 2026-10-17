@@ -88,6 +88,16 @@ export function Sidebar() {
               github.com/{PROFILE.handle}
             </a>
           </MetaRow>
+          <MetaRow icon="linkedin">
+            <a
+              href={PROFILE.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:underline"
+            >
+              in/sabbir-hossain
+            </a>
+          </MetaRow>
         </ul>
 
         <section className="border-t border-line pt-[18px]">
