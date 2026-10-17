@@ -275,10 +275,30 @@ export interface BackendWork {
   features: string[];
   stack: string[];
   image: { src: string; width: number; height: number }; // admin screenshot, not linked (it's behind a login)
+  blurred?: boolean; // client business figures blurred in the screenshot
 }
 
 /** Admin panels and backends behind client sites — proof of the backend side. */
 export const BACKEND_WORK: BackendWork[] = [
+  {
+    projectId: "proton-mobile",
+    title: "ProtonBD admin, CRM & analytics",
+    summary:
+      "The back office behind Proton's online phone store: a CRM and a CMS in one, with sales and traffic analytics, a real-time visitor view, and modules for products, orders, payments, customers, campaigns, SEO, blog and showrooms.",
+    features: [
+      "CRM and CMS dashboards",
+      "Sales and traffic analytics",
+      "Real-time visitors by device",
+      "Date-range comparison",
+      "Products, orders and payments",
+      "Customers and campaigns",
+      "SEO, blog and media library",
+      "Showrooms, reports and alerts",
+    ],
+    stack: ["React", "Node.js", "MySQL"],
+    image: { src: "/projects/proton-admin.jpg", width: 1600, height: 760 },
+    blurred: true,
+  },
   {
     projectId: "a1polymer",
     title: "A1 Polymer admin panel",

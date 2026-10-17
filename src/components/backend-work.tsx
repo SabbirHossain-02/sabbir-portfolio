@@ -33,6 +33,7 @@ export function AdminPreview({ projectId }: { projectId: string }) {
         />
         <div className="min-w-0">
           <h3 className="font-semibold">{work.title}</h3>
+          {work.blurred && <p className="mt-0.5 text-xs text-muted">Client figures blurred for privacy.</p>}
           <ul className="mt-2 grid gap-1.5 text-[13px]">
             {work.features.map((f) => (
               <li key={f} className="flex items-center gap-2">
@@ -80,6 +81,7 @@ export function BackendWork() {
                 <div className="min-w-0">
                   <h3 className="text-[17px] font-semibold">{b.title}</h3>
                   <p className="mt-1.5 max-w-[60ch] text-muted">{b.summary}</p>
+                  {b.blurred && <p className="mt-1.5 text-xs text-muted">Client figures blurred for privacy.</p>}
                   <div className="mt-3 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[12.5px] text-muted">
                     <StackDots stack={b.stack} />
                     {site && (
