@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import { PROFILE, SKILLS } from "./site";
 
+const PRIMARY_URL = "https://sabbirhossain-dev.vercel.app";
+
 /**
- * Canonical site URL. On Vercel, VERCEL_PROJECT_PRODUCTION_URL is the
- * production domain, so this follows a custom domain automatically once one
- * is attached. Set NEXT_PUBLIC_SITE_URL to override. Server-only.
+ * Canonical site URL. Vercel's production domain wins once it's a real custom
+ * domain (e.g. a bought .com); while the project only has *.vercel.app
+ * aliases, PRIMARY_URL picks the one we chose. NEXT_PUBLIC_SITE_URL overrides
+ * both. Server-only.
  */
+const vercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL;
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://sabbir-portfolio-fawn.vercel.app")
+  (vercelProd && !vercelProd.endsWith(".vercel.app") ? `https://${vercelProd}` : PRIMARY_URL)
 ).replace(/\/$/, "");
 
 export const SITE_TITLE = `${PROFILE.name} — Full-Stack Developer`;
