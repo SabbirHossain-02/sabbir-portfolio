@@ -318,6 +318,25 @@ export const BACKEND_WORK: BackendWork[] = [
     image: { src: "/projects/a1polymer-admin.jpg", width: 1600, height: 593 },
   },
   {
+    projectId: "property-lifts",
+    title: "Property Lifts admin & analytics",
+    summary:
+      "The admin behind the Property Lifts site. The team tracks traffic and live visitors, answers enquiries and feedback, and manages the catalogue, spare parts, the 2D and 3D lift designers, and every page section without touching code.",
+    features: [
+      "Traffic from 7 days to 12 months",
+      "Live visitors and monthly trends",
+      "Enquiries and feedback inbox",
+      "Products, categories and spare parts",
+      "2D and 3D lift designer settings",
+      "Projects, journal and FAQs",
+      "Gallery, brochures and media",
+      "Every page section editable",
+    ],
+    stack: ["Next.js", "three.js", "Tailwind CSS"],
+    image: { src: "/projects/property-lifts-admin.jpg", width: 1600, height: 692 },
+    blurred: true,
+  },
+  {
     projectId: "anwar-ispat",
     title: "Anwar Ispat admin CMS",
     summary:
