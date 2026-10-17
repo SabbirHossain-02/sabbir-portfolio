@@ -43,8 +43,17 @@ export interface Chapter {
   when: string;
   title: string;
   paragraphs: string[];
+  pull?: string; // a line from the chapter, set large as a pull quote
   photo?: Photo;
 }
+
+/** Milestone chips under the story's opening. */
+export const MILESTONES = [
+  { when: "Class 7", what: "Moved to Narsingdi" },
+  { when: "2021", what: "First line of code" },
+  { when: "2025", what: "Joined PKG IT" },
+  { when: "Next", what: "Security + HSC" },
+];
 
 export const CHAPTERS: Chapter[] = [
   {
@@ -62,6 +71,7 @@ export const CHAPTERS: Chapter[] = [
       "Near the end of class nine, I opened a laptop and wrote my first code. It was HTML, and it was simple, but it was mine.",
       "After that, the nights changed. I made clothes all day and practised coding all night, until the sky outside started to get light.",
     ],
+    pull: "I made clothes all day and practised coding all night.",
   },
   {
     when: "The hardest part",
@@ -70,6 +80,7 @@ export const CHAPTERS: Chapter[] = [
       "I joined a course to learn properly. It reached JavaScript arrays and objects, and then it stopped. No more lessons. No one to ask.",
       "That hurt more than I can explain. It felt like a door closing just as I had found it. So I made a decision: if there was no teacher left, I would be my own motivation. Every day I opened YouTube, watched one more video, and practised until it made sense. Then I came back and did it again the next day.",
     ],
+    pull: "If there was no teacher left, I would be my own motivation.",
     photo: PHOTOS.college1,
   },
   {
@@ -78,6 +89,7 @@ export const CHAPTERS: Chapter[] = [
     paragraphs: [
       "Training at the gym gave me the habit that held everything together: show up every day, even when progress is too slow to see. I brought that same habit to every night of coding.",
     ],
+    pull: "Show up every day, even when progress is too slow to see.",
     photo: PHOTOS.gym,
   },
   {
