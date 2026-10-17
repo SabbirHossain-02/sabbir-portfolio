@@ -14,7 +14,7 @@ export default function Overview() {
       <article className="panel">
         <div className="flex items-center gap-2 border-b border-line px-[18px] py-3 font-mono text-[13px] text-muted">
           <Icon name="book" />
-          <span className="font-medium text-ink">sabbir-hosen</span> / README.md
+          <span className="font-medium text-ink">sabbir-hossain</span> / README.md
         </div>
         <div className="px-[18px] pt-5 pb-6 md:px-[30px] md:pt-[26px] md:pb-[30px]">
           <h2 className="mb-3.5 border-b border-line pb-2.5 text-[26px] font-bold tracking-tight">

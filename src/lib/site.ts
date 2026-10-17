@@ -18,7 +18,7 @@ export const TABS: Tab[] = [
 ];
 
 export const PROFILE = {
-  name: "Sabbir Hosen",
+  name: "Sabbir Hossain",
   handle: "SabbirHossain-02",
   pronouns: "he/him",
   role: "Full-Stack Software Engineer",
@@ -35,7 +35,7 @@ export const PROFILE = {
     linkedin: "https://linkedin.com/in/sabbirhosen",
     fiverr: "https://fiverr.com/sabbirhosen",
   },
-  cv: "/Sabbir_Hosen_CV.pdf",
+  cv: "/Sabbir_Hossain_CV.pdf",
   portrait: "/profile.webp",
 };
 

@@ -6,7 +6,7 @@ import { CopyButton } from "@/components/copy-button";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Hire Sabbir Hosen for your next web app, API or migration. Usually replies within two hours.",
+  description: "Hire Sabbir Hossain for your next web app, API or migration. Usually replies within two hours.",
 };
 
 export default function ContactPage() {

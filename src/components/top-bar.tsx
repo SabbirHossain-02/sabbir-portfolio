@@ -27,7 +27,7 @@ export function TopBar() {
             {"{S}"}
           </Link>
           <div className="min-w-0 truncate font-mono text-sm text-muted">
-            <span className="font-medium text-ink">sabbir-hosen</span>
+            <span className="font-medium text-ink">sabbir-hossain</span>
             <span className="max-sm:hidden"> / portfolio</span>
           </div>
           <div className="ml-auto flex items-center gap-2">

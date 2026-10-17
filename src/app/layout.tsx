@@ -22,18 +22,18 @@ const description =
 
 export const metadata: Metadata = {
   title: {
-    default: "Sabbir Hosen — Full-Stack Software Engineer",
-    template: "%s · Sabbir Hosen",
+    default: "Sabbir Hossain — Full-Stack Software Engineer",
+    template: "%s · Sabbir Hossain",
   },
   description,
   openGraph: {
-    title: "Sabbir Hosen — Full-Stack Software Engineer",
+    title: "Sabbir Hossain — Full-Stack Software Engineer",
     description,
     type: "profile",
   },
   twitter: {
     card: "summary",
-    title: "Sabbir Hosen — Full-Stack Software Engineer",
+    title: "Sabbir Hossain — Full-Stack Software Engineer",
     description,
   },
   icons: {
