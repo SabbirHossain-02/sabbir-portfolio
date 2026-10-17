@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { PROFILE, STATS } from "@/lib/site";
 import { MILESTONES, MOMENTS, PHOTOS, STORY, SUMMARY, TRAITS } from "@/lib/story";
 import { Icon } from "@/components/icons";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "My story",
   description:
     "Self-taught full-stack developer Sabbir Hossain: from making clothes by day and coding by night to building systems for national brands at PKG IT.",
-};
+  path: "/story",
+});
 
 export default function StoryPage() {
   return (

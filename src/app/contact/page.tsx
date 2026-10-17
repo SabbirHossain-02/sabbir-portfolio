@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PROFILE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { ContactForm } from "@/components/contact-form";
 import { CopyButton } from "@/components/copy-button";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description: "Hire Sabbir Hossain for your next web app, API or migration. Usually replies within two hours.",
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

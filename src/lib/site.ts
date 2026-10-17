@@ -22,7 +22,7 @@ export const PROFILE = {
   name: "Sabbir Hossain",
   handle: "SabbirHossain-02",
   pronouns: "he/him",
-  role: "Full-Stack Software Engineer",
+  role: "Full-Stack Developer",
   company: "PKG IT",
   since: 2025,
   codingSince: 2021,

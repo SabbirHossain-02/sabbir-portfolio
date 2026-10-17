@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { FAQ, SERVICES } from "@/lib/site";
 import { Icon } from "@/components/icons";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
   description:
     "Full-stack application development, API development and integration, and migration and performance work.",
-};
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

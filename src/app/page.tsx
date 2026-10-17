@@ -1,5 +1,6 @@
 import { ABOUT, PROFILE, PROJECTS, SKILLS } from "@/lib/site";
 import { STORY } from "@/lib/story";
+import { jsonLd, personJsonLd } from "@/lib/seo";
 import { Icon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { Contributions } from "@/components/contributions";
@@ -13,6 +14,11 @@ const own = PROJECTS.filter((p) => p.own);
 export default function Overview() {
   return (
     <div className="flex flex-col gap-7">
+      {/* structured data for search engines */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(personJsonLd()) }}
+      />
       <article className="panel">
         <div className="flex items-center gap-2 border-b border-line px-[18px] py-3 font-mono text-[13px] text-muted">
           <Icon name="book" />
