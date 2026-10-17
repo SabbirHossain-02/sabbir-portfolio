@@ -5,14 +5,15 @@ import { StackDots } from "./project-card";
 
 /**
  * Collapsible admin-panel preview shown inside a project's row on the
- * Projects page. Open by default so the backend proof is seen, not hunted for.
+ * Projects page. Closed by default so the list stays scannable; the summary
+ * line says what's inside.
  */
 export function AdminPreview({ projectId }: { projectId: string }) {
   const work: Work | undefined = BACKEND_WORK.find((b) => b.projectId === projectId);
   if (!work) return null;
 
   return (
-    <details open className="group rounded-xl border border-line bg-surface md:col-span-2">
+    <details className="group rounded-xl border border-line bg-surface md:col-span-2">
       <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-2.5 font-mono text-[13px] text-muted [&::-webkit-details-marker]:hidden">
         <Icon name="server" />
         <span className="font-medium text-ink">{work.projectId}</span> / admin
@@ -20,7 +21,11 @@ export function AdminPreview({ projectId }: { projectId: string }) {
           <Icon name="lock" className="h-3 w-3" />
           Behind login
         </span>
-        <Icon name="chevron" className="ml-auto h-4 w-4 transition-transform group-open:rotate-90" />
+        <span className="ml-auto font-sans text-[12.5px] text-accent max-sm:hidden">
+          <span className="group-open:hidden">Show admin panel</span>
+          <span className="hidden group-open:inline">Hide</span>
+        </span>
+        <Icon name="chevron" className="h-4 w-4 transition-transform group-open:rotate-90 max-sm:ml-auto" />
       </summary>
       <div className="grid gap-4 border-t border-line p-4 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <Image
