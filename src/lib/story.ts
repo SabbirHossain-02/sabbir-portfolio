@@ -82,9 +82,9 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     when: "2025",
-    title: "Rahul bhai, and the door that opened",
+    title: "Rahul Roy, and the door that opened",
     paragraphs: [
-      "Then I met Rahul bhai. He taught me how real work gets done, and it was through him that I got my first job. He didn't teach me everything; the rest I kept learning from YouTube and from my own mistakes. But without him, I would not have walked through that door.",
+      "Then I met Rahul Roy. He taught me how real work gets done, and it was through him that I got my first job. He didn't teach me everything; the rest I kept learning from YouTube and from my own mistakes. But without him, I would not have walked through that door.",
       "In 2025 I joined PKG IT as a full-stack developer. I still remember holding that appointment letter.",
     ],
     photo: PHOTOS.joiningDay,
