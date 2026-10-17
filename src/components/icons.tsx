@@ -20,6 +20,8 @@ import {
   Send,
   GraduationCap,
   ChevronRight,
+  Server,
+  Lock,
   Circle,
 } from "lucide-react";
 import type { ComponentType } from "react";
@@ -58,6 +60,8 @@ export const ICONS: Record<string, ComponentType<IconProps>> = {
   send: Send,
   cap: GraduationCap,
   chevron: ChevronRight,
+  server: Server,
+  lock: Lock,
   github: GithubMark,
 };
 

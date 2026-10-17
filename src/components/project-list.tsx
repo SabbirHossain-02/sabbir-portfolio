@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { PROJECTS, PROJECT_TYPES } from "@/lib/site";
+import { PROJECTS, PROJECT_TYPES, hasAdmin } from "@/lib/site";
 import { Icon } from "./icons";
 import { Shot, StackDots } from "./project-card";
 
@@ -100,6 +100,7 @@ export function ProjectList() {
                   </a>
                   <span className="badge badge-live">Live</span>
                   <span className="badge">{p.type}</span>
+                  {hasAdmin(p.id) && <span className="badge">+ Admin CMS</span>}
                 </h2>
                 <p className="mt-2 mb-3 max-w-[66ch] text-muted">{p.purpose}</p>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] text-muted">

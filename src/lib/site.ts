@@ -268,6 +268,39 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+export interface BackendWork {
+  projectId: string; // the public site this admin powers
+  title: string;
+  summary: string;
+  features: string[];
+  stack: string[];
+  image: string; // admin screenshot, not linked (it's behind a login)
+}
+
+/** Admin panels and backends behind client sites — proof of the backend side. */
+export const BACKEND_WORK: BackendWork[] = [
+  {
+    projectId: "anwar-ispat",
+    title: "Anwar Ispat admin CMS",
+    summary:
+      "The custom admin panel behind anwarispat.com. The client's team updates the catalogue and site content themselves and handles quotation requests and messages in one place, without needing a developer.",
+    features: [
+      "Secure admin login",
+      "Product catalogue",
+      "Media & events",
+      "Hero banner",
+      "Mega projects",
+      "Editable page text",
+      "Quotation requests",
+      "Contact messages",
+    ],
+    stack: ["Next.js", "Node.js", "PostgreSQL"],
+    image: "/projects/anwar-ispat-admin.jpg",
+  },
+];
+
+export const hasAdmin = (projectId: string) => BACKEND_WORK.some((b) => b.projectId === projectId);
+
 /** Project-type filters on the Projects page; each matches a substring of `type`. */
 export const PROJECT_TYPES = ["E-commerce", "Corporate", "Hospitality", "3D", "SaaS", "Tools", "Games"];
 

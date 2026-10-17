@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { stackColor, type Project } from "@/lib/site";
+import { hasAdmin, stackColor, type Project } from "@/lib/site";
 import { Icon } from "./icons";
 
 /** Coloured dot + name per stack tag, like a repo's language line. */
@@ -53,6 +53,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </a>
           <span className="badge badge-live">Live</span>
           {project.own && <span className="badge">Own product</span>}
+          {hasAdmin(project.id) && <span className="badge">+ Admin CMS</span>}
         </div>
         <p className="line-clamp-2 text-[13.5px] text-muted">{project.purpose}</p>
         <div className="mt-auto flex flex-wrap gap-x-3.5 gap-y-1 pt-1 text-[12.5px] text-muted">

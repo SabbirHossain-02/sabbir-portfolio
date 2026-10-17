@@ -2,6 +2,7 @@ import { ABOUT, PROFILE, PROJECTS, SKILLS, TIMELINE } from "@/lib/site";
 import { Icon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { Contributions } from "@/components/contributions";
+import { BackendWork } from "@/components/backend-work";
 import Link from "next/link";
 
 const pinned = PROJECTS.filter((p) => p.pinned);
@@ -71,6 +72,8 @@ export default function Overview() {
           ))}
         </div>
       </section>
+
+      <BackendWork />
 
       <Contributions />
 
