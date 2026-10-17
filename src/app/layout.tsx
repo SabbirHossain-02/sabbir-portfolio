@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { PROFILE } from "@/lib/site";
 import { TopBar } from "@/components/top-bar";
 import { Sidebar } from "@/components/sidebar";
+import { SiteFooter } from "@/components/site-footer";
 
 const sans = Geist({
   variable: "--font-sans",
@@ -56,14 +56,7 @@ export default function RootLayout({
             <Sidebar />
             <main className="rise min-w-0">{children}</main>
           </div>
-          <footer className="border-t border-line py-[22px] text-[12.5px] text-muted">
-            <div className="mx-auto flex max-w-[1240px] flex-wrap justify-between gap-2 px-4 sm:px-6">
-              <span>
-                © {new Date().getFullYear()} {PROFILE.name}
-              </span>
-              <span className="font-mono">Built with Next.js &amp; Tailwind</span>
-            </div>
-          </footer>
+          <SiteFooter />
         </Providers>
       </body>
     </html>

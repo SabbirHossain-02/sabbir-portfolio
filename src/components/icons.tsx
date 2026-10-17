@@ -37,6 +37,34 @@ function GithubMark({ className, strokeWidth = 1.8 }: IconProps) {
   );
 }
 
+function LinkedinMark({ className, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} className={className} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
+function FacebookMark({ className, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} className={className} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+
+/* Speech bubble with a handset — reads as WhatsApp at icon size. */
+function WhatsappMark({ className, strokeWidth = 1.8 }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} className={className} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 20.5 5 16.2A9 9 0 1 1 8 19.2z" />
+      <path d="M9 8.6c0-.4.3-.8.7-.8h.6c.2 0 .4.1.5.3l.6 1.4c.1.2 0 .5-.1.7l-.5.5a5.6 5.6 0 0 0 2.6 2.6l.5-.5c.2-.2.4-.2.7-.1l1.4.6c.2.1.3.3.3.5v.6c0 .4-.4.7-.8.7A6 6 0 0 1 9 8.6z" />
+    </svg>
+  );
+}
+
 /** Resolves the string icon ids used across site data to components. */
 export const ICONS: Record<string, ComponentType<IconProps>> = {
   book: BookOpen,
@@ -63,6 +91,9 @@ export const ICONS: Record<string, ComponentType<IconProps>> = {
   server: Server,
   lock: Lock,
   github: GithubMark,
+  linkedin: LinkedinMark,
+  facebook: FacebookMark,
+  whatsapp: WhatsappMark,
 };
 
 export function Icon({

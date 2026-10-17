@@ -32,7 +32,9 @@ export const PROFILE = {
   bio: "Full-stack engineer. I build backend services, APIs and app-like interfaces that stay fast while they grow.",
   socials: {
     github: "https://github.com/SabbirHossain-02",
-    linkedin: "https://linkedin.com/in/sabbirhosen",
+    linkedin: "https://www.linkedin.com/in/sabbir-hossain-67076a434/",
+    facebook: "https://www.facebook.com/nobita.chowdhury.597795",
+    whatsapp: "https://wa.me/8801959250836",
     fiverr: "https://fiverr.com/sabbirhosen",
   },
   cv: "/Sabbir_Hossain_CV.pdf",
