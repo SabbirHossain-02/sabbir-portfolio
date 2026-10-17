@@ -1,161 +1,168 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { PROFILE } from "@/lib/site";
-import { CHAPTERS, MILESTONES, MOMENTS, PHOTOS, STORY, type Photo } from "@/lib/story";
+import { PROFILE, STATS } from "@/lib/site";
+import { MILESTONES, MOMENTS, PHOTOS, STORY, SUMMARY, TRAITS } from "@/lib/story";
 import { Icon } from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "My story",
   description:
-    "How Sabbir Hossain went from making clothes by day and coding by night to building systems for national brands at PKG IT.",
+    "Self-taught full-stack developer Sabbir Hossain: from making clothes by day and coding by night to building systems for national brands at PKG IT.",
 };
 
 export default function StoryPage() {
   return (
-    <div className="flex flex-col gap-7">
-      {/* thin reading-progress bar, driven by scroll in CSS (globals.css) */}
-      <div aria-hidden className="read-progress" />
-
-      <article className="panel overflow-hidden">
-        <div className="flex items-center gap-2 border-b border-line px-[18px] py-3 font-mono text-[13px] text-muted">
-          <Icon name="story" />
-          <span className="font-medium text-ink">sabbir-hossain</span> / STORY.md
-        </div>
-
-        {/* Opening */}
-        <header
-          className="grid items-center gap-8 border-b border-line px-[18px] py-9 md:grid-cols-[minmax(0,1fr)_270px] md:px-[38px] md:py-12"
+    <div className="flex flex-col gap-6">
+      {/* Introduction */}
+      <section className="panel overflow-hidden">
+        <div
+          className="grid items-center gap-6 px-[18px] py-7 sm:grid-cols-[150px_minmax(0,1fr)] md:px-8 md:py-8"
           style={{
             background:
-              "radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%)",
+              "radial-gradient(110% 100% at 100% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%)",
           }}
         >
+          <Image
+            src={PHOTOS.dhanmondi.src}
+            alt={PHOTOS.dhanmondi.alt}
+            width={PHOTOS.dhanmondi.width}
+            height={PHOTOS.dhanmondi.height}
+            sizes="150px"
+            priority
+            className="aspect-[4/5] w-[150px] rounded-xl border border-line object-cover shadow-card"
+          />
           <div className="min-w-0">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.1em] text-accent">My story</p>
-            <h1 className="text-[30px] font-bold leading-[1.12] tracking-tight md:text-[40px]">{STORY.quote}</h1>
-            <p className="mt-5 max-w-[50ch] text-[16.5px] leading-relaxed text-muted">{STORY.intro}</p>
-            <ol className="mt-7 flex flex-wrap gap-2">
-              {MILESTONES.map((m, i) => (
-                <li key={m.when} className="flex items-center gap-2">
-                  <span
-                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[12.5px] ${
-                      m.when === "Next"
-                        ? "border-accent bg-accent-soft text-accent"
-                        : "border-line bg-surface text-ink"
-                    }`}
-                  >
-                    <span className="font-mono text-[11.5px] text-muted">{m.when}</span>
-                    {m.what}
-                  </span>
-                  {i < MILESTONES.length - 1 && <Icon name="arrowRight" className="h-3.5 w-3.5 text-muted max-sm:hidden" />}
-                </li>
-              ))}
-            </ol>
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-accent">About me</p>
+            <h1 className="mt-1.5 text-[26px] font-bold leading-tight tracking-tight md:text-[30px]">{STORY.quote}</h1>
+            <p className="mt-3 max-w-[56ch] text-[15.5px] leading-relaxed text-muted">{STORY.intro}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link href="/contact" className="btn btn-primary">
+                Hire me
+              </Link>
+              <a href={PROFILE.cv} download className="btn">
+                <Icon name="download" />
+                Download CV
+              </a>
+            </div>
           </div>
-          <Figure photo={PHOTOS.dhanmondi} sizes="270px" className="mx-auto w-full max-w-[270px]" priority />
-        </header>
+        </div>
 
-        {/* Chapters on a journey line */}
-        <ol className="relative px-[18px] py-4 md:px-[38px]">
-          <span aria-hidden className="absolute top-10 bottom-10 left-[35px] w-0.5 bg-line md:left-[55px]" />
-          {CHAPTERS.map((c, i) => {
-            const next = i === CHAPTERS.length - 1;
-            return (
-              <li key={c.title} className="reveal relative grid grid-cols-[36px_minmax(0,1fr)] gap-x-4 py-7 md:gap-x-6">
-                <span
-                  className={`relative z-10 grid h-9 w-9 place-items-center rounded-full border-2 font-mono text-[12px] font-medium ${
-                    next ? "border-accent bg-accent text-accent-ink" : "border-line bg-surface text-ink"
-                  }`}
-                >
-                  {String(i + 1).padStart(2, "0")}
+        <dl className="grid grid-cols-2 border-t border-line md:grid-cols-4">
+          {STATS.map((s, i) => (
+            <div
+              key={s.label}
+              className={`px-[18px] py-4 md:px-8 ${i % 2 ? "border-l border-line" : ""} ${i > 1 ? "max-md:border-t" : ""} ${i === 2 ? "md:border-l" : ""}`}
+            >
+              <dt className="text-xs text-muted">{s.label}</dt>
+              <dd className="mt-0.5 text-[22px] font-semibold tabular-nums tracking-tight">{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* The short version */}
+      <section>
+        <h2 className="mb-3 text-base font-semibold">The short version</h2>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {SUMMARY.map((s) => (
+            <article key={s.label} className="reveal panel flex flex-col gap-3 p-5">
+              <div className="flex items-center gap-2.5">
+                <span className="grid h-8 w-8 place-items-center rounded-lg bg-accent-soft text-accent">
+                  <Icon name={s.icon} />
                 </span>
+                <h3 className="font-semibold">{s.label}</h3>
+              </div>
+              <p className="text-[14.5px] leading-relaxed text-muted">{s.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-                <div className={`grid gap-6 ${c.photo ? "lg:grid-cols-[minmax(0,1fr)_240px]" : ""}`}>
-                  <div className="min-w-0">
-                    <p className={`pt-1 font-mono text-xs ${next ? "text-accent" : "text-muted"}`}>{c.when}</p>
-                    <h2 className="mt-1 text-[22px] font-semibold tracking-tight">{c.title}</h2>
-                    <div className="mt-3 grid max-w-[62ch] gap-3.5 text-[16px] leading-[1.75]">
-                      {c.paragraphs.map((p) => (
-                        <p key={p.slice(0, 32)}>{p}</p>
-                      ))}
-                    </div>
-                    {c.pull && (
-                      <blockquote className="mt-6 max-w-[34ch] border-l-2 border-accent pl-4 text-[20px] font-semibold leading-snug tracking-tight text-ink md:text-[22px]">
-                        {c.pull}
-                      </blockquote>
-                    )}
-                  </div>
-                  {c.photo && (
-                    <Figure photo={c.photo} sizes="(min-width: 1024px) 240px, 300px" className="w-full max-w-[300px] lg:max-w-none lg:pt-6" />
-                  )}
+      {/* What it means for a client */}
+      <section className="reveal panel p-5 md:p-7">
+        <h2 className="text-[19px] font-semibold tracking-tight">What this means if you hire me</h2>
+        <p className="mt-1 text-muted">The way I got here is the way I work.</p>
+        <div className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+          {TRAITS.map((t) => (
+            <div key={t.title} className="grid grid-cols-[36px_minmax(0,1fr)] gap-3">
+              <span className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface-2 text-accent">
+                <Icon name={t.icon} />
+              </span>
+              <div>
+                <h3 className="font-semibold">{t.title}</h3>
+                <p className="mt-1 text-[14px] leading-relaxed text-muted">{t.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Journey */}
+      <section className="reveal panel p-5 md:p-7">
+        <h2 className="mb-5 text-base font-semibold">Journey</h2>
+        <ol className="grid gap-5 md:grid-cols-4 md:gap-4">
+          {MILESTONES.map((m, i) => {
+            const next = m.when === "Next";
+            return (
+              <li key={m.when} className="relative grid grid-cols-[14px_minmax(0,1fr)] content-start gap-3 md:grid-cols-1 md:gap-2">
+                {/* connector: vertical on mobile, horizontal on desktop */}
+                {i < MILESTONES.length - 1 && (
+                  <span
+                    aria-hidden
+                    className="absolute top-4 left-[6px] h-[calc(100%+4px)] w-0.5 bg-line md:top-[6px] md:left-4 md:h-0.5 md:w-full"
+                  />
+                )}
+                <span
+                  className={`relative mt-1 h-3.5 w-3.5 rounded-full border-2 md:mt-0 ${
+                    next ? "border-accent bg-surface" : "border-accent bg-accent"
+                  }`}
+                />
+                <div>
+                  <p className={`font-mono text-xs ${next ? "text-accent" : "text-muted"}`}>{m.when}</p>
+                  <p className="mt-0.5 text-[14.5px] font-medium">{m.what}</p>
                 </div>
               </li>
             );
           })}
         </ol>
+      </section>
 
-        {/* Closing */}
-        <footer className="flex flex-wrap items-center gap-3 border-t border-line bg-surface-2/50 px-[18px] py-6 md:px-[38px]">
-          <p className="mr-auto text-[15px] font-medium">If you&apos;ve read this far, let&apos;s build something together.</p>
-          <Link href="/projects" className="btn">
-            See my work
-          </Link>
-          <a href={PROFILE.cv} download className="btn">
-            <Icon name="download" />
-            CV
-          </a>
-          <Link href="/contact" className="btn btn-primary">
-            Hire me
-          </Link>
-        </footer>
-      </article>
-
-      <section>
-        <h2 className="mb-3 text-base font-semibold">Moments along the way</h2>
-        <div className="columns-2 gap-4 lg:columns-3">
+      {/* Photos */}
+      <section className="reveal">
+        <h2 className="mb-3 text-base font-semibold">Along the way</h2>
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {MOMENTS.map((m) => (
-            <Figure
-              key={m.src}
-              photo={m}
-              sizes="(min-width: 1024px) 280px, 50vw"
-              className="reveal mb-4 break-inside-avoid"
-              zoom
-            />
+            <figure key={m.src} className="group">
+              <div className="overflow-hidden rounded-xl border border-line bg-surface-2">
+                <Image
+                  src={m.src}
+                  alt={m.alt}
+                  width={m.width}
+                  height={m.height}
+                  sizes="(min-width: 768px) 210px, 50vw"
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                />
+              </div>
+              <figcaption className="mt-1.5 font-mono text-[11.5px] text-muted">{m.caption}</figcaption>
+            </figure>
           ))}
         </div>
       </section>
-    </div>
-  );
-}
 
-function Figure({
-  photo,
-  sizes,
-  className = "",
-  priority = false,
-  zoom = false,
-}: {
-  photo: Photo;
-  sizes: string;
-  className?: string;
-  priority?: boolean;
-  zoom?: boolean; // gentle hover zoom for gallery tiles
-}) {
-  return (
-    <figure className={`group ${className}`}>
-      <div className="overflow-hidden rounded-xl border border-line bg-surface-2 shadow-card">
-        <Image
-          src={photo.src}
-          alt={photo.alt}
-          width={photo.width}
-          height={photo.height}
-          sizes={sizes}
-          priority={priority}
-          className={`block h-auto w-full ${zoom ? "transition-transform duration-500 group-hover:scale-[1.04]" : ""}`}
-        />
-      </div>
-      <figcaption className="mt-2 font-mono text-[11.5px] text-muted">{photo.caption}</figcaption>
-    </figure>
+      {/* Call to action */}
+      <section className="panel flex flex-wrap items-center gap-3 px-5 py-5 md:px-7">
+        <div className="mr-auto">
+          <p className="font-semibold">Have a project in mind?</p>
+          <p className="text-[14px] text-muted">I usually reply within two hours on working days.</p>
+        </div>
+        <Link href="/projects" className="btn">
+          See my work
+        </Link>
+        <Link href="/contact" className="btn btn-primary">
+          Start a conversation
+        </Link>
+      </section>
+    </div>
   );
 }
