@@ -143,6 +143,17 @@ export const PROJECTS: Project[] = [
       "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784677995/anwar-ispat_sxjfgl.png",
   },
   {
+    id: "rainbow-paints",
+    title: "Rainbow Paints",
+    type: "Brand · E-commerce",
+    purpose:
+      "Brand site and online store for Rainbow Paints, an RFL Group company: products by category, 260 shades, a colour visualizer, a showroom finder and online ordering.",
+    pinned: true,
+    stack: ["Commerce", "CMS", "CRM"],
+    liveUrl: "https://rainbowpaintsbd.com/",
+    image: "/projects/rainbow-paints.jpg",
+  },
+  {
     id: "compressly",
     title: "Compressly",
     type: "Tools · Web App",
@@ -184,7 +195,6 @@ export const PROJECTS: Project[] = [
     type: "Hospitality · Management",
     purpose:
       "Luxury hotel website for a Sylhet property, with a room showcase and an enquiry and booking flow that reads as premium hospitality.",
-    pinned: true,
     stack: ["Next.js", "Node.js", "Tailwind CSS", "Booking flow"],
     liveUrl: "https://hotel-the-glory-web.vercel.app/",
     image:
@@ -280,6 +290,25 @@ export interface BackendWork {
 
 /** Admin panels and backends behind client sites — proof of the backend side. */
 export const BACKEND_WORK: BackendWork[] = [
+  {
+    projectId: "rainbow-paints",
+    title: "Rainbow Paints content & leads admin",
+    summary:
+      "One admin for the whole business: a CMS for products, categories, 260 shades, finishes, showrooms, FAQs and pages, and a CRM for orders, leads, job applications, companies and contacts. The dashboard flags orders and leads that are waiting too long.",
+    features: [
+      "Orders and leads with wait-time alerts",
+      "\"Needs attention\" queue",
+      "Products, categories and 260 shades",
+      "Finishes, documents and media",
+      "Showrooms, FAQs and pages",
+      "Job applications",
+      "Companies, contacts and activity log",
+      "Search everything with Ctrl K",
+    ],
+    stack: ["CMS", "CRM"],
+    image: { src: "/projects/rainbow-paints-admin.jpg", width: 1600, height: 733 },
+    blurred: true,
+  },
   {
     projectId: "proton-mobile",
     title: "ProtonBD admin, CRM & analytics",
@@ -383,6 +412,8 @@ export const STACK_COLORS: Record<string, string | null> = {
   ONNX: null,
   "PDF.js": null,
   "HTML5 Canvas": null,
+  CMS: null,
+  CRM: null,
   Vercel: null,
 };
 
