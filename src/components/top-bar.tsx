@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { TABS, PROJECTS, SERVICES } from "@/lib/site";
 import { Icon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
+import { Logo } from "./logo";
 
 const COUNTS: Record<string, number> = {
   "/projects": PROJECTS.length,
@@ -19,12 +20,8 @@ export function TopBar() {
     <header className="sticky top-0 z-50 border-b border-line bg-surface">
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6">
         <div className="flex items-center gap-3 pt-3.5 pb-1.5">
-          <Link
-            href="/"
-            aria-label="Home"
-            className="grid h-[34px] w-[34px] place-items-center rounded-[9px] bg-accent font-mono text-[15px] font-semibold tracking-tighter text-accent-ink"
-          >
-            {"{S}"}
+          <Link href="/" aria-label="Home" className="shrink-0 rounded-[9px] transition hover:brightness-110">
+            <Logo />
           </Link>
           <div className="min-w-0 truncate font-mono text-sm text-muted">
             <span className="font-medium text-ink">sabbir-hossain</span>

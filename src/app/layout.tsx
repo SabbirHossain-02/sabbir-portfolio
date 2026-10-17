@@ -36,11 +36,8 @@ export const metadata: Metadata = {
     title: "Sabbir Hossain — Full-Stack Software Engineer",
     description,
   },
-  icons: {
-    icon: [{ url: "/icon.png", type: "image/png" }],
-    shortcut: "/icon.png",
-    apple: "/apple-icon.png",
-  },
+  // Icons come from the file conventions: app/favicon.ico, app/icon.svg,
+  // app/apple-icon.png.
 };
 
 export default function RootLayout({
