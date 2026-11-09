@@ -73,7 +73,7 @@ export function ContactForm() {
           autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Jane Doe"
+          placeholder="Enter your name"
           className="input"
         />
       </div>
@@ -88,7 +88,7 @@ export function ContactForm() {
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="jane@company.com"
+          placeholder="Enter your email"
           className="input"
         />
       </div>
