@@ -151,6 +151,28 @@ export const PROJECTS: Project[] = [
     image: "/projects/rainbow-paints.jpg",
   },
   {
+    id: "astro-engineering",
+    title: "Astro Engineering",
+    type: "Brand · E-commerce",
+    purpose:
+      "Site and online store for Astro Engineering, the sole importer of Caltex Havoline and Delo lubricants in Bangladesh: an oil finder by vehicle, product range, dealer locator on a live map, dealer login and news.",
+    pinned: true,
+    stack: ["Next.js", "React", "Tailwind CSS", "Leaflet"],
+    liveUrl: "https://astro-eng-com.vercel.app/",
+    image: "/projects/astro-engineering.jpg",
+  },
+  {
+    id: "akij-ara",
+    title: "Akij ARA",
+    type: "Brand · Automotive",
+    purpose:
+      "Brand site for ARA electric scooters by Akij Renewable Energy & Automobiles: the full model range, quotations, test-ride and service booking, warranty details and a showroom finder.",
+    pinned: true,
+    stack: ["Next.js", "React", "Tailwind CSS"],
+    liveUrl: "https://akijara.com/",
+    image: "/projects/akij-ara.jpg",
+  },
+  {
     id: "compressly",
     title: "Compressly",
     type: "Tools · Web App",
@@ -228,17 +250,6 @@ export const PROJECTS: Project[] = [
     stack: ["React", "Next.js", "Tailwind CSS", "Dashboard"],
     liveUrl: "https://saasdash-react-template.vercel.app/",
     image: "/saasdash-preview.jpg",
-  },
-  {
-    id: "caltex",
-    title: "Caltex",
-    type: "Brand · E-commerce",
-    purpose:
-      "Conversion-focused storefront for an automotive lubricant brand: fast catalogue, clean product pages and cart.",
-    stack: ["Next.js", "React", "Tailwind CSS", "Commerce"],
-    liveUrl: "https://caltex-demo.vercel.app/",
-    image:
-      "https://res.cloudinary.com/dlddbdmqy/image/upload/v1784678110/caltex_byaqgm.png",
   },
   {
     id: "ids-group",
@@ -385,7 +396,7 @@ export const BACKEND_WORK: BackendWork[] = [
 export const hasAdmin = (projectId: string) => BACKEND_WORK.some((b) => b.projectId === projectId);
 
 /** Project-type filters on the Projects page; each matches a substring of `type`. */
-export const PROJECT_TYPES = ["E-commerce", "Corporate", "Hospitality", "3D", "SaaS", "Tools", "Games"];
+export const PROJECT_TYPES = ["E-commerce", "Corporate", "Hospitality", "3D", "SaaS", "Automotive", "Tools", "Games"];
 
 /**
  * Dot colour per stack tag. `null` marks a tag that isn't a language or
@@ -410,6 +421,7 @@ export const STACK_COLORS: Record<string, string | null> = {
   ONNX: null,
   "PDF.js": null,
   "HTML5 Canvas": null,
+  Leaflet: null,
   "Socket.IO": null,
   Webhooks: null,
   VPS: null,
