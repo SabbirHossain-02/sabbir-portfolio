@@ -2,19 +2,31 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { TABS, PROJECTS, SERVICES } from "@/lib/site";
+import { useEffect, useRef } from "react";
+import { TABS, PROJECTS, SERVICES, BACKEND_WORK } from "@/lib/site";
 import { Icon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
 import { Logo } from "./logo";
 
 const COUNTS: Record<string, number> = {
   "/projects": PROJECTS.length,
+  "/backend": BACKEND_WORK.length,
   "/services": SERVICES.length,
 };
 
 /** Sticky header: repo-style breadcrumb, theme toggle, and the page tabs. */
 export function TopBar() {
   const pathname = usePathname();
+  const nav = useRef<HTMLElement>(null);
+
+  // On narrow screens the tab strip scrolls sideways; keep the current tab
+  // centred in view (scrolls the strip only, never the page).
+  useEffect(() => {
+    const strip = nav.current;
+    const active = strip?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!strip || !active || strip.scrollWidth <= strip.clientWidth) return;
+    strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: "smooth" });
+  }, [pathname]);
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-surface">
@@ -35,7 +47,7 @@ export function TopBar() {
           </div>
         </div>
 
-        <nav aria-label="Sections" className="no-scrollbar flex gap-1 overflow-x-auto">
+        <nav ref={nav} aria-label="Sections" className="no-scrollbar relative flex gap-1 overflow-x-auto">
           {TABS.map((t) => {
             const active = t.href === "/" ? pathname === "/" : pathname.startsWith(t.href);
             const count = COUNTS[t.href];

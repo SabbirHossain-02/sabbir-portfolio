@@ -4,6 +4,7 @@ import { SITE_URL } from "@/lib/seo";
 const PAGES: { path: string; priority: number; changeFrequency: "weekly" | "monthly" }[] = [
   { path: "", priority: 1, changeFrequency: "weekly" },
   { path: "/projects", priority: 0.9, changeFrequency: "weekly" },
+  { path: "/backend", priority: 0.8, changeFrequency: "monthly" },
   { path: "/story", priority: 0.8, changeFrequency: "monthly" },
   { path: "/services", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },

@@ -14,6 +14,7 @@ export const TABS: Tab[] = [
   { href: "/", label: "Overview", icon: "book" },
   { href: "/story", label: "Story", icon: "story" },
   { href: "/projects", label: "Projects", icon: "repo" },
+  { href: "/backend", label: "Backend", icon: "server" },
   { href: "/services", label: "Services", icon: "layers" },
   { href: "/contact", label: "Contact", icon: "mail" },
 ];
@@ -133,7 +134,6 @@ export const PROJECTS: Project[] = [
     type: "Corporate · E-commerce",
     purpose:
       "Corporate brand site for one of Bangladesh's largest steel manufacturers: product catalogue, quote requests and a cinematic brand presence built to carry national traffic.",
-    pinned: true,
     stack: ["Next.js", "React", "Node.js", "PostgreSQL"],
     liveUrl: "https://www.anwarispat.com/",
     image:
@@ -145,7 +145,6 @@ export const PROJECTS: Project[] = [
     type: "Brand · E-commerce",
     purpose:
       "Brand site and online store for Rainbow Paints, an RFL Group company: products by category, 260 shades, a colour visualizer, a showroom finder and online ordering.",
-    pinned: true,
     stack: ["Next.js", "Node.js", "PostgreSQL", "Python", "Socket.IO", "Webhooks", "VPS"],
     liveUrl: "https://rainbowpaintsbd.com/",
     image: "/projects/rainbow-paints.jpg",
@@ -179,7 +178,6 @@ export const PROJECTS: Project[] = [
     purpose:
       "Free image compressor, resizer, AI background remover and PDF tools that run entirely in the browser. Files never leave the device.",
     own: true,
-    pinned: true,
     stack: ["JavaScript", "Canvas API", "ONNX", "PDF.js"],
     liveUrl: "https://compresslyonline.blogspot.com/",
     image: "/projects/compressly.jpg",
@@ -191,7 +189,6 @@ export const PROJECTS: Project[] = [
     purpose:
       "Nine free casual browser games, from Traffic Rush to Planet Merge, that play instantly on phone, tablet and PC with no download.",
     own: true,
-    pinned: true,
     stack: ["JavaScript", "HTML5 Canvas", "Vercel"],
     liveUrl: "https://joyblast-games.vercel.app/",
     image: "/projects/joyblast.jpg",
@@ -202,7 +199,6 @@ export const PROJECTS: Project[] = [
     type: "Corporate · E-commerce",
     purpose:
       "Corporate storefront for a polymer and plastics manufacturer: product catalogue, enquiries and online ordering in one place.",
-    pinned: true,
     stack: ["Next.js", "React", "Tailwind CSS", "Node.js"],
     liveUrl: "https://a1polymer.com/",
     image:
@@ -225,7 +221,6 @@ export const PROJECTS: Project[] = [
     type: "Portfolio · 3D",
     purpose:
       "Elevator-industry portfolio with an interactive 3D lift simulator and a polished product showcase.",
-    pinned: true,
     stack: ["Next.js", "three.js", "Tailwind CSS"],
     liveUrl: "https://property-lifts-portfolio.vercel.app/",
     image:
